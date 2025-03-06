@@ -1,36 +1,6 @@
 import { getRelativeLocaleUrl } from "astro:i18n";
-import { DEFAULT_LOCALE_SETTING, LOCALES_SETTING } from "./locales";
-
-/**
- * User-defined locales list
- * @constant @readonly
- */
-export const LOCALES = LOCALES_SETTING as Record<string, LocaleConfig>;
-type LocaleConfig = {
-	readonly label: string;
-	readonly lang?: string;
-	readonly dir?: "ltr" | "rtl";
-};
-
-/**
- * Type for the language code
- * @example
- * "en" | "ja" | ...
- */
-export type Lang = keyof typeof LOCALES;
-
-/**
- * Default locale code
- * @constant @readonly
- */
-export const DEFAULT_LOCALE = DEFAULT_LOCALE_SETTING as Lang;
-
-/**
- * Type for the multilingual object
- * @example
- * { en: "Hello", ja: "こんにちは", ... }
- */
-export type Multilingual = { [key in Lang]?: string };
+import { DEFAULT_LOCALE, LOCALES, type Lang, type Multilingual } from "./types";
+import { ui } from "./ui";
 
 /**
  * Helper to get the translation function
@@ -38,11 +8,17 @@ export type Multilingual = { [key in Lang]?: string };
  * @returns - The translation function
  */
 export function useTranslations(lang: Lang) {
-	return function t(multilingual: Multilingual | string): string {
-		if (typeof multilingual === "string") {
-			return multilingual;
+	return function t(multilingualOrKey: Multilingual | string): string {
+		if (typeof multilingualOrKey === "string") {
+			// Cuando es una cadena, busca en ui[lang] o ui[DEFAULT_LOCALE]
+			return (
+				ui[lang][multilingualOrKey] ??
+				ui[DEFAULT_LOCALE][multilingualOrKey] ??
+				multilingualOrKey
+			);
 		}
-		return multilingual[lang] || multilingual[DEFAULT_LOCALE] || "";
+		// Cuando es un objeto TextMultilingual, devuelve el valor para lang o DEFAULT_LOCALE
+		return multilingualOrKey[lang] ?? multilingualOrKey[DEFAULT_LOCALE] ?? "";
 	};
 }
 

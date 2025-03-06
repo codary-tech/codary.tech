@@ -1,12 +1,12 @@
 ---
 // Select UI to switch between locales.
-
 import { LOCALES, getLocalePaths } from "@/i18n";
+import { Icon } from "astro-icon/components";
 ---
 
-<label>
-  <span class="material-icons-sharp">translate</span>
-  <select data-languageSelect>
+<label class="relative inline-block w-60">
+  <Icon name="tabler:language" class="absolute text-primary-light dark:text-primary-dark text-3xl left-1.5 top-1.5" />
+  <select data-languageSelect class="w-full text-center h-10 px-10 cursor-pointer appearance-none rounded-md text-foreground-light dark:text-foreground-dark bg-base border-2 border-foreground-light dark:border-foreground-dark focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary focus:ring-opacity-50">
     {
       getLocalePaths(Astro.url).map(({ path, lang }) => (
         <option
@@ -19,7 +19,7 @@ import { LOCALES, getLocalePaths } from "@/i18n";
       ))
     }
   </select>
-  <span class="material-icons-sharp">expand_more</span>
+  <Icon name="tabler:chevron-down" class="absolute text-primary-light dark:text-primary-dark text-3xl right-1.5 top-1.5" />
 </label>
 
 <script is:inline>
@@ -33,38 +33,3 @@ import { LOCALES, getLocalePaths } from "@/i18n";
     });
   });
 </script>
-
-<style>
-  label {
-    position: relative;
-    display: inline-block;
-    width: 240px;
-    text-align-last: left;
-    .material-icons-sharp {
-      pointer-events: none;
-      position: absolute;
-      color: var(--color-theme);
-      &:first-child {
-        font-size: 24px;
-        inset: 8px auto 8px 8px;
-        opacity: 0.4;
-      }
-      &:last-child {
-        font-size: 28px;
-        inset: 6px 6px 6px auto;
-      }
-    }
-  }
-  select {
-    width: 100%;
-    height: 40px;
-    padding-inline: 38px;
-    cursor: pointer;
-    appearance: none;
-    border-radius: 6px;
-    font-family: "Noto Sans";
-    color: var(--color-main);
-    background-color: var(--color-base);
-    border: 2px solid var(--color-theme);
-  }
-</style>

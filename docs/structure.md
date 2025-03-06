@@ -15,7 +15,6 @@
 │   │   ├───image-actions.yml
 │   │   ├───links.yml
 │   │   └───pagespeed-insights.yml
-│   ├───.DS_Store
 │   ├───FUNDING.yml
 │   ├───PULL_REQUEST_TEMPLATE.md
 │   └───dependabot.yml
@@ -37,20 +36,11 @@
 │   └───ogp.png
 ├───src/
 │   ├───assets/
-│   │   ├───ar/
-│   │   │   └───hero.svg
 │   │   ├───en/
 │   │   │   └───hero.svg
 │   │   ├───es/
 │   │   │   └───hero.svg
 │   │   ├───images/
-│   │   │   ├───ar/
-│   │   │   │   ├───first-post/
-│   │   │   │   │   └───...
-│   │   │   │   ├───second-post/
-│   │   │   │   │   └───...
-│   │   │   │   └───third-post/
-│   │   │   │       └───...
 │   │   │   ├───en/
 │   │   │   │   ├───first-post/
 │   │   │   │   │   └───...
@@ -65,32 +55,10 @@
 │   │   │   │   │   └───...
 │   │   │   │   └───third-post/
 │   │   │   │       └───...
-│   │   │   ├───ja/
-│   │   │   │   ├───first-post/
-│   │   │   │   │   └───...
-│   │   │   │   ├───second-post/
-│   │   │   │   │   └───...
-│   │   │   │   └───third-post/
-│   │   │   │       └───...
-│   │   │   ├───zh-cn/
-│   │   │   │   ├───first-post/
-│   │   │   │   │   └───...
-│   │   │   │   ├───second-post/
-│   │   │   │   │   └───...
-│   │   │   │   └───third-post/
-│   │   │   │       └───...
-│   │   │   ├───DALL·E 2025-02-21 23.23.12 - Una representación conceptual del Humane AI Pin, un dispositivo pequeño y elegante que se adhiere a la ropa. El diseño es minimalista, con un cuerpo m.webp
 │   │   │   ├───blog-placeholder-1.avif
 │   │   │   ├───blog-placeholder-2.avif
 │   │   │   ├───blog-placeholder-3.avif
-│   │   │   ├───blog-placeholder-4.avif
-│   │   │   ├───cloudflare-vs-laliga-2.webp
-│   │   │   └───photo-1601987077677-5346c0c57d3f.avif
-│   │   ├───ja/
-│   │   │   └───hero.svg
-│   │   ├───zh-cn/
-│   │   │   └───hero.svg
-│   │   ├───.DS_Store
+│   │   │   └───blog-placeholder-4.avif
 │   │   ├───astro-logo.svg
 │   │   └───symbol.svg
 │   ├───components/
@@ -107,98 +75,45 @@
 │   │   └───PageHeadline.astro
 │   ├───data/
 │   │   ├───authors/
-│   │   │   ├───ar/
-│   │   │   │   └───john-doe.json
 │   │   │   ├───en/
 │   │   │   │   └───john-doe.json
-│   │   │   ├───es/
-│   │   │   │   └───john-doe.json
-│   │   │   ├───ja/
-│   │   │   │   └───john-doe.json
-│   │   │   └───zh-cn/
+│   │   │   └───es/
 │   │   │       └───john-doe.json
 │   │   ├───blog/
-│   │   │   ├───ar/
-│   │   │   │   ├───2025/
-│   │   │   │   │   └───...
-│   │   │   │   ├───first-post/
-│   │   │   │   │   └───...
-│   │   │   │   ├───second-post/
-│   │   │   │   │   └───...
-│   │   │   │   └───third-post/
-│   │   │   │       └───...
 │   │   │   ├───en/
-│   │   │   │   ├───2025/
-│   │   │   │   │   └───...
 │   │   │   │   ├───first-post/
 │   │   │   │   │   └───...
 │   │   │   │   ├───second-post/
 │   │   │   │   │   └───...
 │   │   │   │   └───third-post/
 │   │   │   │       └───...
-│   │   │   ├───es/
-│   │   │   │   ├───2025/
-│   │   │   │   │   └───...
-│   │   │   │   ├───first-post/
-│   │   │   │   │   └───...
-│   │   │   │   ├───second-post/
-│   │   │   │   │   └───...
-│   │   │   │   ├───third-post/
-│   │   │   │   │   └───...
-│   │   │   │   └───.DS_Store
-│   │   │   ├───ja/
-│   │   │   │   ├───2025/
-│   │   │   │   │   └───...
-│   │   │   │   ├───first-post/
-│   │   │   │   │   └───...
-│   │   │   │   ├───second-post/
-│   │   │   │   │   └───...
-│   │   │   │   └───third-post/
-│   │   │   │       └───...
-│   │   │   ├───zh-cn/
-│   │   │   │   ├───2025/
-│   │   │   │   │   └───...
-│   │   │   │   ├───first-post/
-│   │   │   │   │   └───...
-│   │   │   │   ├───second-post/
-│   │   │   │   │   └───...
-│   │   │   │   └───third-post/
-│   │   │   │       └───...
-│   │   │   └───.DS_Store
+│   │   │   └───es/
+│   │   │       ├───first-post/
+│   │   │       │   └───...
+│   │   │       ├───second-post/
+│   │   │       │   └───...
+│   │   │       └───third-post/
+│   │   │           └───...
 │   │   ├───categories/
-│   │   │   ├───ar/
-│   │   │   │   ├───internet.md
-│   │   │   │   └───test.md
 │   │   │   ├───en/
 │   │   │   │   ├───internet.md
 │   │   │   │   └───test.md
-│   │   │   ├───es/
-│   │   │   │   ├───internet.md
-│   │   │   │   └───test.md
-│   │   │   ├───ja/
-│   │   │   │   └───test.md
-│   │   │   ├───jp/
-│   │   │   │   └───internet.md
-│   │   │   └───zh-cn/
+│   │   │   └───es/
 │   │   │       ├───internet.md
 │   │   │       └───test.md
-│   │   ├───tags/
-│   │   │   ├───ar/
-│   │   │   │   ├───ai.md
-│   │   │   │   └───test.md
-│   │   │   ├───en/
-│   │   │   │   ├───ai.md
-│   │   │   │   └───test.md
-│   │   │   ├───es/
-│   │   │   │   ├───ai.md
-│   │   │   │   └───test.md
-│   │   │   ├───ja/
-│   │   │   │   ├───ai.md
-│   │   │   │   └───test.md
-│   │   │   └───zh-cn/
-│   │   │       ├───ai.md
-│   │   │       └───test.md
-│   │   └───.DS_Store
+│   │   └───tags/
+│   │       ├───en/
+│   │       │   ├───ai.md
+│   │       │   └───test.md
+│   │       └───es/
+│   │           ├───ai.md
+│   │           └───test.md
+│   ├───i18n/
+│   │   ├───i18n.ts
+│   │   ├───index.ts
+│   │   ├───locales.ts
+│   │   ├───types.ts
+│   │   └───ui.ts
 │   ├───layouts/
 │   │   ├───Article.astro
 │   │   └───Base.astro
@@ -211,10 +126,6 @@
 │   │   │   ├───index.astro
 │   │   │   ├───monolingual.astro
 │   │   │   └───rss.xml.js
-│   │   ├───ar/
-│   │   │   ├───feature.mdx
-│   │   │   ├───page.mdx
-│   │   │   └───setup.mdx
 │   │   ├───en/
 │   │   │   ├───feature.mdx
 │   │   │   ├───page.mdx
@@ -223,36 +134,24 @@
 │   │   │   ├───feature.mdx
 │   │   │   ├───page.mdx
 │   │   │   └───setup.mdx
-│   │   ├───ja/
-│   │   │   ├───feature.mdx
-│   │   │   ├───page.mdx
-│   │   │   └───setup.mdx
-│   │   ├───zh-cn/
-│   │   │   ├───feature.mdx
-│   │   │   ├───page.mdx
-│   │   │   └───setup.mdx
-│   │   ├───.DS_Store
 │   │   ├───404.astro
 │   │   ├───admin.astro
 │   │   ├───index.astro
 │   │   └───robots.txt.ts
 │   ├───styles/
-│   │   ├───base.css
 │   │   ├───global.css
 │   │   ├───layout.css
 │   │   └───reset.css
-│   ├───.DS_Store
 │   ├───consts.ts
 │   ├───content.config.ts
-│   ├───env.d.ts
-│   ├───i18n.ts
-│   └───locales.ts
+│   └───env.d.ts
 ├───.gitignore
 ├───.lycheeignore
 ├───.npmrc
 ├───.pre-commit-config.yaml
 ├───LICENSE
 ├───README.md
+├───SECURITY.md
 ├───astro.config.mjs
 ├───biome.json
 ├───package.json

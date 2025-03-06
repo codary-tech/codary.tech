@@ -1,3 +1,50 @@
-@import "reset";
-@import "base";
-@import "layout";
+@import "./layout.css";
+@import "tailwindcss";
+
+@theme {
+	--color-background-light: #f4f6f7;
+	--color-background-dark: #262a30;
+
+	--color-foreground-light: #373c42;
+	--color-foreground-dark: #e3e7ea;
+
+	--color-primary-light: #5e6f7c;
+	--color-primary-dark: #a5b1bb;
+
+	--color-secondary-light: #798a97;
+	--color-secondary-dark: #cad2d7;
+
+	--color-accent-light: #454e59;
+	--color-accent-dark: #a5b1bb;
+
+	--color-muted-light: #cad2d7;
+	--color-muted-dark: #3e454c;
+
+	--color-border-light: #a5b1bb;
+	--color-border-dark: #3e454c;
+
+	--color-shark-50: #f4f6f7;
+	--color-shark-100: #e3e7ea;
+	--color-shark-200: #cad2d7;
+	--color-shark-300: #a5b1bb;
+	--color-shark-400: #798a97;
+	--color-shark-500: #5e6f7c;
+	--color-shark-600: #505d6a;
+	--color-shark-700: #454e59;
+	--color-shark-800: #3e454c;
+	--color-shark-900: #373c42;
+	--color-shark-950: #262a30;
+}
+
+[class^="material-icons"] {
+	vertical-align: middle;
+	font-size: 1.1em;
+	line-height: 1;
+	display: inline-block;
+	width: 1em;
+	height: 1em;
+	overflow: hidden;
+	&:dir(rtl).dir {
+		scale: -1 1;
+	}
+}

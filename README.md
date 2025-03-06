@@ -1,10 +1,10 @@
 # Astro i18n Starter
 
 ```sh
-npm create astro@latest -- --template yacosta738/astro-cms
+pnpm create astro@latest -- --template yacosta738/astro-cms
 ```
 
-[![Logo Image](docs/hero.svg)](https://astro-cms-dpv.pages.dev/ "See document")
+[![Logo Image](docs/hero.svg)](https://codary.tech/ "See document")
 
 i18n Starter is a simple [Astro](https://astro.build) theme for creating multilingual websites.
 
@@ -32,4 +32,4 @@ This theme is self-documented, and the pages within this theme can be considered
 
 Install and preview locally or check out the sample site below.
 
-<https://astro-cms-dpv.pages.dev/>
+<https://codary.tech/>
