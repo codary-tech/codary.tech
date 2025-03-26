@@ -1,0 +1,20 @@
+---
+export const prerender = true;
+import LatestNewsletter from "@/components/LatestNewsletter.astro";
+import { LOCALES, type Lang, useTranslations } from "@/i18n";
+import Layout from "@/layouts/General.astro";
+
+const t = useTranslations(Astro.currentLocale as Lang);
+
+export const getStaticPaths = () =>
+	Object.keys(LOCALES).map((lang) => ({
+		params: { lang },
+	}));
+---
+<Layout title={t('newsletter.title')} description={t('newsletter.description')}>
+	<div class="container mx-auto px-4 pt-24">
+		<h1 class="text-8xl">{t('newsletter.title')}</h1>
+    <p>{t('newsletter.description')}</p>
+		<LatestNewsletter />
+	</div>
+</Layout>

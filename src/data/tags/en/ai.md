@@ -1,3 +1,3 @@
 ---
-title: Artificial Intelligence
+title: ai
 ---

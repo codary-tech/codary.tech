@@ -1,76 +1,80 @@
 ---
 // Footer UI displayed on each page.
-import LocalesHomeList from "@/components/i18n/LocalesHomeList.astro";
+import { SITE_TITLE } from "@/consts";
+import { type Lang, useTranslations } from "@/i18n";
+import { filterMenuItems, navLinks } from "@/models/menu";
+import Logo from "./Logo.astro";
+import NavLink from "./NavLink.astro";
+import SocialLinks from "./SocialLinks.astro";
+
+const t = useTranslations(Astro.currentLocale as Lang);
+
+const socials = [
+	{
+		name: "Twitter",
+		url: "https://twitter.com/codary",
+		icon: "tabler:brand-x",
+	},
+	{
+		name: "GitHub",
+		url: "https://github.com/codary",
+		icon: "tabler:brand-github",
+	},
+	{ name: "RSS", url: "/rss.xml", icon: "tabler:rss" },
+];
+
+// Filter menu items based on conditions
+const filteredNavLinks = filterMenuItems(navLinks);
+
+// Calculate optimal grid structure based on number of links
+// This helps maintain a balanced two-column layout when possible
+const totalLinks = filteredNavLinks.length;
+const optimalColumns = totalLinks <= 4 ? 1 : 2;
+const columnsClass = optimalColumns === 1 ? "md:grid-cols-1" : "md:grid-cols-2";
 ---
 
-<footer class="l-footer l-content">
-  <a
-    href="https://github.com/yacosta738/astro-cms"
-    target="_blank"
-    class="github"
-  >
-    GitHub
-    <span class="material-icons-sharp dir">open_in_new</span>
-  </a>
-
-  <ul>
-    <LocalesHomeList />
-  </ul>
-
-  <a class="copy" href="https://hira.page/" target="_blank" dir="ltr">
-    © Your Brand {new Date().getFullYear()}.
-  </a>
+<footer
+	class="relative flex justify-center items-center px-4 py-8 bg-bg-light dark:bg-bg-dark transition-colors duration-350"
+>
+	<div class="container mx-auto px-4">
+		<div class="mb-6 md:mb-10 flex justify-between flex-wrap gap-6">
+			<div class="w-full max-w-80">
+				<Logo />
+				<p
+					class="mt-2.5 mb-5 font-inter text-sm font-normal text-footer-description-light dark:text-footer-description-dark"
+				>
+					{t("footer.description")}
+				</p>
+				<SocialLinks socials={socials} />
+			</div>
+			<div class="w-full md:w-auto">
+				<nav>
+						<ul
+						class={`grid grid-cols-1 ${columnsClass} gap-x-12 gap-y-3 auto-rows-auto`}
+						style={optimalColumns === 2 ? `grid-template-rows: repeat(${Math.ceil(totalLinks / 2)}, auto)` : ""}
+					>
+						{
+							filteredNavLinks.map((link) => (
+								<li>
+									<NavLink
+										href={link.href}
+										translationKey={link.translationKey}
+										ariaLabelKey={link.ariaLabelKey}
+										target={link.target}
+										variant="footer"
+									/>
+								</li>
+							))
+						}
+					</ul>
+				</nav>
+			</div>
+		</div>
+		<p
+				class="text-footer-copyright-light dark:text-footer-copyright-dark text-xs font-inter font-normal leading-[140%] tracking-normal"
+			>
+				{t("footer.copyright")} © {new Date().getFullYear()}
+				{SITE_TITLE}
+			</p>
+	</div>
 </footer>
-
-<style>
-  footer {
-    padding-block: var(--sp-m) var(--sp-l);
-    text-align: center;
-    background-color: var(--color-theme);
-    color: var(--color-base);
-    border-radius: 16px;
-    margin-block-end: -16px;
-  }
-
-  .github {
-    display: block;
-    margin-block-start: calc(var(--sp-m) * -1 - 24px);
-    margin-inline: auto;
-    width: 160px;
-    height: 48px;
-    line-height: 48px;
-    background: var(--color-accent);
-    color: var(--color-main);
-    font-weight: 600;
-    letter-spacing: 0.01em;
-    border-radius: 100px;
-  }
-
-  ul {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-block-start: var(--sp-m);
-    gap: var(--sp-s);
-    a {
-      display: block;
-      padding-inline: 0.5em;
-      background: color-mix(in srgb, var(--color-main) 30%, transparent);
-      border-radius: 0.5em;
-    }
-    a::before {
-      content: "translate";
-      font-family: "Material Icons Sharp";
-      vertical-align: middle;
-      margin-inline-end: 0.2em;
-      opacity: 0.5;
-    }
-  }
-
-  .copy {
-    display: block;
-    margin-block-start: var(--sp-m);
-    opacity: 0.8;
-    letter-spacing: 0.05em;
-  }
-</style>

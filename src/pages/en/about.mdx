@@ -1,0 +1,51 @@
+---
+layout: "@/layouts/Page.astro"
+title: "About Codary"
+description: "Discover what Codary.tech is, your source for technology, programming and artificial intelligence news"
+---
+import PageHeadline from "@/components/PageHeadline.astro";
+import CtaNewsletterSubscription from  "@/components/CtaNewsletterSubscription.astro"
+import { SITE_TITLE } from "@/consts";
+
+<PageHeadline title={frontmatter.title} />
+
+## What is Codary?
+
+Codary.tech is a website dedicated to technology news, with a special focus on programming and artificial intelligence. Our goal is to keep you informed about the latest trends, tools, and advances in the world of software development and AI.
+
+## Our Newsletter
+
+Every Friday we send out our newsletter with a carefully selected collection of:
+
+- The most relevant tech news of the week
+- Resources and tools for developers
+- Newly launched or updated open source applications
+- Updates on popular frameworks and libraries
+- Programming tutorials and guides
+- Significant advances in artificial intelligence
+
+Subscribe to receive the most valuable content from the tech ecosystem in your inbox, carefully curated by our team.
+
+## Our Resources
+
+At Codary we don't just share news, we also create and compile useful resources for the developer community:
+
+- Detailed guides on programming languages
+- Comparisons of tools and technologies
+- Reviews of libraries and frameworks
+- Case studies on successful implementations
+- Best practices in software development
+
+We are committed to providing high-quality content that helps technology professionals and enthusiasts stay updated and improve their skills.
+
+## Join Our Community
+
+We invite you to be part of the Codary community to stay up to date with the latest technological trends and share knowledge with other programming and artificial intelligence enthusiasts.
+
+<div class="not-prose border-t border-t-main-light dark:border-t-main-dark">
+	<CtaNewsletterSubscription
+									formId="about-cta-newsletter-subscription-form"
+									title="Subscribe to our newsletter"
+									description="Stay updated with the latest news and resources in technology, programming, and AI. Join our community of tech enthusiasts!"
+									/>
+</div>

@@ -1,7 +1,7 @@
 ---
 // Basic Layout for All Pages
 
-import Footer from "@/components/Footer.astro";
+import Analytics from "@/components/Analytics.astro";
 import Header from "@/components/Header.astro";
 import LocaleHtmlHead from "@/components/i18n/LocaleHtmlHead.astro";
 import LocaleSuggest from "@/components/i18n/LocaleSuggest.astro";
@@ -9,7 +9,10 @@ import LocaleSuggest from "@/components/i18n/LocaleSuggest.astro";
 import { SITE_DESCRIPTION, SITE_TITLE, X_ACCOUNT } from "@/consts";
 import { LOCALES, type Lang, getLocalePaths, useTranslations } from "@/i18n";
 const t = useTranslations(Astro.currentLocale as Lang);
+// Supports weights 100-900
+import "@fontsource-variable/inter";
 import "@/styles/global.css";
+import "@/styles/scroll-behavior.css";
 
 interface Props {
 	title?: string;
@@ -23,14 +26,8 @@ const locale = Astro.currentLocale as Lang;
 const localeTitle = title ? `${title} - ${t(SITE_TITLE)}` : t(SITE_TITLE);
 const localeDescription = description || t(SITE_DESCRIPTION);
 ---
-
-<!--
-
-  Source Code:
-  https://github.com/yacosta738/astro-cms
-
--->
-<html lang={LOCALES[locale].lang || locale} dir={LOCALES[locale].dir || null}>
+<!doctype html>
+<html lang={LOCALES[locale].lang || locale} dir={LOCALES[locale].dir || null} class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <title>{localeTitle}</title>
@@ -50,9 +47,10 @@ const localeDescription = description || t(SITE_DESCRIPTION);
 
     <!-- icon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon alternate" sizes="64x64" type="image/png" href="/favicon.png">
-    <link rel="icon" sizes="192x192" href="/android-chrome.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+		<link rel="manifest" href="/site.webmanifest">
     <meta name="color-scheme" content="light dark" />
 
     <!-- OGP -->
@@ -66,46 +64,21 @@ const localeDescription = description || t(SITE_DESCRIPTION);
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content={t(X_ACCOUNT)} />
 
-    <!-- External Resource -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-    <link rel="preload" as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;800&display=swap" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;800&display=swap" media="print" onload={`this.media='all'`} />
-
-    <link rel="preload" as="style" fetchpriority="high" href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp&display=swap" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp&display=swap" media="print" onload={`this.media='all'`} />
-
+		<Analytics />
     <LocaleHtmlHead />
   </head>
 
-  <body>
-    <LocaleSuggest />
-    <Header />
+  <body class="bg-bg-light dark:bg-bg-dark scroll-smooth transition-colors duration-300 ease-in-out">
+    <slot name="header">
+			<LocaleSuggest />
+    	<Header />
+		</slot>
+		<slot name="subheader" />
 
-    <main class="l-main l-content">
+    <main>
       <slot />
     </main>
 
-    <Footer />
-
     { import.meta.env.DEV && <style>:root { scroll-behavior: auto }</style> }
-
-    <script>
-      let lastScroll = window.scrollY;
-      const header = document.querySelector('.l-header');
-
-      window.addEventListener('scroll', () => {
-        const currentScroll = window.scrollY;
-        if (currentScroll > lastScroll && currentScroll > 100) {
-          // Scrolling down & past 100px
-          header?.classList.add('hidden');
-        } else {
-          // Scrolling up
-          header?.classList.remove('hidden');
-        }
-        lastScroll = currentScroll;
-      });
-    </script>
   </body>
 </html>

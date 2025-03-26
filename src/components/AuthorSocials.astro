@@ -1,0 +1,22 @@
+---
+import ObfuscateEmail from "./ObfuscateEmail.astro";
+import SocialLinks from "./SocialLinks.astro";
+
+interface Social {
+	name: string;
+	url: string;
+	icon: string;
+}
+
+interface Props {
+	socials: Social[];
+	email: string;
+	className?: string;
+}
+
+const { socials, email, className = "mt-2" } = Astro.props;
+---
+
+<SocialLinks socials={socials} class={`flex items-center w-full max-w-fit gap-4 ${className}`}>
+    {email && (<ObfuscateEmail email={email} />)}
+</SocialLinks>

@@ -6,8 +6,12 @@
 		"baseUrl": ".",
 		"strictNullChecks": true,
 		"paths": {
-			"@/*": ["src/*"]
+			"@/*": ["src/*"],
+			"@i18n": ["src/i18n/index.ts"],
+			"@lib/*": ["src/lib/*"],
+			"@models/*": ["src/lib/models/*"]
 		},
+		"jsx": "preserve",
 		"types": [
         "@cloudflare/workers-types/2023-07-01"
       ]

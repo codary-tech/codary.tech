@@ -1,0 +1,54 @@
+---
+export const prerender = false;
+import SubscriptionForm from "@/components/SubscriptionForm.astro";
+import { BASE_URL } from "@/consts";
+import { type Lang, useTranslations } from "@/i18n";
+import Layout from "@/layouts/Base.astro";
+import { Icon } from "astro-icon/components";
+
+// Check if user is logged in and redirect if needed
+let isLoggedIn = false;
+try {
+	const response = await fetch(`${Astro.url.origin}/api/user`, {
+		headers: {
+			cookie: Astro.request.headers.get("cookie") || "",
+		},
+	});
+	const data = await response.json();
+	isLoggedIn = data.isLoggedIn;
+
+	// Redirect to home if already logged in
+	if (isLoggedIn) {
+		return Astro.redirect("/");
+	}
+} catch (error) {
+	console.error("Error checking authentication status:", error);
+}
+
+const t = useTranslations(Astro.currentLocale as Lang);
+---
+
+<Layout title={t('signin.title')} description={t('signin.description')}>
+    <div class="flex justify-center items-center w-full min-h-screen">
+        <div class="flex flex-col gap-10 justify-center items-center p-4 container mx-auto max-w-md text-main-light dark:text-main-dark">
+            <h1 class="text-5xl font-bold text-center">{t('signin.title')}</h1>
+            <p class="text-center">{t('signin.description')}</p>
+            <SubscriptionForm
+                formId="signin-form"
+                buttonText={t('signin.submit')}
+                inputClass='bg-main-light dark:bg-main-dark text-main-dark dark:text-main-light'
+                inputContainerClass="flex-col gap-10 w-full"
+                buttonClass='w-full max-w-full'
+                formType="login"
+            />
+            <div class="flex justify-center items-center gap-2 mt-4">
+                <span class="text-secondary-foreground-light dark:text-secondary-foreground-dark">{t('signin.no_account')}</span>
+                <a href={`${BASE_URL}/signup`} aria-label={t('signin.create_account')}
+                class="bg-none border-none text-main-light dark:text-main-dark uppercase flex items-center gap-0.5">
+                    {t('signin.create_account')}
+                    <Icon name="tabler:chevron-right" class="size-5" />
+                </a>
+            </div>
+        </div>
+    </div>
+</Layout>

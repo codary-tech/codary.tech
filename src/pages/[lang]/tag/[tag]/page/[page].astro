@@ -1,0 +1,155 @@
+---
+export const prerender = true;
+import GridContainer from "@/components/GridContainer.astro";
+import PageHeadline from "@/components/PageHeadline.astro";
+import Pagination from "@/components/Pagination.astro";
+import { LOCALES, type Lang, useTranslations } from "@/i18n";
+import Layout from "@/layouts/General.astro";
+import { getArticles } from "@/models/article";
+import type Tag from "@/models/tag/tag.model";
+import { getTagById } from "@/models/tag/tag.service";
+import { cleanEntityId } from "@/utils/collection.entity";
+
+export async function getStaticPaths() {
+	// Get all articles
+	const allArticles = await getArticles({ includeDrafts: false });
+
+	// Create paths for each language and tag
+	const paths = [];
+
+	// Collect all unique tag IDs from articles
+	const uniqueTagIds = new Set<string>();
+	for (const article of allArticles) {
+		if (article.tags && Array.isArray(article.tags)) {
+			for (const tag of article.tags) {
+				// Handle both string tags and tag objects
+				const tagId = typeof tag === "string" ? tag : tag.id;
+				uniqueTagIds.add(tagId);
+			}
+		}
+	}
+
+	// Define posts per page - MATCH THE VALUE FROM index.astro
+	const postsPerPage = 16; // Using small value for testing purposes
+
+	// Generate paths for all supported languages and tags
+	for (const lang of Object.keys(LOCALES)) {
+		for (const tagId of uniqueTagIds) {
+			// Only process tags for the current language
+			if (!tagId.startsWith(`${lang}/`)) continue;
+
+			// Clean the tag ID (remove language prefix)
+			const cleanedTagId = cleanEntityId(tagId);
+
+			// Try to get tag data from the tag service
+			let tagObject: Tag;
+			try {
+				const resolvedTag = await getTagById(tagId);
+				if (!resolvedTag) {
+					// Create a basic tag object if not found in the collection
+					tagObject = { id: tagId, title: tagId.split("/").pop() || tagId };
+					console.log(
+						`⚠️ [Pagination] Created fallback tag object for: ${tagId}`,
+					);
+				} else {
+					tagObject = resolvedTag;
+				}
+			} catch (error) {
+				console.error(`❌ [Pagination] Error getting tag ${tagId}:`, error);
+				// Create a fallback tag to prevent build failure
+				tagObject = { id: tagId, title: tagId.split("/").pop() || tagId };
+			}
+
+			// Filter articles for this language and tag
+			const taggedArticles = allArticles
+				.filter((article) => {
+					if (article.id.split("/")[0] !== lang) return false;
+					if (!article.tags || !Array.isArray(article.tags)) return false;
+
+					return article.tags.some((articleTag) => {
+						const articleTagId =
+							typeof articleTag === "string" ? articleTag : articleTag.id;
+						return articleTagId === tagId;
+					});
+				})
+				.sort(
+					(a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf(),
+				);
+
+			// Calculate pagination
+			const totalPages = Math.ceil(taggedArticles.length / postsPerPage);
+
+			// Only generate pages starting from page 2 (page 1 is handled by index.astro)
+			for (let i = 2; i <= totalPages; i++) {
+				const pagePosts = taggedArticles.slice(
+					(i - 1) * postsPerPage,
+					i * postsPerPage,
+				);
+
+				// Skip if no posts for this page
+				if (pagePosts.length === 0) {
+					console.log(`⚠️ No posts for ${tagId} on page ${i}`);
+					continue;
+				}
+
+				paths.push({
+					params: {
+						lang,
+						tag: cleanedTagId,
+						page: i.toString(),
+					},
+					props: {
+						postsPerPage,
+						page: {
+							data: pagePosts,
+							currentPage: i,
+							lastPage: totalPages,
+							tag: tagObject,
+						},
+					},
+				});
+			}
+		}
+	}
+	return paths;
+}
+
+// Get current locale and tag from params for rendering
+const { lang, tag, page: pageParam } = Astro.params;
+const currentLocale = lang as Lang;
+const t = useTranslations(currentLocale);
+
+const title = t({
+	en: `Articles tagged with "${tag}" - Page ${pageParam}`,
+	es: `Artículos etiquetados con "${tag}" - Página ${pageParam}`,
+});
+const basePath = `/${currentLocale}/tag/${tag}/page`;
+const indexUrl = `/${currentLocale}/tag/${tag}`;
+const { page } = Astro.props;
+---
+
+<Layout title={title}>
+	<div class="container mx-auto px-4 pt-24">
+		<PageHeadline title={title}>
+			<p class="text-xl text-main-light dark:text-main-dark">
+				{
+					t({
+						en: `Browse all our content related to ${tag}`,
+						es: `Navega por todo nuestro contenido relacionado con ${tag}`,
+					})
+				}
+			</p>
+		</PageHeadline>
+		<GridContainer posts={page.data} />
+
+		<Pagination
+			currentPage={page.currentPage}
+			lastPage={page.lastPage}
+			urlPrev={page.currentPage > 2 ? `${basePath}/${page.currentPage - 1}` : indexUrl}
+			urlNext={page.currentPage < page.lastPage ? `${basePath}/${page.currentPage + 1}` : null}
+			basePath={basePath}
+			maxDisplayedPages={5}
+			firstPageUrl={indexUrl}
+		/>
+	</div>
+</Layout>

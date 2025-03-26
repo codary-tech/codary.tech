@@ -1,0 +1,41 @@
+---
+import { type Lang, useTranslations } from "@/i18n";
+import { cn } from "@/lib/utils";
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"div"> {
+	title: string;
+	email?: string;
+}
+
+const { title, email, ...attrs } = Astro.props;
+
+const currentLocale = Astro.currentLocale as Lang;
+const t = useTranslations(currentLocale);
+---
+
+<div
+  class={cn(
+    "bg-square-light dark:bg-square-dark p-4 @sm:p-5 @md:p-6 rounded-lg",
+    "text-main-light dark:text-main-dark shadow-sm",
+    "animate-[var(--animate-to-top-fade-in)]",
+		"not-prose",
+    attrs.class
+  )}
+  {...attrs}
+>
+  <h3 class="text-2xl sm:text-4xl font-bold mb-2">{title}</h3>
+  <p class="text-secondary-foreground-light dark:text-secondary-foreground-dark">
+    <slot />
+    {email && (
+      <>
+        <a
+          href={`mailto:${email}`}
+          class="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 hover:underline transition-colors"
+        >
+          {email}
+        </a>
+      </>
+    )}
+  </p>
+</div>

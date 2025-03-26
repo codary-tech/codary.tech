@@ -1,0 +1,19 @@
+---
+import { type Lang, useTranslations } from "@/i18n";
+import { getNewsletters } from "@/models/newsletter";
+import LatestPosts from "./LatestPosts.astro";
+const currentLanguage = Astro.currentLocale as Lang;
+const t = useTranslations(currentLanguage);
+
+const newsletter = await getNewsletters({
+	includeDrafts: false,
+	lang: currentLanguage,
+});
+const hasNewsletters = newsletter.length > 0;
+---
+
+{
+	hasNewsletters && (
+		<LatestPosts title={t("newsletter.latest.title")} posts={newsletter} />
+	)
+}

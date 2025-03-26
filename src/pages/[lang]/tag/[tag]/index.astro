@@ -1,0 +1,146 @@
+---
+export const prerender = true;
+import GridContainer from "@/components/GridContainer.astro";
+import PageHeadline from "@/components/PageHeadline.astro";
+import Pagination from "@/components/Pagination.astro";
+import { LOCALES, type Lang, useTranslations } from "@/i18n";
+import Layout from "@/layouts/General.astro";
+import { getArticles } from "@/models/article";
+import type Tag from "@/models/tag/tag.model";
+import { getTagById } from "@/models/tag/tag.service";
+import { cleanEntityId } from "@/utils/collection.entity";
+
+export async function getStaticPaths() {
+	// Get all articles
+	const allArticles = await getArticles({ includeDrafts: false });
+
+	// Create paths for each language and tag
+	const paths = [];
+
+	// Collect all unique tag IDs from articles
+	const uniqueTagIds = new Set<string>();
+	for (const article of allArticles) {
+		if (article.tags && Array.isArray(article.tags)) {
+			for (const tag of article.tags) {
+				// Handle both string tags and tag objects
+				const tagId = typeof tag === "string" ? tag : tag.id;
+				uniqueTagIds.add(tagId);
+			}
+		}
+	}
+
+	// Generate paths for all supported languages and tags
+	for (const lang of Object.keys(LOCALES)) {
+		for (const tagId of uniqueTagIds) {
+			// Only process tags for the current language
+			if (!tagId.startsWith(`${lang}/`)) continue;
+
+			// Try to get tag data from the tag service
+			let tagObject: Tag;
+			try {
+				const resolvedTag = await getTagById(tagId);
+				if (!resolvedTag) {
+					// Create a basic tag object if not found in the collection
+					tagObject = { id: tagId, title: tagId.split("/").pop() || tagId };
+					console.log(`⚠️ Created fallback tag object for: ${tagId}`);
+				} else {
+					tagObject = resolvedTag;
+				}
+			} catch (error) {
+				console.error(`❌ Error getting tag ${tagId}:`, error);
+				// Create a fallback tag to prevent build failure
+				tagObject = { id: tagId, title: tagId.split("/").pop() || tagId };
+			}
+
+			// Filter articles for this language and tag
+			const taggedArticles = allArticles
+				.filter((article) => {
+					if (article.id.split("/")[0] !== lang) return false;
+					if (!article.tags || !Array.isArray(article.tags)) return false;
+
+					return article.tags.some((articleTag) => {
+						const articleTagId =
+							typeof articleTag === "string" ? articleTag : articleTag.id;
+						return articleTagId === tagId;
+					});
+				})
+				.sort(
+					(a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf(),
+				);
+
+			// Define pagination config - updated to match news page
+			const postsPerPage = 16; // Keep this consistent with pagination page
+			// Calculate total pages
+			const totalPages = Math.ceil(taggedArticles.length / postsPerPage);
+
+			// First page posts
+			const pagePosts = taggedArticles.slice(0, postsPerPage);
+
+			// Skip if no posts for this tag
+			if (pagePosts.length === 0) {
+				console.log(`ℹ️ No posts found for tag: ${tagId}`);
+				continue;
+			}
+
+			paths.push({
+				params: {
+					lang,
+					tag: cleanEntityId(tagId),
+				},
+				props: {
+					postsPerPage,
+					page: {
+						data: pagePosts,
+						currentPage: 1,
+						lastPage: totalPages,
+						tag: tagObject,
+					},
+				},
+			});
+		}
+	}
+	return paths;
+}
+
+// Get current locale and tag from params for rendering
+const { lang, tag } = Astro.params;
+const currentLocale = lang as Lang;
+const t = useTranslations(currentLocale);
+
+const title = t({
+	en: `Articles tagged with "${tag}"`,
+	es: `Artículos etiquetados con "${tag}"`,
+});
+
+const basePath = `/${currentLocale}/tag/${tag}/page`;
+const indexUrl = `/${currentLocale}/tag/${tag}`;
+const { page, postsPerPage } = Astro.props;
+---
+
+<Layout title={title}>
+	<div class="container mx-auto px-4 pt-24">
+		<PageHeadline title={title}>
+			<p class="text-xl text-main-light dark:text-main-dark">
+				{
+					t({
+						en: `Browse all our content related to ${tag}`,
+						es: `Navega por todo nuestro contenido relacionado con ${tag}`,
+					})
+				}
+			</p>
+		</PageHeadline>
+		<GridContainer posts={page.data.slice(0, postsPerPage)} />
+
+		{page.lastPage > 1 && (
+			<Pagination
+				currentPage={1}
+				lastPage={page.lastPage}
+				urlPrev={null}
+				urlNext={page.lastPage > 1 ? `${basePath}/2` : null}
+				basePath={basePath}
+				maxDisplayedPages={5}
+				firstPageUrl={indexUrl}
+			/>
+		)}
+	</div>
+</Layout>

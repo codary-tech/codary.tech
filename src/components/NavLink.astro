@@ -1,0 +1,51 @@
+---
+import { type Lang, useTranslations } from "@/i18n";
+import { cn } from "@/lib/utils";
+import { Icon } from "astro-icon/components";
+import type { HTMLAttributes } from "astro/types";
+
+export interface Props extends HTMLAttributes<"a"> {
+	href: string;
+	translationKey: string;
+	ariaLabelKey?: string;
+	icon?: string;
+	variant?: "header" | "footer" | "mobile";
+	target?: string;
+}
+
+const {
+	href,
+	translationKey,
+	ariaLabelKey,
+	icon,
+	variant = "header",
+	target,
+	class: className,
+	...attrs
+} = Astro.props;
+
+const t = useTranslations(Astro.currentLocale as Lang);
+
+// Define variant classes
+const variantClasses = {
+	header:
+		"text-main-light hover:text-secondary-foreground-light dark:text-main-dark dark:hover:text-secondary-foreground-dark py-2 uppercase text-sm",
+	footer:
+		"flex justify-start text-secondary-foreground-light dark:text-secondary-foreground-dark font-sans text-sm font-normal hover:text-main-light dark:hover:text-main-dark transition-colors duration-350",
+	mobile:
+		"text-main-light hover:text-secondary-foreground-light dark:text-main-dark dark:hover:text-secondary-foreground-dark py-3 uppercase text-sm border-b border-section-border-light/10 dark:border-section-border-dark/10",
+};
+
+const classes = cn(variantClasses[variant], className);
+---
+
+<a
+  href={href}
+  class={classes}
+  aria-label={ariaLabelKey ? t(ariaLabelKey) : undefined}
+  target={target}
+  {...attrs}
+>
+  {t(translationKey)}
+  {icon && <Icon name={icon} class="size-4 inline ml-1" />}
+</a>

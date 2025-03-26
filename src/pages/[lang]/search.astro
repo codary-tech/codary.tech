@@ -1,0 +1,24 @@
+---
+export const prerender = true;
+import Logo from "@/components/Logo.astro";
+import { type Lang, localeParams, useTranslations } from "@/i18n";
+import Layout from "@/layouts/General.astro";
+import Pagefind from "astro-pagefind/components/Search";
+const t = useTranslations(Astro.currentLocale as Lang);
+export const getStaticPaths = () => localeParams;
+---
+
+<Layout title={t('search.title')} description={t('search.description')}>
+	<section class="mx-auto w-full max-w-(--breakpoint-2xl) px-4 md:px-6 pb-32">
+		<div class="min-h-[500px] flex flex-col items-center justify-start pt-6 mt-32">
+			<Logo class="text-7xl mb-5"/>
+			<div class="w-full max-w-[500px] h-auto max-h-[500px] md:w-[400px] lg:w-[500px] overflow-y-auto">
+				<Pagefind
+					id="search"
+					className="pagefind-ui w-full h-full"
+					uiOptions={{ showImages: false }}
+				/>
+			</div>
+		</div>
+	</section>
+</Layout>

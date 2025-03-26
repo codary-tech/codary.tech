@@ -1,0 +1,22 @@
+---
+import { SITE_TITLE } from "@/consts";
+import { type Lang, useTranslations } from "@/i18n";
+import { cn } from "@/lib/utils";
+import type { HTMLAttributes } from "astro/types";
+const t = useTranslations(Astro.currentLocale as Lang);
+interface Props extends HTMLAttributes<"a"> {}
+const { class: className, ...attrs } = Astro.props as Props;
+---
+
+<a
+	href={`/${Astro.currentLocale}`}
+	id="site-title"
+	class={cn(
+		"text-xl font-medium text-main-light dark:text-main-dark transition-colors",
+		className
+	)}
+	{...attrs}
+	aria-label={t("logo.description")}
+>
+	{SITE_TITLE}
+</a>
