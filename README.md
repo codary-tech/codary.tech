@@ -6,44 +6,44 @@
 [![Astro](https://img.shields.io/badge/Astro-5.2.5-FF5D01)](package.json)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-[![Link Checking](https://github.com/yacosta738/codary.tech/actions/workflows/links.yml/badge.svg)](https://github.com/yacosta738/codary.tech/actions/workflows/links.yml)
-[![Lighthouse CI](https://github.com/yacosta738/codary.tech/actions/workflows/pagespeed-insights.yml/badge.svg)](https://github.com/yacosta738/codary.tech/actions/workflows/pagespeed-insights.yml)
+[![Link Checking](https://github.com/codary-tech/codary.tech/actions/workflows/links.yml/badge.svg)](https://github.com/codary-tech/codary.tech/actions/workflows/links.yml)
+[![Lighthouse CI](https://github.com/codary-tech/codary.tech/actions/workflows/pagespeed-insights.yml/badge.svg)](https://github.com/codary-tech/codary.tech/actions/workflows/pagespeed-insights.yml)
 
 > 🚀 Un blog técnico moderno construido con Astro, enfocado en rendimiento y experiencia de usuario.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/yacosta738/codary.tech)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/yacosta738/codary.tech)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/yacosta738/codary.tech?devcontainer_path=.devcontainer/basics/devcontainer.json)
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/codary-tech/codary.tech)
+[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/codary-tech/codary.tech)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/codary-tech/codary.tech?devcontainer_path=.devcontainer/basics/devcontainer.json)
 
 **Codary.tech** es el sitio web oficial basado en el [Astro Starter Kit: Basics](https://astro.build). Está construido con tecnologías modernas para ofrecer un sitio rápido, escalable y fácil de mantener.
 
 ## Tabla de Contenidos
 
 - [Codary.tech](#codarytech)
-  - [Tabla de Contenidos](#tabla-de-contenidos)
-  - [Descripción](#descripción)
-  - [Características](#características)
-  - [Tecnologías Utilizadas](#tecnologías-utilizadas)
-  - [Entorno de Desarrollo](#entorno-de-desarrollo)
-    - [Requisitos del Sistema](#requisitos-del-sistema)
-    - [Configuración del Editor](#configuración-del-editor)
-  - [Guía de Desarrollo](#guía-de-desarrollo)
-    - [Estructura de Branches](#estructura-de-branches)
-    - [Flujo de Trabajo](#flujo-de-trabajo)
-    - [Convenciones de Código](#convenciones-de-código)
-  - [Solución de Problemas](#solución-de-problemas)
-    - [Problemas Comunes](#problemas-comunes)
-    - [Logs y Debugging](#logs-y-debugging)
-  - [Requisitos Previos](#requisitos-previos)
-  - [Instalación](#instalación)
-  - [Scripts y Comandos](#scripts-y-comandos)
-  - [Despliegue](#despliegue)
-  - [Contribuciones](#contribuciones)
-    - [Proceso de Pull Request](#proceso-de-pull-request)
-    - [Guías de Estilo](#guías-de-estilo)
-  - [Licencia](#licencia)
-  - [Contacto](#contacto)
-  - [Contribuciones en el Repositorio](#contribuciones-en-el-repositorio)
+	- [Tabla de Contenidos](#tabla-de-contenidos)
+	- [Descripción](#descripción)
+	- [Características](#características)
+	- [Tecnologías Utilizadas](#tecnologías-utilizadas)
+	- [Entorno de Desarrollo](#entorno-de-desarrollo)
+		- [Requisitos del Sistema](#requisitos-del-sistema)
+		- [Configuración del Editor](#configuración-del-editor)
+	- [Guía de Desarrollo](#guía-de-desarrollo)
+		- [Estructura de Branches](#estructura-de-branches)
+		- [Flujo de Trabajo](#flujo-de-trabajo)
+		- [Convenciones de Código](#convenciones-de-código)
+	- [Solución de Problemas](#solución-de-problemas)
+		- [Problemas Comunes](#problemas-comunes)
+		- [Logs y Debugging](#logs-y-debugging)
+	- [Requisitos Previos](#requisitos-previos)
+	- [Instalación](#instalación)
+	- [Scripts y Comandos](#scripts-y-comandos)
+	- [Despliegue](#despliegue)
+	- [Contribuciones](#contribuciones)
+		- [Proceso de Pull Request](#proceso-de-pull-request)
+		- [Guías de Estilo](#guías-de-estilo)
+	- [Licencia](#licencia)
+	- [Contacto](#contacto)
+	- [Contribuciones en el Repositorio](#contribuciones-en-el-repositorio)
 
 ## Descripción
 
@@ -83,6 +83,7 @@ Este proyecto es el sitio web de **Codary.tech**. Basado en Astro, aprovecha lo 
 ### Configuración del Editor
 
 Recomendamos Visual Studio Code con las siguientes extensiones:
+
 - Biome
 - Astro
 - Tailwind CSS IntelliSense
@@ -98,11 +99,13 @@ Recomendamos Visual Studio Code con las siguientes extensiones:
 ### Flujo de Trabajo
 
 1. Crea una nueva rama desde `main`
+
    ```bash
    git checkout -b feature/nueva-funcionalidad main
    # o
    git checkout -b fix/bug-correccion main
    ```
+
 2. Desarrolla tu funcionalidad o corrección
 3. Ejecuta tests y linting
 4. Crea un Pull Request hacia `main`
@@ -118,11 +121,13 @@ Recomendamos Visual Studio Code con las siguientes extensiones:
 ### Problemas Comunes
 
 1. **Error: Cannot find module 'xyz'**
+
    ```bash
    pnpm install
    ```
 
 2. **Error de puerto en uso**
+
    ```bash
    lsof -i :4321
    kill -9 <PID>
@@ -143,7 +148,7 @@ Recomendamos Visual Studio Code con las siguientes extensiones:
 1. **Clona el repositorio:**
 
    ```bash
-   git clone https://github.com/yacosta738/codary.tech.git
+   git clone https://github.com/codary-tech/codary.tech.git
    ```
 
 2. **Accede al directorio del proyecto:**
@@ -175,6 +180,7 @@ Desde la raíz del proyecto, utiliza los siguientes comandos:
   ```bash
   pnpm dev
   ```
+
   Accede a `http://localhost:4321` para ver el sitio en funcionamiento.
 
 - **Construir el sitio para producción:**
@@ -231,21 +237,25 @@ Para desplegar el sitio en producción:
 ### Proceso de Pull Request
 
 1. **Fork y Clone**
+
    ```bash
    git clone https://github.com/your-username/codary.tech.git
    ```
 
 2. **Configura el Repositorio**
+
    ```bash
-   git remote add upstream https://github.com/yacosta738/codary.tech.git
+   git remote add upstream https://github.com/codary-tech/codary.tech.git
    ```
 
 3. **Crea una Rama**
+
    ```bash
    git checkout -b feature/amazing-feature
    ```
 
 4. **Commit y Push**
+
    ```bash
    git commit -m "feat: add amazing feature"
    git push origin feature/amazing-feature
