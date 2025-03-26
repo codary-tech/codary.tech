@@ -8,6 +8,7 @@ interface SignInRequest {
 export const POST: APIRoute = async ({ request }) => {
 	try {
 		const data = await request.json<SignInRequest>();
+
 		const { email } = data;
 
 		if (!email) {

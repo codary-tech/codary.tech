@@ -1,4 +1,5 @@
 import { supabase } from "@/lib/supabase";
+
 import type { AuthError, User } from "@supabase/supabase-js";
 import type { APIRoute } from "astro";
 
@@ -22,7 +23,6 @@ export const GET: APIRoute = async ({ request }) => {
 				refresh_token: "",
 			});
 		}
-
 		// Get the current user with proper typing
 		const { data, error }: GetUserResponse = await supabase.auth.getUser();
 
