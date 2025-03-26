@@ -14,7 +14,7 @@ try {
 			cookie: Astro.request.headers.get("cookie") || "",
 		},
 	});
-	const data = await response.json();
+	const data = await response.json<{ isLoggedIn: boolean }>();
 	isLoggedIn = data.isLoggedIn;
 
 	// Redirect to home if already logged in

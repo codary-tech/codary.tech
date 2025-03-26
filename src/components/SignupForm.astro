@@ -138,7 +138,10 @@ const finalButtonText = buttonText || t("signup.submit");
             body: JSON.stringify({ name, email }),
           });
 
-          const data = await response.json();
+          const data = await response.json<{
+						success: boolean;
+						message?: string;
+					}>();
 
           if (data.success) {
             // Hide form inputs and show success message

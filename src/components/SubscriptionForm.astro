@@ -159,7 +159,10 @@ const successButtonText =
 						body: JSON.stringify({ email }),
 					});
 
-					const data = await response.json();
+					const data = await response.json<{
+						success: boolean;
+						message: string;
+					}>();
 
 					if (data.success) {
 						// Hide form inputs and show success message

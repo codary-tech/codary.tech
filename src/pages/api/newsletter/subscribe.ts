@@ -1,9 +1,14 @@
 import { signInWithMagicLink } from "@/lib/supabase.helper";
 import type { APIRoute } from "astro";
 
+interface SubscribeRequest {
+	email?: string;
+}
+
 export const POST: APIRoute = async ({ request }) => {
 	try {
-		const data = await request.json();
+		const data = await request.json<SubscribeRequest>();
+
 		const { email } = data;
 
 		if (!email) {

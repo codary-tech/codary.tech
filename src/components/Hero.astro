@@ -12,7 +12,7 @@ try {
 			cookie: Astro.request.headers.get("cookie") || "",
 		},
 	});
-	const data = await response.json();
+	const data = await response.json<{ isLoggedIn: boolean }>();
 	isLoggedIn = data.isLoggedIn;
 } catch (error) {
 	console.error("Error fetching user:", error);
@@ -57,8 +57,7 @@ cn(
   document.addEventListener('DOMContentLoaded', async () => {
     try {
       const response = await fetch('/api/user');
-      const data = await response.json();
-
+      const data = await response.json<{ isLoggedIn: boolean }>();
       const subscriptionFormContainer = document.querySelector('#hero .flex.justify-center.items-center.mt-6');
 
       // If user is logged in and the form container is visible, hide it

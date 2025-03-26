@@ -15,7 +15,10 @@ try {
 		},
 	});
 	const data = await response.json();
-	isLoggedIn = data.isLoggedIn;
+	isLoggedIn =
+		data && typeof data === "object" && "isLoggedIn" in data
+			? Boolean(data.isLoggedIn)
+			: false;
 
 	// Redirect to home if already logged in
 	if (isLoggedIn) {
