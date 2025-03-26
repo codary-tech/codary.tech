@@ -1,5 +1,5 @@
 ---
-import { AHREFS_KEY } from "astro:env/client";
+import { AHREFS_KEY } from "astro:env/server";
 ---
 {AHREFS_KEY && (
 	<script is:inline src="https://analytics.ahrefs.com/analytics.js" data-key={AHREFS_KEY} async></script>
