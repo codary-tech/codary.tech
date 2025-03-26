@@ -1,4 +1,4 @@
-import { SUPABASE_ANON_KEY, SUPABASE_URL } from "astro:env/client";
+import { SUPABASE_ANON_KEY, SUPABASE_URL } from "astro:env/server";
 import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = SUPABASE_URL;
