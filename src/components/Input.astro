@@ -1,0 +1,44 @@
+---
+import { cn } from "@/lib/utils";
+import type { HTMLAttributes } from "astro/types";
+
+export interface Props extends HTMLAttributes<"input"> {
+	label?: string;
+	hideLabel?: boolean;
+}
+
+const {
+	id = `input-${crypto.randomUUID()}`,
+	type = "text",
+	class: className,
+	label = "Your email",
+	hideLabel = true,
+	...attrs
+} = Astro.props;
+---
+
+<label
+  for={id}
+  class={cn(
+    "block mb-2 text-sm font-medium text-main-light dark:text-main-dark",
+    hideLabel && "sr-only"
+  )}
+>
+  {label}
+</label>
+<input
+  type={type}
+  id={id}
+  class={cn(
+    "w-full h-10 rounded px-8 py-0",
+    "transition-colors duration-[0.35s] ease-[ease]",
+    "tracking-normal leading-0.5",
+    "opacity-0 animate-[toTopFadeIn_0.35s_ease_forwards] animation-delay-[0.25s] relative",
+    "dark:bg-main-dark/20 dark:hover:bg-main-dark/25 dark:focus:bg-main-dark/25 dark:text-white",
+    "dark:placeholder:text-white/70",
+    "bg-white text-main-dark border border-gray-300 dark:border-none",
+    "placeholder:text-[rgba(51,49,49,0.5)]",
+    className
+  )}
+  {...attrs}
+/>

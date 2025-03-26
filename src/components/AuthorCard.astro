@@ -1,0 +1,33 @@
+---
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+import AuthorSocials from "./AuthorSocials.astro";
+
+interface Social {
+	name: string;
+	url: string;
+	icon: string;
+}
+
+interface Props {
+	name: string;
+	email: string;
+	avatar: string;
+	location: string;
+	socials: Social[];
+}
+
+const { name, email, avatar, location, socials } = Astro.props;
+---
+
+<div class="flex items-center gap-3">
+    <Image src={avatar} alt={name} class="size-20 rounded-full" inferSize/>
+    <div class=" text-main-light dark:text-main-dark font-inter">
+        <h1 class="text-xl font-semibold tracking-tighter leading-[130%]">{name}</h1>
+        <div class="flex items-center gap-0.5 text-sm my-1">
+            <Icon name="tabler:map-pin" class="size-3" />
+            {location}
+        </div>
+        <AuthorSocials socials={socials} email={email} className="mt-2" />
+    </div>
+</div>

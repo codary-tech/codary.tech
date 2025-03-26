@@ -6,8 +6,8 @@ import {
 } from "astro:content";
 import { glob } from "astro/loaders";
 
-const blog = defineCollection({
-	loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: "./src/data/blog" }),
+const articles = defineCollection({
+	loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: "./src/data/articles" }),
 	schema: ({ image }: SchemaContext) =>
 		z.object({
 			title: z.string(),
@@ -21,6 +21,25 @@ const blog = defineCollection({
 			author: reference("authors"),
 			tags: z.array(reference("tags")),
 			category: reference("categories"),
+			draft: z.boolean().optional().default(false),
+			featured: z.boolean().optional().default(false),
+		}),
+});
+
+const newsletter = defineCollection({
+	loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: "./src/data/newsletter" }),
+	schema: ({ image }: SchemaContext) =>
+		z.object({
+			title: z.string(),
+			description: z.string(),
+			date: z.coerce.date(),
+			lastModified: z.coerce
+				.date()
+				.optional()
+				.default(() => new Date()),
+			cover: image().optional(),
+			author: reference("authors"),
+			tags: z.array(reference("tags")),
 			draft: z.boolean().optional().default(false),
 		}),
 });
@@ -47,7 +66,15 @@ const authors = defineCollection({
 		email: z.string(),
 		avatar: z.string(),
 		bio: z.string(),
+		location: z.string(),
+		socials: z.array(
+			z.object({
+				name: z.string(),
+				url: z.string(),
+				icon: z.string(),
+			}),
+		),
 	}),
 });
 
-export const collections = { blog, tags, categories, authors };
+export const collections = { articles, tags, categories, authors, newsletter };

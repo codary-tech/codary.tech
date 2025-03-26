@@ -1,0 +1,92 @@
+---
+import { cn } from "@/lib/utils";
+import { Icon } from "astro-icon/components";
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"button"> {
+	email: string;
+}
+
+const {
+	email,
+	class:
+		className = "text-main-light dark:text-main-dark opacity-80 hover:opacity-100 transition-opacity flex items-center cursor-pointer",
+	...attrs
+} = Astro.props;
+
+// Obfuscate email to prevent scraping - reverse and encode
+const obfuscatedEmail = email
+	? Buffer.from(email.split("").reverse().join("")).toString("base64")
+	: null;
+---
+
+{email && (
+    <>
+        <button
+            id="copy-email-btn"
+            data-email={obfuscatedEmail}
+            aria-label="Copy email address"
+            class={cn(className)}
+            {...attrs}
+        >
+            <Icon name="tabler:mail" class="size-5" />
+        </button>
+        <span id="email-tooltip" class="hidden absolute bg-gray-800 text-white text-xs rounded py-1 px-2 -mt-16 transition-opacity">
+            Email copied!
+        </span>
+    </>
+)}
+
+<script>
+    const copyEmailBtn = document.getElementById('copy-email-btn');
+    const emailTooltip = document.getElementById('email-tooltip');
+
+    // Helper function to decode base64 strings safely
+    function decodeBase64(base64String: string): string {
+        try {
+            // Convert base64 string to binary data
+            const binaryString = window.atob(base64String);
+            // Convert binary data to array of bytes
+            const bytes = new Uint8Array(binaryString.length);
+            for (let i = 0; i < binaryString.length; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            // Convert bytes to string
+            return new TextDecoder().decode(bytes);
+        } catch (e) {
+            console.error('Failed to decode base64 string:', e);
+            return '';
+        }
+    }
+
+    if (copyEmailBtn && emailTooltip) {
+        copyEmailBtn.addEventListener('click', async () => {
+            // Get the obfuscated email and decode it
+            const obfuscatedEmail = copyEmailBtn.getAttribute('data-email') || '';
+            const decodedEmail = decodeBase64(obfuscatedEmail);
+            const originalEmail = decodedEmail.split('').reverse().join('');
+
+            try {
+                // Copy to clipboard
+                await navigator.clipboard.writeText(originalEmail);
+
+                // Show tooltip
+                emailTooltip.classList.remove('hidden');
+                emailTooltip.classList.add('inline-block');
+
+                // Position tooltip near the button
+                const btnRect = copyEmailBtn.getBoundingClientRect();
+                emailTooltip.style.left = `${btnRect.left}px`;
+                emailTooltip.style.top = `${btnRect.top - 30}px`;
+
+                // Hide tooltip after 2 seconds
+                setTimeout(() => {
+                    emailTooltip.classList.add('hidden');
+                    emailTooltip.classList.remove('inline-block');
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy email:', err);
+            }
+        });
+    }
+</script>

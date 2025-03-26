@@ -3,13 +3,10 @@
 
 import type { Multilingual } from "@/i18n";
 
-export const SITE_TITLE: string | Multilingual = "Astro i18n Starter";
+export const SITE_TITLE: string | Multilingual = "Codary";
 
 export const SITE_DESCRIPTION: string | Multilingual = {
 	en: "A starter template for Astro with i18n support.",
-	ja: "i18n 対応の Astro スターターテンプレート。",
-	"zh-cn": "具有 i18n 支持的 Astro 入门模板。",
-	ar: "قالب بداية لـ Astro مع دعم i18n.",
 	es: "Una plantilla inicial para Astro con soporte i18n.",
 };
 
@@ -17,8 +14,14 @@ export const X_ACCOUNT: string | Multilingual = "@yacosta738";
 
 export const NOT_TRANSLATED_CAUTION: string | Multilingual = {
 	en: "This page is not available in your language.",
-	ja: "このページはご利用の言語でご覧いただけません。",
-	"zh-cn": "此页面不支持您的语言。",
-	ar: "هذه الصفحة غير متوفرة بلغتك.",
 	es: "Esta página no está disponible en tu idioma.",
 };
+
+// Base URLs
+const BASE_URL_LOCAL = "http://localhost:4321";
+const BASE_URL_PROD = "https://codary.tech";
+export const BASE_URL = import.meta.env.DEV ? BASE_URL_LOCAL : BASE_URL_PROD;
+
+// cookies identifiers
+export const ACCESS_TOKEN = "sb-access-token";
+export const REFRESH_TOKEN = "sb-refresh-token";

@@ -1,0 +1,79 @@
+---
+export const prerender = true;
+import { getCollection } from "astro:content";
+import AuthorWrapper from "@/components/AuthorWrapper.astro";
+import LatestPosts from "@/components/LatestPosts.astro";
+import PostsList from "@/components/PostsList.astro";
+import { type Lang, useTranslations } from "@/i18n";
+import Layout from "@/layouts/General.astro";
+import { getArticles } from "@/models/article/article.service";
+import { getNewsletters } from "@/models/newsletter";
+
+export async function getStaticPaths() {
+	const authors = await getCollection("authors");
+
+	return Promise.all(
+		authors.map(async (author) => {
+			const [lang, ...id] = author.id.split("/");
+			const authorId = id.join("/") || undefined;
+
+			// Use the new getArticles function with criteria
+			const articles = await getArticles({
+				lang: lang as Lang,
+				author: author.id,
+				includeDrafts: false,
+			});
+
+			// Sort by date (newest first)
+			const sortedArticles = articles.sort(
+				(a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+			);
+
+			const newsletter = await getNewsletters({
+				lang: lang as Lang,
+				author: author.id,
+				includeDrafts: false,
+			});
+
+			const sortedNewsletters = newsletter.sort(
+				(a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+			);
+
+			return {
+				params: { lang, id: authorId },
+				props: {
+					author,
+					authorArticles: sortedArticles,
+					newsletter: sortedNewsletters,
+				},
+			};
+		}),
+	);
+}
+
+const locale = Astro.currentLocale as Lang;
+const { author, authorArticles, newsletter } = Astro.props;
+const hasNewsletters = newsletter.length > 0;
+const hasArticles = authorArticles.length > 0;
+const t = useTranslations(locale);
+---
+
+<Layout title={author.data.name} description={author.data.bio}>
+    <div class="container mx-auto px-4 pt-24">
+        <AuthorWrapper {...author.data} />
+        <section class="p-8">
+					{
+						hasNewsletters && (
+							<LatestPosts title={t("newsletter.latest.title")} posts={newsletter} />
+						)
+					}
+					{ hasArticles && (
+            <PostsList
+                posts={authorArticles}
+								title={t({ en: "Posts", es: "Publicaciones" }) || "Posts"}
+                showLoadMore={true}
+            />)
+					}
+        </section>
+    </div>
+</Layout>

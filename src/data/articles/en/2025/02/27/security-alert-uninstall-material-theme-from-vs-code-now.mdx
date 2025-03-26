@@ -1,0 +1,56 @@
+---
+title: 'Security Alert: Uninstall Material Theme from VS Code Now'
+description: Microsoft has removed the Material Theme extension from VS Code due to security risks. Learn why and how to manually delete it to protect your system.
+date: 2025-02-27T16:06:00
+lastModified: 2025-02-27T16:05:00
+author: en/yuniel-acosta
+cover: /src/assets/images/7762799e-0693-4292-a309-f6a4eec57dc9.avif
+tags:
+  - en/hacking
+  - en/seguridad
+  - en/vs-code
+category: en/cybersecurity
+draft: false
+featured: false
+---
+Security Alert: Uninstall Material Theme from VS Code Immediately
+
+The popular **Material Theme** extension for **Visual Studio Code (VS Code)**, used by millions of developers to customize their editor interface, has been removed from the official extension Marketplace due to serious security concerns. Microsoft, the company behind VS Code, identified a potential **backdoor** in the extension's code, posing a significant risk to user data and system security. While Microsoft has automatically uninstalled the extension in many cases, users are advised to manually check and remove it if it remains installed.
+
+### What Happened to Material Theme?
+
+On February 25, 2025, Microsoft announced the removal of **Material Theme** and **Material Theme Icons** after detecting suspicious code in the `release-notes.js` file. This highly obfuscated code included references to usernames and passwords, raising suspicions of a **backdoor**—a vulnerability that could allow attackers unauthorized access to systems. As a result, the developer, Mattia Astorino (also known as Equinusocio), was banned from the Marketplace, and the extensions were taken down.
+
+![Material Theme Risk Score](/src/assets/images/47455.avif "Material Theme Risk Score")
+
+Despite Microsoft's automatic removal process, some users have reported that the extension still appears in their VS Code installations, raising concerns and the need for immediate action.
+
+### Developer’s Response
+
+Mattia Astorino defended his work, claiming that there was no malicious intent behind the flagged code. According to him, the issue originated from an old dependency on **Sanity.io**, which had been used since 2016 to display release notes. He argued that the problem could have been resolved by simply removing the dependency. Astorino criticized Microsoft for not contacting him before taking drastic measures. However, Microsoft insists that the action was necessary due to the "potential malicious intent" detected, as reported by _BleepingComputer_ [^1].
+
+### How to Protect Your System
+
+If you use **Material Theme** in VS Code, it is crucial to manually uninstall it to ensure the security of your development environment. Follow these steps:
+
+1. Open **VS Code**.
+2. Go to the **Extensions** section (Ctrl + Shift + X on Windows/Linux or Cmd + Shift + X on macOS).
+3. Search for "Material Theme" in the installed extensions list.
+4. Click the "Uninstall" button.
+5. Restart VS Code to complete the process.
+6. Check your extensions directory (e.g., `%USERPROFILE%\.vscode\extensions` on Windows) and remove any leftover files.
+
+Some users have reported that traces of the extension remain even after automatic removal, highlighting the importance of manual verification.
+
+### An Unexpected Twist
+
+Curiously, despite Microsoft’s claim of remote uninstallation, some users have reported that **Material Theme** persists or reinstalls itself. This unusual behavior has caused confusion and concern, reinforcing the need for manual intervention to ensure the issue is fully resolved.
+
+### Conclusion
+
+The **Material Theme** incident serves as a reminder of the importance of strict control over the extensions we install in our development environments. While the debate over the developer’s intentions remains open, the priority is clear: if you have this extension installed, remove it immediately. Protecting your data and system is crucial in a world where cybersecurity threats are ever-present.
+
+**Sources:**
+[^1]: [BleepingComputer: VSCode extensions with 9 million installs pulled over security risks](https://www.bleepingcomputer.com/news/security/vscode-extensions-with-9-million-installs-pulled-over-security-risks/)
+[^2]: [Hacker News: Material Theme has been pulled from VS Code's marketplace](https://news.ycombinator.com/item?id=43178831)
+[^3]: [SecurityOnline: Material Theme Banned Millions of VS Code Users Affected](https://securityonline.info/material-theme-banned-millions-of-vs-code-users-affected/)

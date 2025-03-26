@@ -1,0 +1,297 @@
+---
+import { type Lang, useTranslations } from "@/i18n";
+import { cn } from "@/lib/utils";
+import type { MenuItem } from "@/models/menu";
+import { Icon } from "astro-icon/components";
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"div"> {
+	menuItems?: MenuItem[];
+	ariaLabel?: string;
+	position?: "left" | "right";
+	menuWidth?: string;
+}
+
+const {
+	menuItems = [],
+	ariaLabel = "Menu",
+	position = "left",
+	menuWidth = "200px",
+	...attrs
+} = Astro.props;
+
+const currentLocale = Astro.currentLocale as Lang;
+const t = useTranslations(currentLocale);
+
+// Generate unique ID for this instance to support multiple menus on page
+const menuId = `dots-menu-${Math.random().toString(36).substring(2, 9)}`;
+---
+
+<div
+	class={cn("dots-menu-container group", attrs.class)}
+	id={`${menuId}-container`}
+	{...attrs}
+>
+	<button
+		type="button"
+		class="icon-button p-1 rounded-md hover:bg-square-light dark:hover:bg-square-dark focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark"
+		id={`${menuId}-trigger`}
+		aria-haspopup="true"
+		aria-expanded="false"
+		aria-controls={`${menuId}-content`}
+		aria-label={ariaLabel}
+	>
+		<Icon
+			name="tabler:dots"
+			class="size-5 block icon-horizontal text-main-light dark:text-main-dark"
+			id={`${menuId}-horizontal`}
+			aria-hidden="true"
+		/>
+		<Icon
+			name="tabler:dots-vertical"
+			class="size-5 hidden icon-vertical text-main-light dark:text-main-dark"
+			id={`${menuId}-vertical`}
+			aria-hidden="true"
+		/>
+	</button>
+
+	<!-- Hover bridge -->
+	<div class="hover-bridge"></div>
+
+	<!-- Menu content -->
+	<div
+		class={`menu ${position === "right" ? "right-0 left-auto" : "left-0 right-auto"}`}
+		id={`${menuId}-content`}
+		style={`min-width: ${menuWidth};`}
+		role="menu"
+	>
+		<ul
+			class="w-full bg-bg-light dark:bg-bg-dark border border-section-border-light dark:border-section-border-dark rounded-md shadow-lg z-50 py-1 overflow-hidden"
+		>
+			{menuItems.length > 0 ? (
+				menuItems.map((item: MenuItem, index) => {
+					const itemText = t(item.translationKey);
+					const accessibleName = itemText || `Menu item ${index + 1}`;
+					return (
+						<li role="none">
+							<a
+								href={item.href}
+								class="block w-full px-4 py-2 text-secondary-foreground-light hover:text-main-light hover:bg-square-light dark:text-secondary-foreground-dark dark:hover:text-main-dark dark:hover:bg-square-dark uppercase text-sm transition-colors duration-150"
+								role="menuitem"
+								tabindex="-1"
+								data-index={index}
+								aria-label={accessibleName}
+							>
+								{item.icon && (
+									<Icon name={item.icon} class="size-4 inline-block mr-2" aria-hidden="true" />
+								)}
+								{itemText}
+							</a>
+						</li>
+					);
+				})
+			) : (
+				<li class="px-4 py-2 text-sm text-secondary-foreground-light dark:text-secondary-foreground-dark italic">
+					No menu items
+				</li>
+			)}
+		</ul>
+	</div>
+</div>
+
+<style>
+	.dots-menu-container {
+		position: relative;
+		display: inline-block;
+	}
+
+	.icon-button {
+		cursor: pointer;
+		background: transparent;
+		border: none;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	/* Hover bridge creates a safe corridor to move mouse to menu */
+	.hover-bridge {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		width: 100%;
+		height: 8px;
+		background-color: transparent;
+		z-index: 49;
+	}
+
+	.menu {
+		visibility: hidden;
+		opacity: 0;
+		position: absolute;
+		top: calc(100% + 8px);
+		min-width: 160px;
+		transform-origin: top center;
+		transform: translateY(-10px);
+		transition: opacity 150ms ease-in-out, transform 150ms ease-in-out, visibility 0ms linear 150ms;
+		z-index: 50;
+	}
+
+	/* Icon toggle states based on hover */
+	@media (hover: hover) {
+		/* Include the hover bridge in the hover chain */
+		.dots-menu-container:hover .icon-horizontal,
+		.hover-bridge:hover ~ .icon-horizontal,
+		.menu:hover ~ .icon-horizontal {
+			display: none;
+		}
+
+		.dots-menu-container:hover .icon-vertical,
+		.hover-bridge:hover ~ .icon-vertical,
+		.menu:hover ~ .icon-vertical {
+			display: block;
+		}
+
+		/* Show menu when hovering icon, bridge, or the menu itself */
+		.dots-menu-container:hover .menu,
+		.hover-bridge:hover ~ .menu,
+		.menu:hover {
+			visibility: visible;
+			opacity: 1;
+			transform: translateY(0);
+			transition: opacity 150ms ease-in-out, transform 150ms ease-in-out, visibility 0ms linear 0ms;
+		}
+	}
+
+	/* Show menu when it has the 'show' class (for click interactions) */
+	.menu.show {
+		visibility: visible;
+		opacity: 1;
+		transform: translateY(0);
+		transition: opacity 150ms ease-in-out, transform 150ms ease-in-out, visibility 0ms linear 0ms;
+	}
+
+	/* Ensure the vertical icon is shown when menu is open */
+	.dots-menu-container.menu-open .icon-horizontal {
+		display: none !important;
+	}
+
+	.dots-menu-container.menu-open .icon-vertical {
+		display: block !important;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.menu {
+			transition: none;
+		}
+	}
+</style>
+
+<script is:inline define:vars={{ menuId }}>
+	document.addEventListener("DOMContentLoaded", () => {
+		const menuContainer = document.getElementById(`${menuId}-container`);
+		const menuTrigger = document.getElementById(`${menuId}-trigger`);
+		const menu = document.getElementById(`${menuId}-content`);
+
+		if (!menuContainer || !menuTrigger || !menu) return;
+
+		// Get menu items for keyboard navigation
+		const menuItems = menu.querySelectorAll('[role="menuitem"]');
+		let activeIndex = -1;
+
+		// Toggle menu function with proper TypeScript typing
+		function toggleMenu(show) {
+			// If no argument provided, toggle current state
+			const shouldShow = show === undefined ? !menu.classList.contains("show") : show;
+
+			if (shouldShow) {
+				menu.classList.add("show");
+				menuContainer.classList.add("menu-open");
+				menuTrigger.setAttribute("aria-expanded", "true");
+
+				// Focus first menu item
+				if (menuItems.length > 0) {
+					activeIndex = 0;
+					setTimeout(() => {
+						menuItems[0].focus();
+					}, 50);
+				}
+			} else {
+				menu.classList.remove("show");
+				menuContainer.classList.remove("menu-open");
+				menuTrigger.setAttribute("aria-expanded", "false");
+				activeIndex = -1;
+			}
+		}
+
+		// For all devices, implement click behavior
+		menuTrigger.addEventListener("click", (event) => {
+			event.stopPropagation();
+			toggleMenu();
+		});
+
+		// Close menu when clicking outside
+		document.addEventListener("click", (event) => {
+			const target = event.target;
+			if (menu.classList.contains("show") && !menuContainer.contains(target)) {
+				toggleMenu(false);
+			}
+		});
+
+		// Keyboard navigation
+		menuTrigger.addEventListener("keydown", (event) => {
+			if (event.key === "ArrowDown" || event.key === "Enter" || event.key === " ") {
+				event.preventDefault();
+				toggleMenu(true);
+			} else if (event.key === "Escape") {
+				toggleMenu(false);
+			}
+		});
+
+		menu.addEventListener("keydown", (event) => {
+			const totalItems = menuItems.length;
+
+			if (totalItems === 0) return;
+
+			if (event.key === "ArrowDown") {
+				event.preventDefault();
+				activeIndex = (activeIndex + 1) % totalItems;
+				menuItems[activeIndex].focus();
+			} else if (event.key === "ArrowUp") {
+				event.preventDefault();
+				activeIndex = (activeIndex - 1 + totalItems) % totalItems;
+				menuItems[activeIndex].focus();
+			} else if (event.key === "Home") {
+				event.preventDefault();
+				activeIndex = 0;
+				menuItems[activeIndex].focus();
+			} else if (event.key === "End") {
+				event.preventDefault();
+				activeIndex = totalItems - 1;
+				menuItems[activeIndex].focus();
+			} else if (event.key === "Escape") {
+				event.preventDefault();
+				toggleMenu(false);
+				menuTrigger.focus();
+			} else if (event.key === "Tab" && !event.shiftKey && activeIndex === totalItems - 1) {
+				toggleMenu(false);
+			} else if (event.key === "Tab" && event.shiftKey && activeIndex === 0) {
+				toggleMenu(false);
+			}
+		});
+
+		// Enable menu items to be clickable
+		menuItems.forEach((item) => {
+			item.addEventListener("click", () => {
+				toggleMenu(false);
+			});
+		});
+
+		// Handle window resize - close menu if window size changes
+		window.addEventListener("resize", () => {
+			if (menu.classList.contains("show")) {
+				toggleMenu(false);
+			}
+		});
+	});
+</script>

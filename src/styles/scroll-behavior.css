@@ -1,0 +1,44 @@
+/* Reference the main CSS file for access to Tailwind utilities */
+@reference "../styles/global.css";
+
+/* Modern CSS for scroll behavior
+   This can be imported in your Base layout */
+
+@supports (animation-timeline: scroll()) {
+	@keyframes reveal-header {
+		from {
+			opacity: 0;
+			transform: translateY(-100%);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	@keyframes hide-header {
+		from {
+			opacity: 1;
+			transform: translateY(0);
+		}
+		to {
+			opacity: 0;
+			transform: translateY(-100%);
+		}
+	}
+
+	html {
+		scroll-timeline: --page-scroll block;
+	}
+
+	/* This would work with View Transitions API, but we're keeping JS for now
+     since this is experimental and needs fallbacks */
+	/*
+  header {
+    view-timeline: --header-timeline block;
+    animation: auto reveal-header linear;
+    animation-timeline: --header-timeline;
+    animation-range: entry 0% to entry 10%;
+  }
+  */
+}

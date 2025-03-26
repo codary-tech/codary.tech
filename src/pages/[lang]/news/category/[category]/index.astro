@@ -1,0 +1,152 @@
+---
+export const prerender = true;
+import GridContainer from "@/components/GridContainer.astro";
+import PageHeadline from "@/components/PageHeadline.astro";
+import Pagination from "@/components/Pagination.astro";
+import { LOCALES, type Lang, useTranslations } from "@/i18n";
+import Layout from "@/layouts/General.astro";
+import { getArticles } from "@/models/article";
+import type Category from "@/models/category/category.model";
+import { getCategoryById } from "@/models/category/category.service";
+import { cleanEntityId } from "@/utils/collection.entity";
+
+export async function getStaticPaths() {
+	// Get all articles
+	const allArticles = await getArticles({ includeDrafts: false });
+
+	// Create paths for each language and category
+	const paths = [];
+
+	// Collect all unique category IDs from articles
+	const uniqueCategoryIds = new Set<string>();
+	for (const article of allArticles) {
+		if (article.category) {
+			const categoryId =
+				typeof article.category === "string"
+					? article.category
+					: article.category.id;
+			uniqueCategoryIds.add(categoryId);
+		}
+	}
+
+	// Generate paths for all supported languages and categories
+	for (const lang of Object.keys(LOCALES)) {
+		for (const categoryId of uniqueCategoryIds) {
+			// Only process categories for the current language
+			if (!categoryId.startsWith(`${lang}/`)) continue;
+
+			// Try to get category data from the category service
+			let categoryObject: Category;
+			try {
+				const resolvedCategory = await getCategoryById(categoryId);
+				if (!resolvedCategory) {
+					// Create a basic category object if not found in the collection
+					categoryObject = {
+						id: categoryId,
+						title: categoryId.split("/").pop() || categoryId,
+					};
+					console.log(`⚠️ Created fallback category object for: ${categoryId}`);
+				} else {
+					categoryObject = resolvedCategory;
+				}
+			} catch (error) {
+				console.error(`❌ Error getting category ${categoryId}:`, error);
+				// Create a fallback category to prevent build failure
+				categoryObject = {
+					id: categoryId,
+					title: categoryId.split("/").pop() || categoryId,
+				};
+			}
+
+			// Filter articles for this language and category
+			const categorizedArticles = allArticles
+				.filter((article) => {
+					if (article.id.split("/")[0] !== lang) return false;
+					if (!article.category) return false;
+
+					const articleCategoryId =
+						typeof article.category === "string"
+							? article.category
+							: article.category.id;
+					return articleCategoryId === categoryId;
+				})
+				.sort(
+					(a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf(),
+				);
+
+			// Define pagination config
+			const postsPerPage = 16;
+			// Calculate total pages
+			const totalPages = Math.ceil(categorizedArticles.length / postsPerPage);
+
+			// First page posts
+			const pagePosts = categorizedArticles.slice(0, postsPerPage);
+
+			// Skip if no posts for this category
+			if (pagePosts.length === 0) {
+				console.log(`ℹ️ No posts found for category: ${categoryId}`);
+				continue;
+			}
+
+			paths.push({
+				params: {
+					lang,
+					category: cleanEntityId(categoryId),
+				},
+				props: {
+					postsPerPage,
+					page: {
+						data: pagePosts,
+						currentPage: 1,
+						lastPage: totalPages,
+						category: categoryObject,
+					},
+				},
+			});
+		}
+	}
+	return paths;
+}
+
+// Get current locale and category from params for rendering
+const { lang, category } = Astro.params;
+const currentLocale = lang as Lang;
+const t = useTranslations(currentLocale);
+
+const title = t({
+	en: `Articles in category "${category}"`,
+	es: `Artículos en la categoría "${category}"`,
+});
+
+const basePath = `/${currentLocale}/category/${category}/page`;
+const indexUrl = `/${currentLocale}/category/${category}`;
+const { page, postsPerPage } = Astro.props;
+---
+
+<Layout title={title}>
+	<div class="container mx-auto px-4 pt-24">
+		<PageHeadline title={title}>
+			<p class="text-xl text-main-light dark:text-main-dark">
+				{
+					t({
+						en: `Browse all our content in the ${category} category`,
+						es: `Navega por todo nuestro contenido en la categoría ${category}`,
+					})
+				}
+			</p>
+		</PageHeadline>
+		<GridContainer posts={page.data.slice(0, postsPerPage)} />
+
+		{page.lastPage > 1 && (
+			<Pagination
+				currentPage={1}
+				lastPage={page.lastPage}
+				urlPrev={null}
+				urlNext={page.lastPage > 1 ? `${basePath}/2` : null}
+				basePath={basePath}
+				maxDisplayedPages={5}
+				firstPageUrl={indexUrl}
+			/>
+		)}
+	</div>
+</Layout>

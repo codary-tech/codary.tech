@@ -1,0 +1,46 @@
+---
+export const prerender = true;
+import { render } from "astro:content";
+import OptimizedPicture from "@/components/OptimizedPicture.astro";
+import PostFooter from "@/components/PostFooter.astro";
+import PostHeader from "@/components/PostHeader.astro";
+import Layout from "@/layouts/Article.astro";
+import { getNewsletters } from "@/models/newsletter";
+
+export async function getStaticPaths() {
+	const newsletters = await getNewsletters();
+
+	return newsletters.map((newsletter) => {
+		const [lang, ...id] = newsletter.id.split("/");
+		return {
+			params: { lang, id: id.join("/") || undefined },
+			props: newsletter,
+		};
+	});
+}
+
+const newsletter = Astro.props;
+
+const { Content, remarkPluginFrontmatter } = await render(newsletter.entry);
+---
+
+<Layout
+	{...newsletter}
+	url={Astro.request.url}
+	minutesRead={remarkPluginFrontmatter.minutesRead}
+>
+	<div class="container mx-auto px-4">
+		<PostHeader post={newsletter} readingTime={remarkPluginFrontmatter.minutesRead} />
+		<div class="mx-auto prose lg:prose-xl dark:prose-invert">
+			{
+				newsletter.cover && (
+					<OptimizedPicture src={newsletter.cover} alt={newsletter.title} loading="eager" />
+				)
+			}
+			<Content />
+			<PostFooter post={newsletter} />
+		</div>
+
+		<!-- Comment Area -->
+	</div>
+</Layout>

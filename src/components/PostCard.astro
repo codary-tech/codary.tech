@@ -1,0 +1,145 @@
+---
+import { type Lang, useTranslations } from "@/i18n";
+import type Post from "@/models/post/post.model";
+import type { ContentType } from "@/models/post/post.model";
+import { cleanEntityId } from "@/utils/collection.entity";
+import ByAuthor from "./ByAuthor.astro";
+const currentLocale = Astro.currentLocale as Lang;
+const t = useTranslations(currentLocale);
+interface Props extends Post {
+	type?: ContentType;
+	animationDelay?: number;
+}
+
+const {
+	id,
+	date,
+	title,
+	description,
+	author,
+	tags,
+	type = "newsletter",
+	animationDelay = 0,
+} = Astro.props;
+
+// Format month according to locale
+const formatMonthForDisplay = (date: Date) => {
+	return new Intl.DateTimeFormat(currentLocale, { month: "long" }).format(date);
+};
+
+const contentLink = `/${currentLocale}/${type}/${cleanEntityId(id).toLowerCase()}/`;
+---
+
+<article
+  class="flex items-start gap-6 text-main-light dark:text-main-dark pb-14 relative opacity-0 post-card-animation"
+  style={`--i: ${animationDelay}`}>
+  <div class="hidden md:flex w-35 h-35 items-center justify-center flex-col text-center flex-shrink-0 overflow-hidden relative bg-square-light dark:bg-square-dark rounded font-inter text-sm leading-[140%] tracking-widest uppercase p-3">
+      <time datetime={date.toISOString().split('T')[0]} class="flex flex-col items-center">
+          <span class="font-inter text-7xl leading-[100%] tracking-[-0.04em] -mt-1.5">{date.getDate()}</span>
+          <span class="text-post-card-date-light dark:text-post-card-date-dark text-[9px]">
+            {formatMonthForDisplay(date)}, {date.getFullYear()}
+          </span>
+      </time>
+  </div>
+  <div class="flex-1">
+      <h3 class="font-inter text-3xl font-semibold leading-[124%] tracking-[-0.04em] mb-3 max-w-[470px] w-full line-clamp-3">
+          <a
+            href={contentLink}
+            class="transition-colors hover:text-secondary-foreground-light dark:hover:text-secondary-foreground-dark focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
+            aria-label={`${t("post.aria.title")}: ${title}`}
+          >
+            {title}
+          </a>
+      </h3>
+      <p class="font-inter text-lg leading-[140%] tracking-normal mb-3 max-w-[430px] w-full line-clamp-4">{description}</p>
+      <div class="flex items-center flex-wrap gap-2">
+					<ByAuthor author={author}/>
+          <div class="flex items-center flex-wrap gap-2">
+              {tags?.map((tag) => (
+                <a
+                  class="w-fit inline text-[9px] tracking-widest uppercase transition-colors hover:opacity-80 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
+                  href={`/${currentLocale}/${type}/tag/${cleanEntityId(tag.id).toLowerCase()}/`}
+                  aria-label={t("post.aria.tag", { tag: tag.title })}
+                >
+                  {tag.title}
+                </a>
+              ))}
+          </div>
+      </div>
+  </div>
+</article>
+
+<style>
+  /* Estilos solo para las partes complejas */
+  .post-card-animation {
+    animation: toTopFadeIn 0.4s ease forwards;
+    animation-delay: calc(var(--i) * 0.12s);
+  }
+
+  article:nth-of-type(even) {
+    padding-left: 0.75rem;
+  }
+
+  article:nth-of-type(odd) {
+    padding-right: 0.75rem;
+  }
+
+  /* Línea divisoria en pantallas pequeñas (después de cada elemento) */
+  @media (max-width: 767px) {
+    article:not(:first-child) {
+      position: relative;
+      padding-top: 3.5rem;
+    }
+
+    article:not(:first-child)::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 1px;
+      background-color: var(--color-section-border-light);
+    }
+
+    :global(.dark) article:not(:first-child)::before {
+      background-color: var(--color-section-border-dark);
+    }
+  }
+
+  /* Línea divisoria en pantallas grandes (después de cada 2 elementos) */
+  @media (min-width: 768px) {
+    article:nth-of-type(2n+3) {
+      position: relative;
+      padding-top: 3.5rem;
+    }
+
+    article:nth-of-type(2n+3)::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 1px;
+      background-color: var(--color-section-border-light);
+    }
+
+    :global(.dark) article:nth-of-type(2n+3)::before {
+      background-color: var(--color-section-border-dark);
+    }
+
+    article:nth-of-type(n+3) {
+      padding-top: 3.5rem;
+    }
+  }
+
+  @keyframes toTopFadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

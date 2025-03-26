@@ -1,0 +1,37 @@
+---
+import { type Lang, useTranslations } from "@/i18n";
+import { cn } from "@/lib/utils";
+import { getArticles } from "@/models/article";
+import type Post from "@/models/post/post.model";
+import { parseEntityId } from "@/utils/collection.entity";
+import type { HTMLAttributes } from "astro/types";
+import PostsList from "./PostsList.astro";
+
+const currentLanguage = Astro.currentLocale as Lang;
+const t = useTranslations(currentLanguage);
+
+interface Props extends HTMLAttributes<"section"> {
+	title?: string;
+	showLoadMore?: boolean;
+	posts?: Post[];
+}
+async function loadArticles() {
+	const posts = await getArticles();
+	return posts.filter(
+		(post) => parseEntityId(post.id).lang === currentLanguage,
+	);
+}
+
+const {
+	title = t("post.latest.title"),
+	showLoadMore = true,
+	posts = await loadArticles(),
+	...attrs
+} = Astro.props;
+---
+
+<section class={cn("py-10", attrs.class)} {...attrs}>
+	<div class="container mx-auto px-4">
+		<PostsList posts={posts} title={title} showLoadMore={showLoadMore} />
+	</div>
+</section>

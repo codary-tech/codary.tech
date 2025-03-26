@@ -1,0 +1,164 @@
+---
+export const prerender = true;
+import GridContainer from "@/components/GridContainer.astro";
+import PageHeadline from "@/components/PageHeadline.astro";
+import Pagination from "@/components/Pagination.astro";
+import { LOCALES, type Lang, useTranslations } from "@/i18n";
+import Layout from "@/layouts/General.astro";
+import { getArticles } from "@/models/article";
+import type Category from "@/models/category/category.model";
+import { getCategoryById } from "@/models/category/category.service";
+import { cleanEntityId } from "@/utils/collection.entity";
+
+export async function getStaticPaths() {
+	// Get all articles
+	const allArticles = await getArticles({ includeDrafts: false });
+
+	// Create paths for each language and category
+	const paths = [];
+
+	// Collect all unique category IDs from articles
+	const uniqueCategoryIds = new Set<string>();
+	for (const article of allArticles) {
+		if (article.category) {
+			const categoryId =
+				typeof article.category === "string"
+					? article.category
+					: article.category.id;
+			uniqueCategoryIds.add(categoryId);
+		}
+	}
+
+	// Define posts per page - MATCH THE VALUE FROM index.astro
+	const postsPerPage = 16;
+
+	// Generate paths for all supported languages and categories
+	for (const lang of Object.keys(LOCALES)) {
+		for (const categoryId of uniqueCategoryIds) {
+			// Only process categories for the current language
+			if (!categoryId.startsWith(`${lang}/`)) continue;
+
+			// Clean the category ID (remove language prefix)
+			const cleanedCategoryId = cleanEntityId(categoryId);
+
+			// Try to get category data from the category service
+			let categoryObject: Category;
+			try {
+				const resolvedCategory = await getCategoryById(categoryId);
+				if (!resolvedCategory) {
+					// Create a basic category object if not found in the collection
+					categoryObject = {
+						id: categoryId,
+						title: categoryId.split("/").pop() || categoryId,
+					};
+					console.log(
+						`⚠️ [Pagination] Created fallback category object for: ${categoryId}`,
+					);
+				} else {
+					categoryObject = resolvedCategory;
+				}
+			} catch (error) {
+				console.error(
+					`❌ [Pagination] Error getting category ${categoryId}:`,
+					error,
+				);
+				// Create a fallback category to prevent build failure
+				categoryObject = {
+					id: categoryId,
+					title: categoryId.split("/").pop() || categoryId,
+				};
+			}
+
+			// Filter articles for this language and category
+			const categorizedArticles = allArticles
+				.filter((article) => {
+					if (article.id.split("/")[0] !== lang) return false;
+					if (!article.category) return false;
+
+					const articleCategoryId =
+						typeof article.category === "string"
+							? article.category
+							: article.category.id;
+					return articleCategoryId === categoryId;
+				})
+				.sort(
+					(a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf(),
+				);
+
+			// Calculate pagination
+			const totalPages = Math.ceil(categorizedArticles.length / postsPerPage);
+
+			// Only generate pages starting from page 2 (page 1 is handled by index.astro)
+			for (let i = 2; i <= totalPages; i++) {
+				const pagePosts = categorizedArticles.slice(
+					(i - 1) * postsPerPage,
+					i * postsPerPage,
+				);
+
+				// Skip if no posts for this page
+				if (pagePosts.length === 0) {
+					console.log(`⚠️ No posts for ${categoryId} on page ${i}`);
+					continue;
+				}
+
+				paths.push({
+					params: {
+						lang,
+						category: cleanedCategoryId,
+						page: i.toString(),
+					},
+					props: {
+						postsPerPage,
+						page: {
+							data: pagePosts,
+							currentPage: i,
+							lastPage: totalPages,
+							category: categoryObject,
+						},
+					},
+				});
+			}
+		}
+	}
+	return paths;
+}
+
+// Get current locale and category from params for rendering
+const { lang, category, page: pageParam } = Astro.params;
+const currentLocale = lang as Lang;
+const t = useTranslations(currentLocale);
+
+const title = t({
+	en: `Articles in category "${category}" - Page ${pageParam}`,
+	es: `Artículos en la categoría "${category}" - Página ${pageParam}`,
+});
+const basePath = `/${currentLocale}/category/${category}/page`;
+const indexUrl = `/${currentLocale}/category/${category}`;
+const { page } = Astro.props;
+---
+
+<Layout title={title}>
+	<div class="container mx-auto px-4 pt-24">
+		<PageHeadline title={title}>
+			<p class="text-xl text-main-light dark:text-main-dark">
+				{
+					t({
+						en: `Browse all our content in the ${category} category`,
+						es: `Navega por todo nuestro contenido en la categoría ${category}`,
+					})
+				}
+			</p>
+		</PageHeadline>
+		<GridContainer posts={page.data} />
+
+		<Pagination
+			currentPage={page.currentPage}
+			lastPage={page.lastPage}
+			urlPrev={page.currentPage > 2 ? `${basePath}/${page.currentPage - 1}` : indexUrl}
+			urlNext={page.currentPage < page.lastPage ? `${basePath}/${page.currentPage + 1}` : null}
+			basePath={basePath}
+			maxDisplayedPages={5}
+			firstPageUrl={indexUrl}
+		/>
+	</div>
+</Layout>

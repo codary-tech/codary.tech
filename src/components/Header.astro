@@ -1,185 +1,192 @@
 ---
-// Header & Navigation UI displayed on each page.
-
-import { Image } from "astro:assets";
-import { getRelativeLocaleUrl } from "astro:i18n";
-import LocaleSelect from "@/components/i18n/LocaleSelect.astro";
 import { type Lang, useTranslations } from "@/i18n";
+import { cn } from "@/lib/utils";
+import {
+	type AuthInfo,
+	dropdownMenuItems,
+	filterMenuItems,
+	mainMenuItems,
+} from "@/models/menu";
+import { Icon } from "astro-icon/components";
+import type { HTMLAttributes } from "astro/types";
+import IconButton from "./IconButton.astro";
+import Link from "./Link.astro";
+import Logo from "./Logo.astro";
+import Navigation from "./Navigation.astro";
+import SearchButton from "./SearchButton.astro";
+import ThemeToggle from "./ThemeToggle.astro";
+
 const t = useTranslations(Astro.currentLocale as Lang);
 
-import AstroImage from "@/assets/astro-logo.svg";
+interface Props extends HTMLAttributes<"header"> {
+	// Add any additional props if needed
+}
+const { ...attrs } = Astro.props as Props;
 
-const locale = Astro.currentLocale as Lang;
+// Determine if the user is logged in
+let isLoggedIn = false;
 
-const isActive = (path: string) =>
-	getRelativeLocaleUrl(locale, path) === Astro.url.pathname;
+// Attempt to get user data from server-side if possible
+try {
+	const response = await fetch(`${Astro.url.origin}/api/user`, {
+		headers: {
+			cookie: Astro.request.headers.get("cookie") || "",
+		},
+	});
+	const data = await response.json();
+	isLoggedIn = data.isLoggedIn;
+} catch (error) {
+	console.error("Error fetching user:", error);
+}
+
+// Filter menu items based on conditions
+const filteredMainMenuItems = filterMenuItems(mainMenuItems);
+const filteredDropdownMenuItems = filterMenuItems(dropdownMenuItems);
+
+// Authentication info to pass to Navigation component for mobile menu
+const authInfo: AuthInfo = {
+	isLoggedIn,
+	authPath: isLoggedIn ? "/account" : "/signin",
+	authText: isLoggedIn ? "header.account" : "header.auth",
+};
 ---
 
-<header class="l-header">
-  <h1 dir="ltr">
-    <a href={getRelativeLocaleUrl(locale, "/")}>
-      <Image src={AstroImage} alt="Astro" />
-      i18n Starter
-    </a>
-  </h1>
-
-  <LocaleSelect />
-
-  <nav class="l-content">
-    <ul>
-      <li>
-        <a
-          href={getRelativeLocaleUrl(locale, "/setup")}
-          class={isActive("/setup") ? "active" : null}
+<header id="header"
+ class={cn(
+	"fixed top-0 left-0 w-full z-50 transition-all duration-300 ease-in-out",
+	"border-b border-b-secondary-foreground-light transition-all duration-400 ease-in-out [transition-property:top,background-color,border-bottom-color]",
+ )}
+ {...attrs}
+ >
+    <div class="container mx-auto px-4 flex items-center h-20 relative">
+      <!-- Header Identity - Logo and Site Title -->
+      <div class="flex items-center mr-10">
+        <IconButton
+          class="md:hidden mr-4"
+          id="mobile-menu-button"
+          aria-label={t("header.menu")}
         >
-          {t({ ja: "設定", en: "Setup", "zh-cn": "设置", ar: "إعداد" })}
-        </a>
-      </li>
+          <Icon name="tabler:menu-2" class="size-6 text-main-light dark:text-main-dark" />
+        </IconButton>
 
-      <li>
-        <a
-          href={getRelativeLocaleUrl(locale, "/page")}
-          class={isActive("/page") ? "active" : null}
-        >
-          {
-            t({
-              ja: "ページの追加",
-              en: "Add Page",
-              "zh-cn": "添加页面",
-              ar: "إضافة صفحة",
-            })
+        <Logo />
+      </div>
+
+      <!-- Using the Navigation component with filtered menu items -->
+      <Navigation
+        mainItems={filteredMainMenuItems}
+        dropdownItems={filteredDropdownMenuItems}
+        authInfo={authInfo}
+      />
+
+      <!-- Header Actions -->
+      <div class="flex items-center justify-center space-x-4 ml-auto">
+        <SearchButton id="search-button" />
+        <ThemeToggle />
+
+        <!-- Main button with special colored-hero styles applied via JS -->
+        <Link href={isLoggedIn ? "/account" : "/signin"} class="md:flex hidden">
+          <span>{t(isLoggedIn ? "header.account" : "header.auth")}</span>
+          <Icon name="tabler:chevron-right" class="size-5" />
+        </Link>
+      </div>
+    </div>
+
+  </header>
+
+  <style>
+    /* Reference main styles to access Tailwind's theme, utilities, and variants */
+    @reference "../styles/global.css";
+
+    /* Header states */
+    header {
+      background-color: transparent;
+      transform: translateY(0);
+    }
+
+    header.scrolled {
+      @apply bg-bg-light dark:bg-bg-dark border-b border-section-border-light/12 dark:border-section-border-dark;
+    }
+
+    /* Alternative approach using CSS variables */
+    header.scrolled #site-title,
+    header.scrolled nav a,
+    header.scrolled button:not(.bg-primary-light):not(.bg-primary-dark) {
+      color: var(--colors-main-light);
+    }
+
+    :global(.dark) header.scrolled #site-title,
+    :global(.dark) header.scrolled nav a,
+    :global(.dark) header.scrolled button:not(.bg-primary-light):not(.bg-primary-dark) {
+      color: var(--colors-main-dark);
+    }
+
+    header.scrolled nav a:hover {
+      @apply text-secondary-foreground-light dark:text-secondary-foreground-dark;
+    }
+
+    header.hide {
+      transform: translateY(-100%);
+    }
+  </style>
+
+  <script>
+    // Handle colored-hero classes for button styling
+    const header = document.getElementById('header');
+    const heroSection = document.querySelector('.hero-section');
+
+    // Check if we're on a page with a colored hero
+    if (heroSection && heroSection.classList.contains('colored-hero')) {
+      document.body.classList.add('colored-hero');
+    }
+
+    // Header scroll behavior
+    let lastScrollY = 0;
+
+    const handleHeaderVisibility = () => {
+      if (window.scrollY === 0) {
+        header?.classList.remove("hide", "scrolled");
+      } else if (window.scrollY > 50) {
+        if (window.scrollY < lastScrollY) {
+          header?.classList.remove("hide");
+          header?.classList.add("scrolled");
+        } else {
+          header?.classList.add("hide");
+        }
+      }
+      lastScrollY = window.scrollY;
+    };
+
+    // Initialize header state
+    handleHeaderVisibility();
+
+    // Use passive event listener for better performance
+    window.addEventListener("scroll", handleHeaderVisibility, { passive: true });
+
+    // Check if user is logged in on client-side as well
+    async function checkUserStatus() {
+      try {
+        const response = await fetch('/api/user');
+        const data = await response.json();
+
+        // Update the auth button if needed
+        if (data.isLoggedIn) {
+          const authLink = document.querySelector('a[href="/signin"]');
+          if (authLink) {
+            authLink.setAttribute('href', '/account');
+            const textSpan = authLink.querySelector('span');
+            if (textSpan) {
+              // Translate based on current language
+              const currentLang = document.documentElement.lang || 'en';
+              textSpan.textContent = currentLang === 'es' ? 'Cuenta' : 'Account';
+            }
           }
-        </a>
-      </li>
-
-      <li>
-        <a
-          href={getRelativeLocaleUrl(locale, "/feature")}
-          class={isActive("/feature") ? "active" : null}
-        >
-          {
-            t({
-              ja: "その他の機能",
-              en: "Features",
-              "zh-cn": "特性",
-              ar: "الميزات",
-            })
-          }
-        </a>
-      </li>
-
-      <li class="en-only">
-        <a
-          href={getRelativeLocaleUrl(locale, "/monolingual")}
-          class={isActive("/monolingual") ? "active" : null}
-        >
-          Monolingual
-        </a>
-      </li>
-
-      <li>
-        <a
-          href={getRelativeLocaleUrl(locale, "/blog")}
-          class={isActive("/blog") ? "active" : null}
-        >
-          {t({ ja: "ブログ", en: "Blog", "zh-cn": "博客", ar: "مدونة" })}
-        </a>
-      </li>
-
-      <li>
-        <a
-          href="https://github.com/yacosta738/astro-cms"
-          target="_blank"
-        >
-          GitHub
-          <span class="material-icons-sharp dir">open_in_new</span>
-        </a>
-      </li>
-    </ul>
-  </nav>
-</header>
-
-<style>
-  * {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  header {
-    display: grid;
-    place-items: center;
-    gap: var(--sp-s);
-  }
-
-  h1 {
-    margin-block-start: var(--sp-l);
-    margin-inline-start: -0.5em;
-    font-size: 40px;
-    font-family: var(--english-font);
-    font-weight: 900;
-    @media (width < 480px) {
-      font-size: 28px;
-    }
-
-    a {
-      display: flex;
-      align-items: center;
-    }
-    img {
-      width: 6em;
-      position: relative;
-      inset: 0.1em;
-    }
-  }
-
-  nav {
-    display: flex;
-    align-items: center;
-    gap: var(--sp-m);
-  }
-  ul {
-    display: flex;
-    gap: var(--sp-s);
-    margin-block-start: var(--sp-s);
-
-    .en-only {
-      position: relative;
-      &:not(:lang(en))::before {
-        content: "EN";
-        position: absolute;
-        inset: -0.4em -0.6em auto auto;
-        font-size: 0.8em;
-        font-weight: 900;
-        color: var(--color-main);
-        opacity: 0.6;
+        }
+      } catch (error) {
+        console.error("Error checking user status:", error);
       }
     }
 
-    a {
-      font-size: 1.05rem;
-      display: block;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      padding-block: 0.2em;
-      padding-inline: 0.4em;
-      border-radius: 4px;
-      &:hover,
-      &:active {
-        background-color: color-mix(
-          in srgb,
-          var(--color-theme) 5%,
-          transparent
-        );
-      }
-      &.active {
-        pointer-events: none;
-        color: var(--color-theme);
-      }
-      .material-icons-sharp {
-        opacity: 0.6;
-        margin-inline-start: -0.2em;
-        font-size: 0.9em;
-      }
-    }
-  }
-</style>
+    // Run on load
+    checkUserStatus();
+  </script>

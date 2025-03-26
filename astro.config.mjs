@@ -1,12 +1,23 @@
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
-import { defineConfig } from "astro/config";
-import { DEFAULT_LOCALE_SETTING, LOCALES_SETTING } from "./src/locales";
-import cloudflare from '@astrojs/cloudflare';
+import icon from "astro-icon";
+import pagefind from "astro-pagefind";
+import { defineConfig, envField, passthroughImageService } from "astro/config";
+import { DEFAULT_LOCALE_SETTING, LOCALES_SETTING } from "./src/i18n/locales";
+
+import tailwindcss from "@tailwindcss/vite";
+
+import cloudflare from "@astrojs/cloudflare";
+import { BASE_URL } from "./src/consts.ts";
+import { remarkReadingTime } from "./src/utils/remark-reading-time.mjs";
+
+import partytown from "@astrojs/partytown";
 
 // https://astro.build/config
 export default defineConfig({
-	site: "https://astro-cms-dpv.pages.dev", // Set your site's URL
+	site: BASE_URL,
+	compressHTML: true,
+	output: "server",
 	adapter: cloudflare({
 		platformProxy: {
 		  enabled: true
@@ -20,8 +31,43 @@ export default defineConfig({
 			redirectToDefaultLocale: false,
 		},
 	},
+
+	env: {
+		schema: {
+			AHREFS_KEY: envField.string({
+				context: "client",
+				access: "public",
+			}),
+			SUPABASE_URL: envField.string({
+				context: "client",
+				access: "public",
+			}),
+			SUPABASE_ANON_KEY: envField.string({
+				context: "client",
+				access: "public",
+			}),
+		},
+	},
+
+	image: {
+		service: passthroughImageService(),
+		remotePatterns: [
+			{
+				protocol: "https",
+				hostname: "**.unsplash.com",
+			},
+		],
+	},
+
 	integrations: [
 		mdx(),
+		pagefind(),
+		partytown({
+			config: {
+				forward: ["dataLayer.push"],
+				debug: false,
+			},
+		}),
 		sitemap({
 			i18n: {
 				defaultLocale: DEFAULT_LOCALE_SETTING,
@@ -33,5 +79,17 @@ export default defineConfig({
 				),
 			},
 		}),
+		icon({
+			include: {
+				tabler: ["*"],
+			},
+		}),
 	],
+
+	vite: {
+		plugins: [tailwindcss()],
+	},
+	markdown: {
+		remarkPlugins: [remarkReadingTime],
+	},
 });

@@ -1,0 +1,51 @@
+---
+layout: "@/layouts/Page.astro"
+title: "Acerca de Codary"
+description: "Descubre qué es Codary.tech, tu fuente de noticias sobre tecnología, programación e inteligencia artificial"
+---
+import PageHeadline from "@/components/PageHeadline.astro";
+import CtaNewsletterSubscription from "@/components/CtaNewsletterSubscription.astro";
+import { SITE_TITLE } from "@/consts";
+
+<PageHeadline title={frontmatter.title} />
+
+## ¿Qué es Codary?
+
+Codary.tech es un sitio web dedicado a las noticias de tecnología, con un enfoque especial en programación e inteligencia artificial. Nuestro objetivo es mantenerte informado sobre las últimas tendencias, herramientas y avances en el mundo del desarrollo de software y la IA.
+
+## Nuestra Newsletter
+
+Cada viernes enviamos nuestra newsletter con una cuidadosa selección de:
+
+- Las noticias más relevantes de la semana en tecnología
+- Recursos y herramientas para desarrolladores
+- Aplicaciones open source recién lanzadas o actualizadas
+- Novedades sobre frameworks y librerías populares
+- Tutoriales y guías de programación
+- Avances significativos en inteligencia artificial
+
+Suscríbete para recibir en tu bandeja de entrada el contenido más valioso del ecosistema tecnológico, cuidadosamente seleccionado por nuestro equipo.
+
+## Nuestros Recursos
+
+En Codary no solo compartimos noticias, también creamos y recopilamos recursos útiles para la comunidad de desarrolladores:
+
+- Guías detalladas sobre lenguajes de programación
+- Comparativas de herramientas y tecnologías
+- Reseñas de librerías y frameworks
+- Casos de estudio sobre implementaciones exitosas
+- Mejores prácticas en desarrollo de software
+
+Estamos comprometidos con proporcionar contenido de alta calidad que ayude a los profesionales y entusiastas de la tecnología a mantenerse actualizados y mejorar sus habilidades.
+
+## Únete a Nuestra Comunidad
+
+Te invitamos a formar parte de la comunidad Codary para estar al día con las últimas tendencias tecnológicas y compartir conocimientos con otros apasionados de la programación y la inteligencia artificial.
+
+<div class="not-prose border-t border-t-main-light dark:border-t-main-dark">
+	<CtaNewsletterSubscription
+									formId="about-cta-newsletter-subscription-form"
+									title="Suscríbete a nuestra newsletter"
+									description="Mantente actualizado con las últimas noticias y recursos en tecnología, programación e IA. ¡Únete a nuestra comunidad de entusiastas de la tecnología!"
+									/>
+</div>

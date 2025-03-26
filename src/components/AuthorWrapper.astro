@@ -1,0 +1,25 @@
+---
+import AuthorCard from "./AuthorCard.astro";
+
+interface Social {
+	name: string;
+	url: string;
+	icon: string;
+}
+
+interface Props {
+	name: string;
+	email: string;
+	avatar: string;
+	bio: string;
+	location: string;
+	socials: Social[];
+}
+
+const { name, email, avatar, bio, location, socials } = Astro.props;
+---
+
+<div class="flex flex-col md:flex-row justify-between items-center gap-8 md:gap-12 relative border-b border-section-border-light dark:border-section-border-dark p-8">
+    <AuthorCard name={name} email={email} avatar={avatar} location={location} socials={socials} />
+    <p class="text-main-light dark:text-main-dark font-inter text-base font-normal tracking-normal leading-[140%] max-w-md relative">{bio}</p>
+</div>

@@ -1,0 +1,57 @@
+---
+export const prerender = true;
+import GridContainer from "@/components/GridContainer.astro";
+import PageHeadline from "@/components/PageHeadline.astro";
+import Pagination from "@/components/Pagination.astro";
+import { LOCALES, type Lang, useTranslations } from "@/i18n";
+import Layout from "@/layouts/General.astro";
+import { getArticles } from "@/models/article";
+
+// Get locale from params
+const { lang } = Astro.params;
+const currentLocale = lang as Lang;
+const t = useTranslations(currentLocale);
+
+// Get and sort articles for the current language
+const allArticles = await getArticles();
+const sortedArticles = allArticles
+	.filter((post) => post.id.split("/")[0] === currentLocale)
+	.sort((a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf());
+
+const title = t("news.title");
+
+export const getStaticPaths = () =>
+	Object.keys(LOCALES).map((lang) => ({
+		params: { lang },
+	}));
+
+const postsPerPage = 16;
+const totalPages = Math.ceil(sortedArticles.length / postsPerPage);
+const basePath = `/${currentLocale}/news/page`;
+const indexUrl = `/${currentLocale}/news`;
+---
+
+<Layout {title}>
+	<div class="container mx-auto px-4 pt-24">
+		<PageHeadline {title}>
+			<p class="text-xl text-main-light dark:text-main-dark">
+				{
+					t({
+						en: "Stay updated with the latest insights and developments",
+						es: "Mantente actualizado con las últimas novedades y desarrollos",
+					})
+				}
+			</p>
+		</PageHeadline>
+		<GridContainer posts={sortedArticles.slice(0, postsPerPage)} />
+		<Pagination
+			currentPage={1}
+			lastPage={totalPages}
+			urlPrev={null}
+			urlNext={totalPages > 1 ? `${basePath}/2` : null}
+			basePath={basePath}
+			maxDisplayedPages={5}
+			firstPageUrl={indexUrl}
+		/>
+	</div>
+</Layout>

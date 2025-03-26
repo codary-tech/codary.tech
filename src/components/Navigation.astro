@@ -1,0 +1,254 @@
+---
+import { type Lang, useTranslations } from "@/i18n";
+import { cn } from "@/lib/utils";
+import type { AuthInfo, MenuItem } from "@/models/menu";
+import { Icon } from "astro-icon/components";
+import type { HTMLAttributes } from "astro/types";
+import DotMenuIcon from "./DotMenuIcon.astro";
+import IconButton from "./IconButton.astro";
+import Link from "./Link.astro";
+import Logo from "./Logo.astro";
+import SearchButton from "./SearchButton.astro";
+import SubscriptionForm from "./SubscriptionForm.astro";
+import ThemeToggle from "./ThemeToggle.astro";
+
+export interface Props extends HTMLAttributes<"nav"> {
+	mainItems: MenuItem[];
+	dropdownItems?: MenuItem[];
+	authInfo: AuthInfo;
+}
+
+const { mainItems, dropdownItems, authInfo, ...attrs } = Astro.props;
+const t = useTranslations(Astro.currentLocale as Lang);
+
+// No need to recheck conditions here as items are already filtered by Header component
+
+// Check if user is logged in
+let isLoggedIn = false;
+try {
+	const response = await fetch(`${Astro.url.origin}/api/user`, {
+		headers: {
+			cookie: Astro.request.headers.get("cookie") || "",
+		},
+	});
+	const data = await response.json();
+	isLoggedIn = data.isLoggedIn;
+} catch (error) {
+	console.error("Error fetching user:", error);
+}
+---
+
+
+<nav class={cn("hidden md:flex items-center h-full space-x-8", attrs.class)}
+{...attrs}
+>
+  {
+    mainItems.map((item: MenuItem) => (
+      <a
+        href={item.href}
+        class="text-main-light hover:text-secondary-foreground-light dark:text-main-dark dark:hover:text-secondary-foreground-dark py-2 uppercase text-sm"
+      >
+        {t(item.translationKey)}
+        {item.icon && <Icon name={item.icon} class="size-4 inline ml-1" />}
+      </a>
+    ))
+  }
+	{dropdownItems && dropdownItems.length > 0 && (
+    <DotMenuIcon menuItems={dropdownItems}/>
+  )}
+</nav>
+
+<div
+  id="mobile-menu-overlay"
+  class="fixed inset-0 bg-black/50 z-40 opacity-0 pointer-events-none transition-opacity duration-300"
+>
+</div>
+<div
+  id="mobile-menu"
+  class="mobile-menu fixed top-0 left-0 h-screen w-2/3 bg-bg-light dark:bg-bg-dark z-50 transform -translate-x-full transition-transform duration-300 ease-in-out shadow-xl"
+>
+  <div
+    class="flex justify-between items-center p-4 border-b border-section-border-light dark:border-section-border-dark"
+  >
+    <Logo />
+    <IconButton
+      id="close-mobile-menu"
+      aria-label={t("mobile-menu.close")}
+      title={t("mobile-menu.close")}>
+      <Icon name="tabler:x" class="size-5" />
+    </IconButton>
+  </div>
+
+  <!-- Mobile Navigation -->
+  <nav class="flex flex-col p-4 bg-bg-light dark:bg-bg-dark">
+    {
+      mainItems.map((item: MenuItem) => (
+        <a
+          href={item.href}
+          class="text-main-light hover:text-secondary-foreground-light dark:text-main-dark dark:hover:text-secondary-foreground-dark py-3 uppercase text-sm border-b border-section-border-light/10 dark:border-section-border-dark/10"
+        >
+          {t(item.translationKey)}
+        </a>
+      ))
+    }
+    {
+      dropdownItems &&
+        dropdownItems.map((item: MenuItem) => (
+          <a
+            href={item.href}
+            class="text-main-light hover:text-secondary-foreground-light dark:text-main-dark dark:hover:text-secondary-foreground-dark py-3 uppercase text-sm border-b border-section-border-light/10 dark:border-section-border-dark/10"
+          >
+            {t(item.translationKey)}
+          </a>
+        ))
+    }
+  </nav>
+
+  <!-- Mobile Menu Footer with Header Actions -->
+  <div class="p-4 mt-auto bg-bg-light dark:bg-bg-dark">
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center">
+        <SearchButton id="mobile-search-button" />
+        <ThemeToggle id="theme-toggle-navigation" />
+      </div>
+      <!-- Auth button -->
+      <Link href={authInfo.authPath} class="w-full justify-center">
+        <span>{t(authInfo.authText)}</span>
+        <Icon name="tabler:chevron-right" class="size-5" />
+      </Link>
+    </div>
+  </div>
+  <div
+    class="p-4 mt-auto border-t border-section-border-light dark:border-section-border-dark bg-bg-light dark:bg-bg-dark"
+  >
+    <p class="text-xl font-bold text-main-light dark:text-main-dark">
+      {t("mobile-menu-subscribe.title")}
+    </p>
+    <p class="text-xs mt-1.5 font-light text-main-light dark:text-main-dark">
+      { t("mobile-menu-subscribe.description")  }
+    </p>
+    {
+      !isLoggedIn && (
+        <div class="flex justify-center items-center my-6 w-full">
+          <SubscriptionForm
+            formId="mobile-subscription-form"
+            formType="subscribe"
+            inputContainerClass="flex-col gap-2 w-full"
+            buttonClass="w-full max-w-full"
+          />
+        </div>
+      )
+    }
+  </div>
+</div>
+
+<script>
+  // Mobile menu toggle with animation
+  const mobileMenuButton = document.getElementById("mobile-menu-button");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const mobileMenuOverlay = document.getElementById("mobile-menu-overlay");
+  const closeMobileMenuButton = document.getElementById("close-mobile-menu");
+  const mobileThemeToggle = document.getElementById("mobile-theme-toggle");
+  const mobileSearchButton = document.getElementById("mobile-search-button");
+  const headerSearchButton = document.getElementById("search-button");
+
+  function openMobileMenu() {
+    document.body.style.overflow = "hidden"; // Prevent scrolling
+    mobileMenu?.classList.add("translate-x-0");
+    mobileMenu?.classList.remove("-translate-x-full");
+    mobileMenuOverlay?.classList.add("opacity-100");
+    mobileMenuOverlay?.classList.remove("pointer-events-none");
+  }
+
+  function closeMobileMenu() {
+    document.body.style.overflow = ""; // Restore scrolling
+    mobileMenu?.classList.remove("translate-x-0");
+    mobileMenu?.classList.add("-translate-x-full");
+    mobileMenuOverlay?.classList.remove("opacity-100");
+    mobileMenuOverlay?.classList.add("pointer-events-none");
+  }
+
+  if (mobileMenuButton) {
+    mobileMenuButton.addEventListener("click", openMobileMenu);
+  }
+
+  if (closeMobileMenuButton) {
+    closeMobileMenuButton.addEventListener("click", closeMobileMenu);
+  }
+
+  if (mobileMenuOverlay) {
+    mobileMenuOverlay.addEventListener("click", closeMobileMenu);
+  }
+
+  // Close with Escape key
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && mobileMenu?.classList.contains("translate-x-0")) {
+      closeMobileMenu();
+    }
+  });
+
+  // Mobile theme toggle
+  if (mobileThemeToggle) {
+    mobileThemeToggle.addEventListener("click", () => {
+      document.documentElement.classList.toggle("dark");
+      localStorage.setItem(
+        "theme",
+        document.documentElement.classList.contains("dark") ? "dark" : "light"
+      );
+    });
+  }
+
+  // Sync mobile search button with header search button
+  if (mobileSearchButton && headerSearchButton) {
+    mobileSearchButton.addEventListener("click", () => {
+      closeMobileMenu();
+      setTimeout(() => {
+        headerSearchButton.click();
+      }, 300);
+    });
+  }
+
+  // Dots menu toggle and hover effect
+  const menuButton = document.getElementById("menu-button");
+  const menuContainer = document.getElementById("menu-container");
+  const dotsHorizontal = document.getElementById("dots-horizontal");
+  const dotsVertical = document.getElementById("dots-vertical");
+  const dropdownMenu = document.getElementById("dropdown-menu");
+
+  if (
+    menuButton &&
+    menuContainer &&
+    dotsHorizontal &&
+    dotsVertical &&
+    dropdownMenu
+  ) {
+    // Hover effect
+    menuContainer.addEventListener("mouseenter", () => {
+      dotsHorizontal.classList.add("hidden");
+      dotsVertical.classList.remove("hidden");
+    });
+
+    menuContainer.addEventListener("mouseleave", () => {
+      if (!dropdownMenu.classList.contains("hidden")) return; // Don't switch back if menu is open
+      dotsHorizontal.classList.remove("hidden");
+      dotsVertical.classList.add("hidden");
+    });
+
+    // Click to toggle dropdown
+    menuButton.addEventListener("click", () => {
+      dropdownMenu.classList.toggle("hidden");
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", (event) => {
+      if (!menuContainer.contains(event.target as Node)) {
+        dropdownMenu.classList.add("hidden");
+        // Reset icons when closing dropdown
+        if (!menuContainer.matches(":hover")) {
+          dotsHorizontal.classList.remove("hidden");
+          dotsVertical.classList.add("hidden");
+        }
+      }
+    });
+  }
+</script>

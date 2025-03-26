@@ -13,6 +13,12 @@ repos:
         args: ["--no-progress", "--exclude-path", "node_modules", "--exclude-path", "public/admin"]
   - repo: local
     hooks:
+      - id: run-organize-script
+        name: run-organize-script
+        entry: pnpm
+        args: ['run', 'organize']
+        language: system
+        pass_filenames: false
       - id: run-check-script
         name: run-check-script
         entry: pnpm

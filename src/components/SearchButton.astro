@@ -1,0 +1,22 @@
+---
+import { type Lang, useTranslations } from "@/i18n";
+import { cn } from "@/lib/utils";
+import { Icon } from "astro-icon/components";
+import type { HTMLAttributes } from "astro/types";
+
+export interface Props extends HTMLAttributes<"button"> {}
+const currentLanguage = Astro.currentLocale as Lang;
+const t = useTranslations(currentLanguage);
+const { id = "mobile-search-button", class: className, ...attrs } = Astro.props;
+---
+
+<a
+  id={id}
+	href={`/${currentLanguage}/search`}
+  class={cn("p-2 text-secondary-foreground-light hover:text-main-light dark:text-secondary-foreground-dark dark:hover:text-main-dark cursor-pointer transition-colors",className)}
+    aria-label={t("search.button")}
+    title={t("search.button")}
+    {...attrs}
+>
+  <Icon name="tabler:search" class="size-5 text-main-light dark:text-main-dark cursor-pointer" />
+</a>
