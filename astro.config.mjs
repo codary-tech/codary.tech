@@ -20,9 +20,9 @@ export default defineConfig({
 	output: "server",
 	adapter: cloudflare({
 		platformProxy: {
-		  enabled: true
-		}
-	  }),
+			enabled: true,
+		},
+	}),
 	i18n: {
 		defaultLocale: DEFAULT_LOCALE_SETTING,
 		locales: Object.keys(LOCALES_SETTING),
