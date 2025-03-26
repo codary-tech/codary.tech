@@ -24,13 +24,6 @@
 │   ├───extensions.json
 │   ├───launch.json
 │   └───settings.sample.json
-├───.wrangler/
-│   ├───state/
-│   │   └───v3/
-│   │       ├───cache/
-│   │       └───workflows/
-│   ├───tmp/
-│   └───.DS_Store
 ├───docs/
 │   ├───hero.svg
 │   ├───lighthouse.png
@@ -407,6 +400,7 @@
 │   ├───.env
 │   ├───.gitignore
 │   └───config.toml
+├───.dev.vars
 ├───.editorconfig
 ├───.gitignore
 ├───.lycheeignore
