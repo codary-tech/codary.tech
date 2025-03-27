@@ -1,5 +1,5 @@
 ---
-import { type Lang, useTranslations } from "@/i18n";
+import { type Lang, useTranslatedPath, useTranslations } from "@/i18n";
 import { cn } from "@/lib/utils";
 import { Icon } from "astro-icon/components";
 import type { HTMLAttributes } from "astro/types";
@@ -24,7 +24,9 @@ const {
 	...attrs
 } = Astro.props;
 
-const t = useTranslations(Astro.currentLocale as Lang);
+const currentLocale = Astro.currentLocale as Lang;
+const t = useTranslations(currentLocale);
+const translatePath = useTranslatedPath(currentLocale);
 
 // Define variant classes
 const variantClasses = {
@@ -40,7 +42,7 @@ const classes = cn(variantClasses[variant], className);
 ---
 
 <a
-  href={href}
+  href={translatePath(href)}
   class={classes}
   aria-label={ariaLabelKey ? t(ariaLabelKey) : undefined}
   target={target}

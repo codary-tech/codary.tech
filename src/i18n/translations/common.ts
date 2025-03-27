@@ -9,6 +9,8 @@ export const common: { en: UIDict; es: UIDict } = {
 		close: "Close",
 		"copy.link": "Copy link",
 		"load.more": "LOAD MORE",
+		"select.language": "Select Language",
+		"language-selector.label": "Select Language",
 	},
 	es: {
 		"header.auth": "Iniciar Sesión",
@@ -18,5 +20,7 @@ export const common: { en: UIDict; es: UIDict } = {
 		close: "Cerrar",
 		"copy.link": "Copiar enlace",
 		"load.more": "CARGAR MÁS",
+		"select.language": "Seleccionar Idioma",
+		"language-selector.label": "Seleccionar Idioma",
 	},
 };

@@ -82,6 +82,7 @@ export default defineConfig({
 		icon({
 			include: {
 				tabler: ["*"],
+				openmoji: ["*"],
 			},
 		}),
 	],

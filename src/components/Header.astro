@@ -1,5 +1,5 @@
 ---
-import { type Lang, useTranslations } from "@/i18n";
+import { type Lang, useTranslatedPath, useTranslations } from "@/i18n";
 import { cn } from "@/lib/utils";
 import {
 	type AuthInfo,
@@ -15,18 +15,17 @@ import Logo from "./Logo.astro";
 import Navigation from "./Navigation.astro";
 import SearchButton from "./SearchButton.astro";
 import ThemeToggle from "./ThemeToggle.astro";
+import LocaleSelect from "./i18n/LocaleSelect.astro";
 
-const t = useTranslations(Astro.currentLocale as Lang);
+const lang = Astro.currentLocale as Lang;
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
 
-interface Props extends HTMLAttributes<"header"> {
-	// Add any additional props if needed
-}
+interface Props extends HTMLAttributes<"header"> {}
 const { ...attrs } = Astro.props as Props;
 
-// Determine if the user is logged in
 let isLoggedIn = false;
 
-// Attempt to get user data from server-side if possible
 try {
 	const response = await fetch(`${Astro.url.origin}/api/user`, {
 		headers: {
@@ -39,14 +38,12 @@ try {
 	console.error("Error fetching user:", error);
 }
 
-// Filter menu items based on conditions
 const filteredMainMenuItems = filterMenuItems(mainMenuItems);
 const filteredDropdownMenuItems = filterMenuItems(dropdownMenuItems);
 
-// Authentication info to pass to Navigation component for mobile menu
 const authInfo: AuthInfo = {
 	isLoggedIn,
-	authPath: isLoggedIn ? "/account" : "/signin",
+	authPath: translatePath(isLoggedIn ? "/account" : "/signin"),
 	authText: isLoggedIn ? "header.account" : "header.auth",
 };
 ---
@@ -59,7 +56,6 @@ const authInfo: AuthInfo = {
  {...attrs}
  >
     <div class="container mx-auto px-4 flex items-center h-20 relative">
-      <!-- Header Identity - Logo and Site Title -->
       <div class="flex items-center mr-10">
         <IconButton
           class="md:hidden mr-4"
@@ -71,21 +67,21 @@ const authInfo: AuthInfo = {
 
         <Logo />
       </div>
-
-      <!-- Using the Navigation component with filtered menu items -->
       <Navigation
         mainItems={filteredMainMenuItems}
         dropdownItems={filteredDropdownMenuItems}
         authInfo={authInfo}
       />
 
-      <!-- Header Actions -->
       <div class="flex items-center justify-center space-x-4 ml-auto">
         <SearchButton id="search-button" />
         <ThemeToggle />
+				<LocaleSelect
+					variant="text"
+					class="hidden md:inline-flex"
+				/>
 
-        <!-- Main button with special colored-hero styles applied via JS -->
-        <Link href={isLoggedIn ? "/account" : "/signin"} class="md:flex hidden">
+        <Link href={translatePath(isLoggedIn ? "/account" : "/signin")} class="md:flex hidden">
           <span>{t(isLoggedIn ? "header.account" : "header.auth")}</span>
           <Icon name="tabler:chevron-right" class="size-5" />
         </Link>
@@ -95,7 +91,6 @@ const authInfo: AuthInfo = {
   </header>
 
   <style>
-    /* Reference main styles to access Tailwind's theme, utilities, and variants */
     @reference "../styles/global.css";
 
     /* Header states */

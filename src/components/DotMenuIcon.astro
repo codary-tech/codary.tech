@@ -1,5 +1,5 @@
 ---
-import { type Lang, useTranslations } from "@/i18n";
+import { type Lang, useTranslatedPath, useTranslations } from "@/i18n";
 import { cn } from "@/lib/utils";
 import type { MenuItem } from "@/models/menu";
 import { Icon } from "astro-icon/components";
@@ -22,9 +22,9 @@ const {
 
 const currentLocale = Astro.currentLocale as Lang;
 const t = useTranslations(currentLocale);
+const translatePath = useTranslatedPath(currentLocale);
 
-// Generate unique ID for this instance to support multiple menus on page
-const menuId = `dots-menu-${Math.random().toString(36).substring(2, 9)}`;
+const menuId = `dots-menu-${crypto.randomUUID()}`;
 ---
 
 <div
@@ -75,7 +75,7 @@ const menuId = `dots-menu-${Math.random().toString(36).substring(2, 9)}`;
 					return (
 						<li role="none">
 							<a
-								href={item.href}
+								href={translatePath(item.href)}
 								class="block w-full px-4 py-2 text-secondary-foreground-light hover:text-main-light hover:bg-square-light dark:text-secondary-foreground-dark dark:hover:text-main-dark dark:hover:bg-square-dark uppercase text-sm transition-colors duration-150"
 								role="menuitem"
 								tabindex="-1"

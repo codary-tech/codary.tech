@@ -1,35 +1,122 @@
 ---
-// Select UI to switch between locales.
-import { LOCALES, getLocalePaths } from "@/i18n";
+import { LOCALES, type Lang, getLocalePaths, useTranslations } from "@/i18n";
 import { Icon } from "astro-icon/components";
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"label"> {
+	variant?: "text" | "flags";
+	width?: string;
+}
+
+const lang = Astro.currentLocale as Lang;
+const t = useTranslations(lang);
+const DEFAULT_FLAG = "openmoji:flag-united-nations";
+
+const { variant = "text", width, ...attrs } = Astro.props;
+const isTextVariant = variant === "text";
+
+const paths = getLocalePaths(Astro.url);
+const pathsData = JSON.stringify(paths);
+
+const currentLocale = {
+	lang,
+	label: LOCALES[lang].label,
+	flag: LOCALES[lang].flag || DEFAULT_FLAG,
+};
+
+const localesData = JSON.stringify(LOCALES);
 ---
 
-<label class="relative inline-block w-60">
-  <Icon name="tabler:language" class="absolute text-primary-light dark:text-primary-dark text-3xl left-1.5 top-1.5" />
-  <select data-languageSelect class="w-full text-center h-10 px-10 cursor-pointer appearance-none rounded-md text-foreground-light dark:text-foreground-dark bg-base border-2 border-foreground-light dark:border-foreground-dark focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary focus:ring-opacity-50">
-    {
-      getLocalePaths(Astro.url).map(({ path, lang }) => (
+<locale-select
+  data-variant={variant}
+  data-width={width}
+  data-current-locale={JSON.stringify(currentLocale)}
+  data-paths={pathsData}
+  data-locales={localesData}
+  class={`inline-flex items-center relative ${attrs.class}`}
+  {...attrs}
+>
+  <label
+    class={`relative inline-flex items-center w-full`}
+    style={width ? `--select-width: ${width}` : `--select-width: ${isTextVariant ? '8rem' : '6rem'}`}
+  >
+    <span class="sr-only">{t('select.language')}</span>
+    {isTextVariant && (
+      <Icon
+        name="tabler:language"
+        class="absolute text-foreground-light dark:text-foreground-dark text-sm left-2 top-1/2 transform -translate-y-1/2 pointer-events-none z-10"
+      />
+    )}
+
+    <select
+      class={`appearance-none bg-transparent border-0 cursor-pointer text-foreground-light dark:text-foreground-dark outline-none focus:ring-0 focus:text-foreground-light dark:focus:text-foreground-dark py-2 pr-8 w-[var(--select-width)] truncate ${
+        isTextVariant ? 'pl-8' : 'pl-7 text-foreground-light dark:text-foreground-dark'
+      }`}
+    >
+      {paths.map(({ path, lang: localeLang }) => (
         <option
-          label={LOCALES[lang].label}
           value={path}
-          data-lang={lang}
-          selected={lang === Astro.currentLocale}
-          dir={LOCALES[lang].dir || null}
+          selected={localeLang === lang}
+          data-lang={localeLang}
+          class="bg-bg-light dark:bg-bg-dark text-foreground-light dark:text-foreground-dark"
+        >
+          {LOCALES[localeLang].label}
+        </option>
+      ))}
+    </select>
+
+    {isTextVariant ? (
+      <Icon
+        name="tabler:chevron-down"
+        class="absolute text-foreground-light dark:text-foreground-dark text-base right-1 top-1/2 transform -translate-y-1/2 pointer-events-none z-10"
+      />
+    ) : (
+      <span class="absolute left-1 top-1/2 transform -translate-y-1/2 pointer-events-none z-10">
+        <Icon
+          name={currentLocale.flag}
+          class="w-5 h-5"
         />
-      ))
+      </span>
+    )}
+
+    {!isTextVariant && (
+      <Icon
+        name="tabler:chevron-down"
+        class="absolute text-foreground-light dark:text-foreground-dark text-base right-1 top-1/2 transform -translate-y-1/2 pointer-events-none z-10"
+      />
+    )}
+  </label>
+</locale-select>
+
+<script>
+  class LocaleSelect extends HTMLElement {
+    constructor() {
+      super();
+      this.setupSelect();
     }
-  </select>
-  <Icon name="tabler:chevron-down" class="absolute text-primary-light dark:text-primary-dark text-3xl right-1.5 top-1.5" />
-</label>
 
-<script is:inline>
-  const selects = document.querySelectorAll("[data-languageSelect]");
+    setupSelect() {
+      const select = this.querySelector('select');
 
-  selects.forEach((select) => {
-    select.addEventListener("change", (event) => {
-      // used for 404 page
-      localStorage.selectedLang = event.target?.selectedOptions[0].dataset.lang;
-      location.href = event.target?.value;
-    });
-  });
+      if (!select) return;
+
+      const variant = this.dataset.variant || 'text';
+      const currentLocaleData = JSON.parse(this.dataset.currentLocale || '{}');
+
+      select.addEventListener('change', (event) => {
+        if (!(event.currentTarget instanceof HTMLSelectElement)) return;
+
+        const selectedOption = event.currentTarget.selectedOptions[0];
+        const selectedLang = selectedOption.dataset.lang;
+
+        if (selectedLang) {
+          localStorage.selectedLang = selectedLang;
+        }
+
+        window.location.pathname = event.currentTarget.value;
+      });
+    }
+  }
+
+  customElements.define('locale-select', LocaleSelect);
 </script>

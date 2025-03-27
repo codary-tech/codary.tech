@@ -1,5 +1,5 @@
 ---
-import { type Lang, useTranslations } from "@/i18n";
+import { type Lang, useTranslatedPath, useTranslations } from "@/i18n";
 import { cn } from "@/lib/utils";
 import type { AuthInfo, MenuItem } from "@/models/menu";
 import { Icon } from "astro-icon/components";
@@ -11,6 +11,7 @@ import Logo from "./Logo.astro";
 import SearchButton from "./SearchButton.astro";
 import SubscriptionForm from "./SubscriptionForm.astro";
 import ThemeToggle from "./ThemeToggle.astro";
+import LocaleSelect from "./i18n/LocaleSelect.astro";
 
 export interface Props extends HTMLAttributes<"nav"> {
 	mainItems: MenuItem[];
@@ -19,11 +20,10 @@ export interface Props extends HTMLAttributes<"nav"> {
 }
 
 const { mainItems, dropdownItems, authInfo, ...attrs } = Astro.props;
-const t = useTranslations(Astro.currentLocale as Lang);
+const lang = Astro.currentLocale as Lang;
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
 
-// No need to recheck conditions here as items are already filtered by Header component
-
-// Check if user is logged in
 let isLoggedIn = false;
 try {
 	const response = await fetch(`${Astro.url.origin}/api/user`, {
@@ -45,7 +45,7 @@ try {
   {
     mainItems.map((item: MenuItem) => (
       <a
-        href={item.href}
+        href={translatePath(item.href)}
         class="text-main-light hover:text-secondary-foreground-light dark:text-main-dark dark:hover:text-secondary-foreground-dark py-2 uppercase text-sm"
       >
         {t(item.translationKey)}
@@ -65,7 +65,7 @@ try {
 </div>
 <div
   id="mobile-menu"
-  class="mobile-menu fixed top-0 left-0 h-screen w-2/3 bg-bg-light dark:bg-bg-dark z-50 transform -translate-x-full transition-transform duration-300 ease-in-out shadow-xl"
+  class="mobile-menu fixed top-0 left-0 h-screen w-3/4 bg-bg-light dark:bg-bg-dark z-50 flex flex-col transform -translate-x-full transition-transform duration-300 ease-in-out shadow-xl"
 >
   <div
     class="flex justify-between items-center p-4 border-b border-section-border-light dark:border-section-border-dark"
@@ -79,12 +79,11 @@ try {
     </IconButton>
   </div>
 
-  <!-- Mobile Navigation -->
   <nav class="flex flex-col p-4 bg-bg-light dark:bg-bg-dark">
     {
       mainItems.map((item: MenuItem) => (
         <a
-          href={item.href}
+          href={translatePath(item.href)}
           class="text-main-light hover:text-secondary-foreground-light dark:text-main-dark dark:hover:text-secondary-foreground-dark py-3 uppercase text-sm border-b border-section-border-light/10 dark:border-section-border-dark/10"
         >
           {t(item.translationKey)}
@@ -95,7 +94,7 @@ try {
       dropdownItems &&
         dropdownItems.map((item: MenuItem) => (
           <a
-            href={item.href}
+            href={translatePath(item.href)}
             class="text-main-light hover:text-secondary-foreground-light dark:text-main-dark dark:hover:text-secondary-foreground-dark py-3 uppercase text-sm border-b border-section-border-light/10 dark:border-section-border-dark/10"
           >
             {t(item.translationKey)}
@@ -104,46 +103,49 @@ try {
     }
   </nav>
 
-  <!-- Mobile Menu Footer with Header Actions -->
-  <div class="p-4 mt-auto bg-bg-light dark:bg-bg-dark">
+  <div class="p-4 bg-bg-light dark:bg-bg-dark flex-1 overflow-y-auto">
     <div class="flex items-center justify-between mb-4">
       <div class="flex items-center">
         <SearchButton id="mobile-search-button" />
         <ThemeToggle id="theme-toggle-navigation" />
       </div>
-      <!-- Auth button -->
       <Link href={authInfo.authPath} class="w-full justify-center">
         <span>{t(authInfo.authText)}</span>
         <Icon name="tabler:chevron-right" class="size-5" />
       </Link>
     </div>
+
+    <div class="mt-6">
+      <p class="text-xl font-bold text-main-light dark:text-main-dark">
+        {t("mobile-menu-subscribe.title")}
+      </p>
+      <p class="text-xs mt-1.5 font-light text-main-light dark:text-main-dark">
+        {t("mobile-menu-subscribe.description")}
+      </p>
+      {
+        !isLoggedIn && (
+          <div class="flex justify-center items-center my-6 w-full">
+            <SubscriptionForm
+              formId="mobile-subscription-form"
+              formType="subscribe"
+              inputContainerClass="flex-col gap-2 w-full"
+              buttonClass="w-full max-w-full"
+            />
+          </div>
+        )
+      }
+    </div>
   </div>
-  <div
-    class="p-4 mt-auto border-t border-section-border-light dark:border-section-border-dark bg-bg-light dark:bg-bg-dark"
-  >
-    <p class="text-xl font-bold text-main-light dark:text-main-dark">
-      {t("mobile-menu-subscribe.title")}
-    </p>
-    <p class="text-xs mt-1.5 font-light text-main-light dark:text-main-dark">
-      { t("mobile-menu-subscribe.description")  }
-    </p>
-    {
-      !isLoggedIn && (
-        <div class="flex justify-center items-center my-6 w-full">
-          <SubscriptionForm
-            formId="mobile-subscription-form"
-            formType="subscribe"
-            inputContainerClass="flex-col gap-2 w-full"
-            buttonClass="w-full max-w-full"
-          />
-        </div>
-      )
-    }
-  </div>
+
+  <footer class="p-4 border-t border-section-border-light dark:border-section-border-dark bg-bg-light dark:bg-bg-dark mt-auto">
+    <div class="flex items-center justify-between">
+      <span class="text-sm text-main-light dark:text-main-dark">{t("language-selector.label")}</span>
+      <LocaleSelect />
+    </div>
+  </footer>
 </div>
 
 <script>
-  // Mobile menu toggle with animation
   const mobileMenuButton = document.getElementById("mobile-menu-button");
   const mobileMenu = document.getElementById("mobile-menu");
   const mobileMenuOverlay = document.getElementById("mobile-menu-overlay");

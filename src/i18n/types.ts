@@ -7,7 +7,17 @@ type LocaleConfig = {
 	readonly label: string;
 	readonly lang?: string;
 	readonly dir?: "ltr" | "rtl";
+	readonly flag?: string;
 };
+
+/**
+ * Configuration to determine if default language should be shown in URLs
+ * When false, the default language won't have a prefix in URLs
+ * @example
+ * If false: /about (for default language) and /es/about (for other languages)
+ * If true: /en/about and /es/about
+ */
+export const SHOW_DEFAULT_LANG_IN_URL = true;
 
 /**
  * Type for the language code

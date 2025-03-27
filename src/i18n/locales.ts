@@ -8,6 +8,7 @@ interface LocaleSetting {
 		label: string;
 		lang?: string;
 		dir?: "rtl" | "ltr";
+		flag?: string;
 	};
 } // refer: https://starlight.astro.build/reference/configuration/#locales
 
@@ -15,8 +16,10 @@ export const LOCALES_SETTING: LocaleSetting = {
 	en: {
 		label: "English",
 		lang: "en-US",
+		flag: "openmoji:flag-united-states",
 	},
 	es: {
 		label: "Español",
+		flag: "openmoji:flag-spain",
 	},
 };
