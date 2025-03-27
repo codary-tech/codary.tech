@@ -36,7 +36,7 @@ export default defineConfig({
 		schema: {
 			AHREFS_KEY: envField.string({
 				context: "server",
-				access: "public",
+				access: "secret",
 			}),
 			SUPABASE_URL: envField.string({
 				context: "server",
