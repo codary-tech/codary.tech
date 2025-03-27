@@ -6,8 +6,8 @@ import type { Multilingual } from "@/i18n";
 export const SITE_TITLE: string | Multilingual = "Codary";
 
 export const SITE_DESCRIPTION: string | Multilingual = {
-	en: "A starter template for Astro with i18n support.",
-	es: "Una plantilla inicial para Astro con soporte i18n.",
+	en: "Weekly tech news digest delivered every Friday, plus a comprehensive catalog of resources for developers and tech enthusiasts.",
+	es: "Resumen semanal de noticias tecnológicas enviado todos los viernes, además de un catálogo completo de recursos útiles para programadores y entusiastas de la tecnología."
 };
 
 export const X_ACCOUNT: string | Multilingual = "@yacosta738";
