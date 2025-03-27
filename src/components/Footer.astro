@@ -1,13 +1,15 @@
 ---
 // Footer UI displayed on each page.
 import { SITE_TITLE } from "@/consts";
-import { type Lang, useTranslations } from "@/i18n";
+import { type Lang, useTranslatedPath, useTranslations } from "@/i18n";
 import { filterMenuItems, navLinks } from "@/models/menu";
 import Logo from "./Logo.astro";
 import NavLink from "./NavLink.astro";
 import SocialLinks from "./SocialLinks.astro";
 
-const t = useTranslations(Astro.currentLocale as Lang);
+const currentLocale = Astro.currentLocale as Lang;
+const t = useTranslations(currentLocale);
+const translatePath = useTranslatedPath(currentLocale);
 
 const socials = [
 	{
@@ -20,7 +22,7 @@ const socials = [
 		url: "https://github.com/codary",
 		icon: "tabler:brand-github",
 	},
-	{ name: "RSS", url: "/rss.xml", icon: "tabler:rss" },
+	{ name: "RSS", url: translatePath("/rss.xml"), icon: "tabler:rss" },
 ];
 
 // Filter menu items based on conditions
@@ -57,7 +59,7 @@ const columnsClass = optimalColumns === 1 ? "md:grid-cols-1" : "md:grid-cols-2";
 							filteredNavLinks.map((link) => (
 								<li>
 									<NavLink
-										href={link.href}
+										href={translatePath(link.href)}
 										translationKey={link.translationKey}
 										ariaLabelKey={link.ariaLabelKey}
 										target={link.target}
