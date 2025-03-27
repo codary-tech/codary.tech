@@ -1,5 +1,5 @@
 import { getRelativeLocaleUrl } from "astro:i18n";
-import { DEFAULT_LOCALE, LOCALES, type Lang, type Multilingual } from "./types";
+import { DEFAULT_LOCALE, LOCALES, SHOW_DEFAULT_LANG_IN_URL, type Lang, type Multilingual } from "./types";
 import { ui } from "./ui";
 
 /**
@@ -34,6 +34,31 @@ export function useTranslations(lang: Lang) {
 		}
 
 		return text;
+	};
+}
+
+/**
+ * Helper to translate paths between languages
+ * @param lang - The current language
+ * @returns - A function that translates paths
+ *
+ * @example
+ * const translatePath = useTranslatedPath('en');
+ * translatePath('/about'); // returns '/about' if en is default and SHOW_DEFAULT_LANG_IN_URL is false
+ * translatePath('/about', 'es'); // returns '/es/about'
+ */
+export function useTranslatedPath(lang: Lang) {
+	return function translatePath(path: string, targetLang: Lang = lang): string {
+		// Ensure path starts with a slash
+		const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+
+		// For default language, we might not show the language prefix based on config
+		if (!SHOW_DEFAULT_LANG_IN_URL && targetLang === DEFAULT_LOCALE) {
+			return normalizedPath;
+		}
+
+		// For other languages, or if we always show the language prefix
+		return `/${targetLang}${normalizedPath}`;
 	};
 }
 
