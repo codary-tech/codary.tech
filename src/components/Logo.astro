@@ -1,15 +1,17 @@
 ---
 import { SITE_TITLE } from "@/consts";
-import { type Lang, useTranslations } from "@/i18n";
+import { type Lang, useTranslatedPath, useTranslations } from "@/i18n";
 import { cn } from "@/lib/utils";
 import type { HTMLAttributes } from "astro/types";
-const t = useTranslations(Astro.currentLocale as Lang);
 interface Props extends HTMLAttributes<"a"> {}
 const { class: className, ...attrs } = Astro.props as Props;
+const lang = Astro.currentLocale as Lang;
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
 ---
 
 <a
-	href={`/${Astro.currentLocale}`}
+	href={translatePath("/")}
 	id="site-title"
 	class={cn(
 		"text-xl font-medium text-main-light dark:text-main-dark transition-colors",
