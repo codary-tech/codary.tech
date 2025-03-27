@@ -15,14 +15,16 @@ export const signInWithMagicLink = async (
 	shouldCreateUser = true,
 	data?: Record<string, unknown>,
 ): Promise<AuthOtpResponse> => {
-	// Sign in a user with a magic link
+	const redirectTo = `${BASE_URL}/api/auth/callback`;
+
+	const otpSignInOptions = {
+		emailRedirectTo: redirectTo,
+		shouldCreateUser: shouldCreateUser,
+		data: data,
+	};
 	const response = await supabase.auth.signInWithOtp({
 		email: email,
-		options: {
-			emailRedirectTo: `${BASE_URL}/api/auth/callback`,
-			shouldCreateUser: shouldCreateUser,
-			data: data, // Pass optional metadata
-		},
+		options: otpSignInOptions,
 	});
 
 	return response;

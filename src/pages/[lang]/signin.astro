@@ -1,8 +1,7 @@
 ---
 export const prerender = false;
 import SubscriptionForm from "@/components/SubscriptionForm.astro";
-import { BASE_URL } from "@/consts";
-import { type Lang, useTranslations } from "@/i18n";
+import { type Lang, useTranslatedPath, useTranslations } from "@/i18n";
 import Layout from "@/layouts/Base.astro";
 import { Icon } from "astro-icon/components";
 
@@ -25,7 +24,9 @@ try {
 	console.error("Error checking authentication status:", error);
 }
 
-const t = useTranslations(Astro.currentLocale as Lang);
+const currentLocale = Astro.currentLocale as Lang;
+const t = useTranslations(currentLocale);
+const translatePath = useTranslatedPath(currentLocale);
 ---
 
 <Layout title={t('signin.title')} description={t('signin.description')}>
@@ -42,7 +43,7 @@ const t = useTranslations(Astro.currentLocale as Lang);
             />
             <div class="flex justify-center items-center gap-2 mt-4">
                 <span class="text-secondary-foreground-light dark:text-secondary-foreground-dark">{t('signin.no_account')}</span>
-                <a href={`${BASE_URL}/signup`} aria-label={t('signin.create_account')}
+                <a href={translatePath("/signup")} aria-label={t('signin.create_account')}
                 class="bg-none border-none text-main-light dark:text-main-dark uppercase flex items-center gap-0.5">
                     {t('signin.create_account')}
                     <Icon name="tabler:chevron-right" class="size-5" />

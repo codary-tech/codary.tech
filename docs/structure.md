@@ -375,6 +375,8 @@
 │   ├───content.config.ts
 │   └───env.d.ts
 ├───supabase/
+│   ├───.temp/
+│   │   └───cli-latest
 │   ├───migrations/
 │   │   ├───20250227195823_user_management_starter.sql
 │   │   └───20250227200050_newsletter_subscriptions.sql
