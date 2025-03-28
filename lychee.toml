@@ -1,0 +1,63 @@
+exclude = [
+	# Exclude zola's `@/` relative links
+	'@/',
+
+	# HackerNews currently produces a 503
+	'news.ycombinator.com',
+
+ 	# Some images that get included directly in the markdown
+    # and don't use the `figure` shortcode
+    '/src/assets/images/47455.avif',
+    '/src/assets/images/whoami.avif',
+
+	'https://sveltia-cms-auth.yunielacosta738.workers.dev/',
+	'^mailto:',
+	'http://purl.org/dc/elements/1.1/',
+]
+exclude_loopback = true
+exclude_private = true
+exclude_path = [
+	".git",
+	"node_modules",
+	"utils/.*",         # Use regex to match any utils directory
+	".*utils.*",
+	"public/admin",
+	"supabase",
+	"__tests__/.*",     # Use regex to match any __tests__ directory
+	".*/utils/.*",      # Match utils directory at any level
+	".*/__tests__/.*",   # Match __tests__ directory at any level
+	"*__tests__*",
+]
+
+#############################  Cache  ###############################
+
+# Enable link caching. This can be helpful to avoid checking the same links on
+# multiple runs.
+cache = true
+# Cache directory. This is where the cached links will be stored.
+
+# Discard all cached requests older than this duration.
+max_cache_age = "2d"
+
+#############################  Runtime  #############################
+
+# Number of threads to utilize.
+# Defaults to number of cores available to the system if omitted.
+threads = 2
+
+# Maximum number of allowed redirects.
+max_redirects = 10
+
+# Maximum number of allowed retries before a link is declared dead.
+max_retries = 2
+
+# Maximum number of concurrent link checks.
+max_concurrency = 14
+
+#############################  Requests  ############################
+
+# User agent to send with each request.
+user_agent = "curl/7.83. 1"
+
+# I got lots of Github links...
+accept = ["200..=204", "401","403", "429"]
