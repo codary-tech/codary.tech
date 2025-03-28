@@ -375,6 +375,8 @@
 │   ├───content.config.ts
 │   └───env.d.ts
 ├───supabase/
+│   ├───.branches/
+│   │   └───_current_branch
 │   ├───.temp/
 │   │   └───cli-latest
 │   ├───migrations/
