@@ -42,7 +42,7 @@ export default defineConfig({
 				context: "server",
 				access: "secret",
 			}),
-			SUPABASE_ANON_KEY: envField.string({
+			SUPABASE_KEY: envField.string({
 				context: "server",
 				access: "secret",
 			}),

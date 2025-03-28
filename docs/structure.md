@@ -378,10 +378,17 @@
 │   ├───.branches/
 │   │   └───_current_branch
 │   ├───.temp/
-│   │   └───cli-latest
+│   │   ├───cli-latest
+│   │   ├───gotrue-version
+│   │   ├───pooler-url
+│   │   ├───postgres-version
+│   │   ├───project-ref
+│   │   └───rest-version
 │   ├───migrations/
 │   │   ├───20250227195823_user_management_starter.sql
 │   │   └───20250227200050_newsletter_subscriptions.sql
+│   ├───templates/
+│   │   └───magic_link.html
 │   ├───.gitignore
 │   └───config.toml
 ├───.dev.vars
