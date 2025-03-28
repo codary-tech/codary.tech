@@ -18,7 +18,7 @@ export const signInWithMagicLink = async (
 	const redirectTo = `${BASE_URL}/api/auth/callback`;
 
 	const otpSignInOptions = {
-		emailRedirectTo: redirectTo,
+		redirectTo: redirectTo,
 		shouldCreateUser: shouldCreateUser,
 		data: data,
 	};
