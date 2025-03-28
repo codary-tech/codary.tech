@@ -1,11 +1,14 @@
 ---
-import { type Lang, useTranslations } from "@/i18n";
+import { type Lang, useTranslatedPath, useTranslations } from "@/i18n";
 import Layout from "@/layouts/Base.astro";
 import { supabase } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
+import { getGravatarUrl } from "@/utils/gravatar.service";
 import { Icon } from "astro-icon/components";
 
-const t = useTranslations(Astro.currentLocale as Lang);
+const currentLanguage = Astro.currentLocale as Lang;
+const t = useTranslations(currentLanguage);
+const translatePath = useTranslatedPath(currentLanguage);
 
 // Check if user is logged in
 let user = null;
@@ -18,7 +21,7 @@ try {
 	} = await supabase.auth.getSession();
 
 	if (!session) {
-		return Astro.redirect(`/${Astro.currentLocale}/signin`);
+		return Astro.redirect(translatePath("/signin"));
 	}
 
 	user = session.user;
@@ -34,9 +37,10 @@ try {
 			const avatarFile = formData.get("avatar") as File;
 
 			if (avatarFile && avatarFile.size > 0) {
-				// Upload avatar to Supabase Storage
+				// Upload avatar to Supabase Storage with organized folder structure
 				const fileExt = avatarFile.name.split(".").pop();
-				const fileName = `${user.id}-${Date.now()}.${fileExt}`;
+				// Use userId as folder name to organize avatars by user
+				const fileName = `${user.id}/${Date.now()}.${fileExt}`;
 
 				const { error: uploadError } = await supabase.storage
 					.from("avatars")
@@ -46,12 +50,16 @@ try {
 					throw new Error(uploadError.message);
 				}
 
-				// Get public URL
-				const {
-					data: { publicUrl },
-				} = supabase.storage.from("avatars").getPublicUrl(fileName);
+				// Get signed URL
+				const { data, error: signedUrlError } = await supabase.storage
+					.from("avatars")
+					.createSignedUrl(fileName, 3600);
 
-				avatarUrl = publicUrl;
+				if (signedUrlError) {
+					throw new Error(signedUrlError.message);
+				}
+
+				avatarUrl = data?.signedUrl;
 			}
 
 			// Update user metadata
@@ -77,21 +85,7 @@ try {
 	}
 } catch (e) {
 	error = e instanceof Error ? e.message : "Authentication error";
-	return Astro.redirect(`/${Astro.currentLocale}/signin`);
-}
-
-// Function to generate Gravatar URL
-function getGravatarUrl(email: string) {
-	const md5 = (str: string) => {
-		// This is a simplified mock of MD5 for demo purposes
-		// In a real app, use a proper MD5 implementation
-		return Array.from(new TextEncoder().encode(str))
-			.map((b) => b.toString(16).padStart(2, "0"))
-			.join("");
-	};
-
-	const hash = md5(email.toLowerCase().trim());
-	return `https://www.gravatar.com/avatar/${hash}?d=mp&s=200`;
+	return Astro.redirect(translatePath("/signin"));
 }
 
 // Determine avatar URL
@@ -300,12 +294,11 @@ const displayName =
 	</div>
 </Layout>
 <script>
-	// Auto-close notifications after 5 seconds and add click-to-dismiss functionality
+	import { supabase } from "@/lib/supabase";
+	// Handle notifications
 	document.addEventListener("DOMContentLoaded", () => {
-		// Get all notifications on the page
 		const notifications = document.querySelectorAll(".notification");
 
-		// Process each notification
 		notifications.forEach((notification) => {
 			// Set a timeout to automatically close after 5 seconds
 			setTimeout(() => {
@@ -321,18 +314,78 @@ const displayName =
 			}
 		});
 
-		// Function to hide notifications with a fade-out effect
-		function hideNotification(element: HTMLElement) {
-			// Only proceed if the element exists and is in the DOM
-			if (element && document.body.contains(element)) {
-				// Add opacity-0 class to fade out
-				element.classList.add("opacity-0");
-
-				// After the transition completes, remove the element
-				setTimeout(() => {
-					element.remove();
-				}, 300); // Match this to the duration-300 in your transition classes
-			}
-		}
+		// Handle signed URL refreshing for avatars
+		refreshAvatarUrls();
+		// Check for URL refresh every 50 minutes (10 minutes before 1-hour expiration)
+		setInterval(refreshAvatarUrls, 50 * 60 * 1000);
 	});
+
+	// Function to hide notifications with a fade-out effect
+	function hideNotification(element: HTMLElement) {
+		// Only proceed if the element exists and is in the DOM
+		if (element && document.body.contains(element)) {
+			// Add opacity-0 class to fade out
+			element.classList.add("opacity-0");
+
+			// After the transition completes, remove the element
+			setTimeout(() => {
+				element.remove();
+			}, 300); // Match this to the duration-300 in your transition classes
+		}
+	}
+
+	// Function to refresh avatar URLs
+	async function refreshAvatarUrls() {
+		const avatarImages = document.querySelectorAll('img[src*="supabase"]');
+
+		avatarImages.forEach(async (img) => {
+			const currentSrc = img.getAttribute('src');
+
+				// Check for both signed and public URLs
+			if (currentSrc && (
+				currentSrc.includes('/storage/v1/object/public/avatars/') ||
+				currentSrc.includes('/storage/v1/object/sign/avatars/')
+			)) {
+				// Extract the file path from the URL - handle both formats
+				let filePath;
+
+				if (currentSrc.includes('/storage/v1/object/public/avatars/')) {
+					const pathRegex = /\/storage\/v1\/object\/public\/avatars\/(.+)/;
+					const match = currentSrc.match(pathRegex);
+					if (match && match[1]) filePath = match[1];
+				} else if (currentSrc.includes('/storage/v1/object/sign/avatars/')) {
+					// For signed URLs, extract the path before the token
+					const signedUrlParts = currentSrc.split('?');
+					if (signedUrlParts.length > 0) {
+						const basePath = signedUrlParts[0];
+						const pathRegex = /\/storage\/v1\/object\/sign\/avatars\/(.+)/;
+						const match = basePath.match(pathRegex);
+						if (match && match[1]) filePath = match[1];
+					}
+				}
+
+				if (filePath) {
+					try {
+						// Create a signed URL with 1-hour expiration
+						const { data, error } = await supabase
+							.storage
+							.from('avatars')
+							.createSignedUrl(filePath, 3600);
+
+						if (error) {
+							console.error('Error creating signed URL:', error);
+							return;
+						}
+
+						if (data?.signedUrl) {
+							// Update the image source with the signed URL
+							img.setAttribute('src', data.signedUrl);
+						}
+					} catch (err) {
+						console.error('Failed to refresh avatar URL:', err);
+					}
+				}
+			}
+		});
+	}
 </script>
