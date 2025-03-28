@@ -1,12 +1,14 @@
 ---
-import { type Lang, useTranslations } from "@/i18n";
+import { type Lang, useTranslatedPath, useTranslations } from "@/i18n";
 import Layout from "@/layouts/Base.astro";
 import { supabase } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
 import { getGravatarUrl } from "@/utils/gravatar.service";
 import { Icon } from "astro-icon/components";
 
-const t = useTranslations(Astro.currentLocale as Lang);
+const currentLanguage = Astro.currentLocale as Lang;
+const t = useTranslations(currentLanguage);
+const translatePath = useTranslatedPath(currentLanguage);
 
 // Check if user is logged in
 let user = null;
@@ -19,7 +21,7 @@ try {
 	} = await supabase.auth.getSession();
 
 	if (!session) {
-		return Astro.redirect(`/${Astro.currentLocale}/signin`);
+		return Astro.redirect(translatePath("/signin"));
 	}
 
 	user = session.user;
@@ -83,7 +85,7 @@ try {
 	}
 } catch (e) {
 	error = e instanceof Error ? e.message : "Authentication error";
-	return Astro.redirect(`/${Astro.currentLocale}/signin`);
+	return Astro.redirect(translatePath("/signin"));
 }
 
 // Determine avatar URL
@@ -292,13 +294,7 @@ const displayName =
 	</div>
 </Layout>
 <script>
-	import { createClient } from "@supabase/supabase-js";
-
-	// Create Supabase client for client-side operations
-	const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
-	const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
-	const supabase = createClient(supabaseUrl, supabaseAnonKey);
-
+	import { supabase } from "@/lib/supabase";
 	// Handle notifications
 	document.addEventListener("DOMContentLoaded", () => {
 		const notifications = document.querySelectorAll(".notification");
