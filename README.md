@@ -7,7 +7,6 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 [![Link Checking](https://github.com/codary-tech/codary.tech/actions/workflows/links.yml/badge.svg)](https://github.com/codary-tech/codary.tech/actions/workflows/links.yml)
-[![Lighthouse CI](https://github.com/codary-tech/codary.tech/actions/workflows/pagespeed-insights.yml/badge.svg)](https://github.com/codary-tech/codary.tech/actions/workflows/pagespeed-insights.yml)
 
 > 🚀 Un blog técnico moderno construido con Astro, enfocado en rendimiento y experiencia de usuario.
 
