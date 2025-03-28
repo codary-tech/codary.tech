@@ -7,7 +7,6 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 [![Link Checking](https://github.com/codary-tech/codary.tech/actions/workflows/links.yml/badge.svg)](https://github.com/codary-tech/codary.tech/actions/workflows/links.yml)
-[![Lighthouse CI](https://github.com/codary-tech/codary.tech/actions/workflows/pagespeed-insights.yml/badge.svg)](https://github.com/codary-tech/codary.tech/actions/workflows/pagespeed-insights.yml)
 
 > 🚀 Un blog técnico moderno construido con Astro, enfocado en rendimiento y experiencia de usuario.
 
@@ -267,6 +266,70 @@ Para desplegar el sitio en producción:
 - **Commits**: [Conventional Commits](https://www.conventionalcommits.org/)
 - **Documentación**: Documenta cualquier nueva funcionalidad o cambio
 
+```mermaid
+graph TD
+    subgraph "Frontend/Presentation Layer"
+        FEComponents["Astro Components & i18n"]:::frontend
+        FELayouts["Layouts"]:::frontend
+        FEPages["Pages"]:::frontend
+        FEStyles["Global Styles"]:::frontend
+    end
+
+    subgraph "Content/Data Layer"
+        DataArticles["MDX Articles & Content"]:::data
+        DataModels["Data Models"]:::data
+    end
+
+    subgraph "API/Backend Layer"
+        APIEndpoints["API Endpoints"]:::api
+    end
+
+    subgraph "External Service Integration"
+        Supabase["Supabase Service"]:::external
+    end
+
+    subgraph "Build & Deployment"
+        AstroConfig["Astro Configuration"]:::build
+        PackageCI["Package & CI/CD"]:::build
+        DevContainer["Dev Container Setup"]:::build
+    end
+
+    FEComponents -->|"renders"| FELayouts
+    FELayouts -->|"composes"| FEPages
+    FEPages -->|"styledBy"| FEStyles
+    DataArticles -->|"processedBy"| DataModels
+    DataModels -->|"suppliesDataTo"| FEPages
+    FEPages -->|"calls"| APIEndpoints
+    APIEndpoints -->|"invokes"| Supabase
+    AstroConfig -->|"builds"| FEComponents
+    AstroConfig -->|"buildsContent"| DataArticles
+    PackageCI -->|"triggersBuild"| AstroConfig
+    DevContainer -->|"setsEnv"| PackageCI
+
+    classDef frontend fill:#D1E8FF,stroke:#0366d6,stroke-width:2px;
+    classDef data fill:#FFF2CC,stroke:#B58900,stroke-width:2px;
+    classDef api fill:#FFE6E6,stroke:#D04437,stroke-width:2px;
+    classDef external fill:#E6FFED,stroke:#28A745,stroke-width:2px;
+    classDef build fill:#F0F0F0,stroke:#6F42C1,stroke-width:2px;
+
+    %% Click Events
+    click FEComponents "https://github.com/codary-tech/codary.tech/tree/main/src/components"
+    click FEComponents "https://github.com/codary-tech/codary.tech/tree/main/src/components/i18n"
+    click FELayouts "https://github.com/codary-tech/codary.tech/tree/main/src/layouts"
+    click FEPages "https://github.com/codary-tech/codary.tech/tree/main/src/pages"
+    click FEStyles "https://github.com/codary-tech/codary.tech/tree/main/src/styles"
+    click DataArticles "https://github.com/codary-tech/codary.tech/tree/main/src/data"
+    click DataModels "https://github.com/codary-tech/codary.tech/tree/main/src/models"
+    click APIEndpoints "https://github.com/codary-tech/codary.tech/tree/main/src/pages/api"
+    click Supabase "https://github.com/codary-tech/codary.tech/tree/main/supabase"
+    click Supabase "https://github.com/codary-tech/codary.tech/blob/main/src/lib/supabase.helper.ts"
+    click Supabase "https://github.com/codary-tech/codary.tech/blob/main/src/lib/supabase.ts"
+    click AstroConfig "https://github.com/codary-tech/codary.tech/blob/main/astro.config.mjs"
+    click PackageCI "https://github.com/codary-tech/codary.tech/blob/main/package.json"
+    click PackageCI "https://github.com/codary-tech/codary.tech/tree/main/.github/workflows"
+    click DevContainer "https://github.com/codary-tech/codary.tech/blob/main/.devcontainer"
+```
+
 ## Licencia
 
 Este proyecto está bajo la licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
@@ -276,7 +339,3 @@ Este proyecto está bajo la licencia MIT. Consulta el archivo [LICENSE](LICENSE)
 - **Autor:** [yacosta738](https://github.com/yacosta738)
 - **Sitio Web:** [codary.tech](https://codary.tech)
 - **Soporte y Consultas:** Abre un issue en el repositorio o contacta al autor a través de sus redes sociales.
-
-## Contribuciones en el Repositorio
-
-![Repositorio Analytics](https://repobeats.axiom.co/api/embed/ebbf1ef036c66e40f1101a1853eb07adc32e9baa.svg "Repo analytics image")
