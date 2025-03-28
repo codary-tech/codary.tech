@@ -2,6 +2,7 @@
 // Basic Layout for All Pages
 
 import Analytics from "@/components/Analytics.astro";
+import BackToTop from "@/components/BackToTop.astro";
 import Header from "@/components/Header.astro";
 import LocaleHtmlHead from "@/components/i18n/LocaleHtmlHead.astro";
 import LocaleSuggest from "@/components/i18n/LocaleSuggest.astro";
@@ -78,6 +79,8 @@ const localeDescription = description || t(SITE_DESCRIPTION);
     <main>
       <slot />
     </main>
+
+    <BackToTop />
 
     { import.meta.env.DEV && <style>:root { scroll-behavior: auto }</style> }
   </body>
