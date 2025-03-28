@@ -10,11 +10,12 @@
 │   │   ├───bug_report.md
 │   │   └───feature_request.md
 │   ├───workflows/
+│   │   ├───.DS_Store
 │   │   ├───cleanup.yml
 │   │   ├───codeql.yml
 │   │   ├───image-actions.yml
-│   │   ├───links.yml
-│   │   └───pagespeed-insights.yml
+│   │   └───links.yml
+│   ├───.DS_Store
 │   ├───FUNDING.yml
 │   ├───PULL_REQUEST_TEMPLATE.md
 │   ├───copilot-instructions.md
@@ -361,6 +362,11 @@
 │   │   ├───global.css
 │   │   └───scroll-behavior.css
 │   ├───utils/
+│   │   ├───__tests__/
+│   │   │   ├───collection.entity.test.ts
+│   │   │   ├───date.test.ts
+│   │   │   ├───gravatar.service.test.ts
+│   │   │   └───image.utils.test.ts
 │   │   ├───test/
 │   │   │   ├───article.generator.mock.ts
 │   │   │   ├───author.generator.mock.ts
@@ -369,6 +375,7 @@
 │   │   │   └───tag.generator.mock.ts
 │   │   ├───collection.entity.ts
 │   │   ├───date.ts
+│   │   ├───gravatar.service.ts
 │   │   ├───image.utils.ts
 │   │   └───remark-reading-time.mjs
 │   ├───consts.ts
@@ -378,16 +385,24 @@
 │   ├───.branches/
 │   │   └───_current_branch
 │   ├───.temp/
-│   │   └───cli-latest
+│   │   ├───cli-latest
+│   │   ├───gotrue-version
+│   │   ├───pooler-url
+│   │   ├───postgres-version
+│   │   ├───project-ref
+│   │   └───rest-version
+│   ├───images/
 │   ├───migrations/
 │   │   ├───20250227195823_user_management_starter.sql
-│   │   └───20250227200050_newsletter_subscriptions.sql
+│   │   ├───20250227200050_newsletter_subscriptions.sql
+│   │   └───20250228000000_storage_policy_updates.sql
+│   ├───templates/
+│   │   └───magic_link.html
 │   ├───.gitignore
 │   └───config.toml
 ├───.dev.vars
 ├───.editorconfig
 ├───.gitignore
-├───.lycheeignore
 ├───.npmrc
 ├───.pre-commit-config.yaml
 ├───CODE_OF_CONDUCT.md
@@ -397,6 +412,7 @@
 ├───SECURITY.md
 ├───astro.config.mjs
 ├───biome.json
+├───lychee.toml
 ├───package.json
 ├───pnpm-lock.yaml
 ├───renovate.json
