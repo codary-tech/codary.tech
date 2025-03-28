@@ -83,6 +83,7 @@
 │   │   ├───AuthorCard.astro
 │   │   ├───AuthorSocials.astro
 │   │   ├───AuthorWrapper.astro
+│   │   ├───BackToTop.astro
 │   │   ├───Button.astro
 │   │   ├───ByAuthor.astro
 │   │   ├───ContactBox.astro

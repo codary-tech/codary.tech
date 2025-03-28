@@ -11,6 +11,7 @@ export const common: { en: UIDict; es: UIDict } = {
 		"load.more": "LOAD MORE",
 		"select.language": "Select Language",
 		"language-selector.label": "Select Language",
+		"back.to.top": "Back to top",
 	},
 	es: {
 		"header.auth": "Iniciar Sesión",
@@ -22,5 +23,6 @@ export const common: { en: UIDict; es: UIDict } = {
 		"load.more": "CARGAR MÁS",
 		"select.language": "Seleccionar Idioma",
 		"language-selector.label": "Seleccionar Idioma",
+		"back.to.top": "Volver al principio",
 	},
 };
