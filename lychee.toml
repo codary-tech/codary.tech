@@ -57,7 +57,6 @@ max_concurrency = 14
 #############################  Requests  ############################
 
 # User agent to send with each request.
-user_agent = "curl/7.83. 1"
-
+user_agent = "curl/7.83.1"
 # I got lots of Github links...
 accept = ["200..=204", "401","403", "429"]
