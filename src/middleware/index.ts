@@ -21,20 +21,14 @@ export const onRequest = defineMiddleware(async (context, next) => {
 		data: { session },
 	} = await supabase.auth.getSession();
 
-	// If session exists, populate locals with user data
-	if (session) {
-		const {
-			data: { user },
-		} = await supabase.auth.getUser();
-
-		if (user) {
-			context.locals.isAuthenticated = true;
-			context.locals.user = {
-				id: user.id,
-				email: user.email || "",
-				role: user.user_metadata?.role || "user",
-			};
-		}
+	// If session exists with user data, populate locals directly from session
+	if (session?.user) {
+		context.locals.isAuthenticated = true;
+		context.locals.user = {
+			id: session.user.id,
+			email: session.user.email || "",
+			role: session.user.user_metadata?.role || "user",
+		};
 	}
 
 	// Extract the requested path and potential locale from URL
