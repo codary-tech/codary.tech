@@ -118,8 +118,6 @@ const localesData = JSON.stringify(LOCALES);
 
       if (!select) return;
 
-      const variant = this.dataset.variant || 'text';
-      const currentLocaleData = JSON.parse(this.dataset.currentLocale || '{}');
 
       select.addEventListener('change', (event) => {
         if (!(event.currentTarget instanceof HTMLSelectElement)) return;

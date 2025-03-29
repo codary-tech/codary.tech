@@ -57,7 +57,7 @@ const t = useTranslations(currentLocale);
 	</div>
 </section>
 
-<script define:vars={{ formId }}>
+<script is:inline define:vars={{ formId }}>
 	// Check authentication status on the client side to handle dynamic changes
 	document.addEventListener('DOMContentLoaded', async () => {
 		try {

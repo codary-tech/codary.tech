@@ -1,5 +1,5 @@
 ---
-import { type Lang, useTranslatedPath, useTranslations } from "@/i18n";
+import { type Lang, useTranslations } from "@/i18n";
 import Layout from "@/layouts/Base.astro";
 import { supabase } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
@@ -8,7 +8,6 @@ import { Icon } from "astro-icon/components";
 
 const currentLanguage = Astro.currentLocale as Lang;
 const t = useTranslations(currentLanguage);
-const translatePath = useTranslatedPath(currentLanguage);
 
 // Check if user is logged in
 let user = null;
@@ -294,7 +293,12 @@ const displayName =
 	</div>
 </Layout>
 <script>
-	import { supabase } from "@/lib/supabase";
+	// Define interface for the API response
+	interface RefreshAvatarResponse {
+		signedUrl?: string;
+		error?: string;
+	}
+
 	// Handle notifications
 	document.addEventListener("DOMContentLoaded", () => {
 		const notifications = document.querySelectorAll(".notification");
@@ -338,10 +342,10 @@ const displayName =
 	async function refreshAvatarUrls() {
 		const avatarImages = document.querySelectorAll('img[src*="supabase"]');
 
-		avatarImages.forEach(async (img) => {
+		for (const img of avatarImages) {
 			const currentSrc = img.getAttribute('src');
 
-				// Check for both signed and public URLs
+			// Check for both signed and public URLs
 			if (currentSrc && (
 				currentSrc.includes('/storage/v1/object/public/avatars/') ||
 				currentSrc.includes('/storage/v1/object/sign/avatars/')
@@ -366,26 +370,29 @@ const displayName =
 
 				if (filePath) {
 					try {
-						// Create a signed URL with 1-hour expiration
-						const { data, error } = await supabase
-							.storage
-							.from('avatars')
-							.createSignedUrl(filePath, 3600);
+						// Call the server endpoint to get a fresh signed URL
+						const response = await fetch('/api/refresh-avatar', {
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json',
+							},
+							body: JSON.stringify({ filePath }),
+						});
 
-						if (error) {
-							console.error('Error creating signed URL:', error);
-							return;
-						}
+						// Type the result of response.json()
+						const result = await response.json() as RefreshAvatarResponse;
 
-						if (data?.signedUrl) {
-							// Update the image source with the signed URL
-							img.setAttribute('src', data.signedUrl);
+						if (response.ok && result.signedUrl) {
+							// Update the image source with the new signed URL
+							img.setAttribute('src', result.signedUrl);
+						} else {
+							console.error('Error refreshing avatar URL:', result.error);
 						}
 					} catch (err) {
 						console.error('Failed to refresh avatar URL:', err);
 					}
 				}
 			}
-		});
+		}
 	}
 </script>

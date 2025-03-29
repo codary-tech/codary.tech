@@ -349,6 +349,7 @@
 │   │   │   │   └───signup.ts
 │   │   │   ├───newsletter/
 │   │   │   │   └───subscribe.ts
+│   │   │   ├───refresh-avatar.ts
 │   │   │   └───user.ts
 │   │   ├───en/
 │   │   │   ├───about.mdx
