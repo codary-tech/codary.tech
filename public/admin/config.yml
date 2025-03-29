@@ -6,7 +6,7 @@ backend:
   name: github
   repo: yacosta738/astro-cms
   branch: main
-  base_url: https://sveltia-cms-auth.yunielacosta738.workers.dev/
+  base_url: https://codary-sveltia-cms-auth.yunielacosta738.workers.dev/
 
 publish_mode: editorial_workflow
 
