@@ -1,8 +1,8 @@
 ---
-import { getUserAuthStatus } from "@/auth/user.service";
 import { type Lang, useTranslatedPath, useTranslations } from "@/i18n";
 import { LOCALES_SETTING } from "@/i18n/locales";
 import { cn } from "@/lib/utils";
+import { checkUserStatusClient } from "@/models/auth/user.service";
 import { Icon } from "astro-icon/components";
 import type { HTMLAttributes } from "astro/types";
 import Link from "./Link.astro";
@@ -18,7 +18,7 @@ const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 
 // Get authentication status
-const isLoggedIn = await getUserAuthStatus(Astro.request);
+const isLoggedIn = await checkUserStatusClient();
 
 // Determine appropriate display classes
 const displayClasses = showOnMobile ? "flex" : "md:flex hidden";
@@ -50,7 +50,7 @@ const translations = Object.fromEntries(
 </auth-button>
 
 <script>
-  import { checkUserStatusClient } from "../auth/user.service";
+  import { checkUserStatusClient } from "@/models/auth/user.service";
 
   class AuthButton extends HTMLElement {
     link: HTMLAnchorElement | null = null;
@@ -126,10 +126,6 @@ const translations = Object.fromEntries(
 
       // Get current language from HTML or data attribute
       const currentLang = document.documentElement.lang || this.dataset.currentLang || 'en';
-
-      // Detect language pattern in URL - works dynamically with any number of languages
-      const langPatternRegex = new RegExp(`^/(${this.supportedLanguages.join('|')})/`);
-      const langPrefix = currentUrl.match(langPatternRegex)?.[0] || '';
 
       // Create base path by removing account/signin part but preserving language prefix
       const basePath = currentUrl.replace(/\/(account|signin).*$/, '');

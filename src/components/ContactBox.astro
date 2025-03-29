@@ -1,5 +1,4 @@
 ---
-import { type Lang, useTranslations } from "@/i18n";
 import { cn } from "@/lib/utils";
 import type { HTMLAttributes } from "astro/types";
 
@@ -9,9 +8,6 @@ interface Props extends HTMLAttributes<"div"> {
 }
 
 const { title, email, ...attrs } = Astro.props;
-
-const currentLocale = Astro.currentLocale as Lang;
-const t = useTranslations(currentLocale);
 ---
 
 <div

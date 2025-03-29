@@ -1,7 +1,6 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { useTranslatedPath, useTranslations } from "../i18n";
-import { DEFAULT_LOCALE, type Lang, type Multilingual } from "../types";
-import { ui } from "../ui";
+import type { Multilingual } from "../types";
 
 // Define mock function before vi.mock
 const mockShowDefaultLang = vi.fn().mockReturnValue(false);
