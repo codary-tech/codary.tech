@@ -1,0 +1,158 @@
+---
+import { getUserAuthStatus } from "@/auth/user.service";
+import { type Lang, useTranslatedPath, useTranslations } from "@/i18n";
+import { LOCALES_SETTING } from "@/i18n/locales";
+import { cn } from "@/lib/utils";
+import { Icon } from "astro-icon/components";
+import type { HTMLAttributes } from "astro/types";
+import Link from "./Link.astro";
+
+interface Props extends HTMLAttributes<"a"> {
+	showOnMobile?: boolean;
+}
+
+const { class: className, showOnMobile = false, ...attrs } = Astro.props;
+
+const lang = Astro.currentLocale as Lang;
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+
+// Get authentication status
+const isLoggedIn = await getUserAuthStatus(Astro.request);
+
+// Determine appropriate display classes
+const displayClasses = showOnMobile ? "flex" : "md:flex hidden";
+
+// Build translations data object to pass to the web component
+const translations = Object.fromEntries(
+	Object.keys(LOCALES_SETTING).map((locale) => [
+		locale,
+		{
+			account: useTranslations(locale as Lang)("header.account"),
+			signin: useTranslations(locale as Lang)("header.auth"),
+		},
+	]),
+);
+---
+
+<auth-button
+  class={cn(displayClasses, className)}
+  data-initial-path={translatePath(isLoggedIn ? "/account" : "/signin")}
+  data-translations={JSON.stringify(translations)}
+  data-current-lang={lang}
+  data-initial-status={isLoggedIn ? "logged-in" : "logged-out"}
+  {...attrs}
+>
+  <Link href={translatePath(isLoggedIn ? "/account" : "/signin")} >
+    <span>{t(isLoggedIn ? "header.account" : "header.auth")}</span>
+    <Icon name="tabler:chevron-right" class="size-5" />
+  </Link>
+</auth-button>
+
+<script>
+  import { checkUserStatusClient } from "../auth/user.service";
+
+  class AuthButton extends HTMLElement {
+    link: HTMLAnchorElement | null = null;
+    textSpan: HTMLSpanElement | null = null;
+    translations: Record<string, { account: string, signin: string }> = {};
+    supportedLanguages: string[] = [];
+    isLoggedIn: boolean = false;
+
+    constructor() {
+      super();
+
+      // Parse translations from data attribute
+      try {
+        this.translations = JSON.parse(this.dataset.translations || '{}');
+        this.supportedLanguages = Object.keys(this.translations);
+      } catch (e) {
+        console.error("Error parsing translations:", e);
+      }
+
+      // Set initial login status
+      this.isLoggedIn = this.dataset.initialStatus === "logged-in";
+    }
+
+    connectedCallback() {
+      // Find elements inside this component
+      this.link = this.querySelector('a');
+      this.textSpan = this.querySelector('span');
+
+      // Initial setup
+      this.updateAuthState(this.isLoggedIn);
+
+      // Check auth status periodically or when component is visible
+      this.checkAuthStatus();
+      document.addEventListener('authStateChange', () => this.checkAuthStatus());
+
+      // Set up an observer to handle route changes (SPA navigation)
+      if (typeof MutationObserver !== 'undefined') {
+        this.observeUrlChanges();
+      }
+    }
+
+    async checkAuthStatus() {
+      try {
+        const newStatus = await checkUserStatusClient();
+        if (newStatus !== this.isLoggedIn) {
+          this.isLoggedIn = newStatus;
+          this.updateAuthState(newStatus);
+        }
+      } catch (error) {
+        console.error("Error checking auth status:", error);
+      }
+    }
+
+    observeUrlChanges() {
+      // Watch for changes to the URL to update the auth button accordingly
+      const observer = new MutationObserver(() => {
+        // Only update if already mounted
+        if (this.link) {
+          this.updateAuthState(this.isLoggedIn);
+        }
+      });
+
+      observer.observe(document.querySelector('body')!, {
+        childList: true,
+        subtree: true
+      });
+    }
+
+    updateAuthState(isLoggedIn: boolean) {
+      if (!this.link || !this.textSpan) return;
+
+      const currentUrl = this.link.getAttribute('href') || '';
+
+      // Get current language from HTML or data attribute
+      const currentLang = document.documentElement.lang || this.dataset.currentLang || 'en';
+
+      // Detect language pattern in URL - works dynamically with any number of languages
+      const langPatternRegex = new RegExp(`^/(${this.supportedLanguages.join('|')})/`);
+      const langPrefix = currentUrl.match(langPatternRegex)?.[0] || '';
+
+      // Create base path by removing account/signin part but preserving language prefix
+      const basePath = currentUrl.replace(/\/(account|signin).*$/, '');
+
+      // Set new path with updated auth endpoint
+      const newPath = `${basePath}/${isLoggedIn ? 'account' : 'signin'}`;
+      this.link.setAttribute('href', newPath);
+
+      // Update text content with translation for current language
+      if (currentLang in this.translations) {
+        this.textSpan.textContent = isLoggedIn
+          ? this.translations[currentLang].account
+          : this.translations[currentLang].signin;
+      } else {
+        // Fallback to default language if current language not found
+        const defaultLang = this.supportedLanguages[0] || 'en';
+        this.textSpan.textContent = isLoggedIn
+          ? this.translations[defaultLang].account
+          : this.translations[defaultLang].signin;
+      }
+    }
+  }
+
+  // Register the custom element
+  customElements.define('auth-button', AuthButton);
+</script>

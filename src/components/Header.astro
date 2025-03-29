@@ -1,4 +1,5 @@
 ---
+import { getUserAuthStatus } from "@/auth/user.service";
 import { type Lang, useTranslatedPath, useTranslations } from "@/i18n";
 import { cn } from "@/lib/utils";
 import {
@@ -9,6 +10,7 @@ import {
 } from "@/models/menu";
 import { Icon } from "astro-icon/components";
 import type { HTMLAttributes } from "astro/types";
+import AuthButton from "./AuthButton.astro";
 import IconButton from "./IconButton.astro";
 import Link from "./Link.astro";
 import Logo from "./Logo.astro";
@@ -24,19 +26,7 @@ const translatePath = useTranslatedPath(lang);
 interface Props extends HTMLAttributes<"header"> {}
 const { ...attrs } = Astro.props as Props;
 
-let isLoggedIn = false;
-
-try {
-	const response = await fetch("/api/user", {
-		headers: {
-			cookie: Astro.request.headers.get("cookie") || "",
-		},
-	});
-	const data = await response.json<{ isLoggedIn: boolean }>();
-	isLoggedIn = data.isLoggedIn;
-} catch (error) {
-	console.error("Error fetching user:", error);
-}
+const isLoggedIn = await getUserAuthStatus(Astro.request);
 
 const filteredMainMenuItems = filterMenuItems(mainMenuItems);
 const filteredDropdownMenuItems = filterMenuItems(dropdownMenuItems);
@@ -81,10 +71,7 @@ const authInfo: AuthInfo = {
 					class="hidden md:inline-flex"
 				/>
 
-        <Link href={translatePath(isLoggedIn ? "/account" : "/signin")} class="md:flex hidden">
-          <span>{t(isLoggedIn ? "header.account" : "header.auth")}</span>
-          <Icon name="tabler:chevron-right" class="size-5" />
-        </Link>
+        <AuthButton />
       </div>
     </div>
 
@@ -126,6 +113,8 @@ const authInfo: AuthInfo = {
   </style>
 
   <script>
+    import { checkUserStatusClient } from "../auth/user.service";
+
     // Handle colored-hero classes for button styling
     const header = document.getElementById('header');
     const heroSection = document.querySelector('.hero-section');
@@ -158,39 +147,23 @@ const authInfo: AuthInfo = {
     // Use passive event listener for better performance
     window.addEventListener("scroll", handleHeaderVisibility, { passive: true });
 
-    // Check if user is logged in on client-side as well
-    async function checkUserStatus() {
+    // Check if user is logged in on client-side using the reusable function
+    async function updateAuthUI() {
       try {
-        const response = await fetch('/api/user');
-        const data = await response.json<{ isLoggedIn: boolean }>();
-
-        // Get current language
-        const currentLang = document.documentElement.lang || 'en';
-
-        // Simple client-side path translation function
-        const translatePath = (path: string) => {
-          // Default language (en) doesn't need prefix
-          if (currentLang === 'en') return path;
-          // Other languages need prefix
-          return `/${currentLang}${path}`;
-        };
+        const isLoggedIn = await checkUserStatusClient();
 
         // Update the auth button if needed
-        if (data.isLoggedIn) {
-          // Use a more robust selector that can find links with or without language prefix
-          const signinPath = translatePath('/signin');
-          const accountPath = translatePath('/account');
-
-          // Find auth links - both with and without language prefix
-          const authLinks = document.querySelectorAll(`a[href="${signinPath}"], a[href="/signin"]`);
-
-          authLinks.forEach(link => {
-            link.setAttribute('href', accountPath);
-            const textSpan = link.querySelector('span');
+        if (isLoggedIn) {
+          const authLink = document.querySelector('a[href="/signin"]');
+          if (authLink) {
+            authLink.setAttribute('href', '/account');
+            const textSpan = authLink.querySelector('span');
             if (textSpan) {
+              // Translate based on current language
+              const currentLang = document.documentElement.lang || 'en';
               textSpan.textContent = currentLang === 'es' ? 'Cuenta' : 'Account';
             }
-          });
+          }
         }
       } catch (error) {
         console.error("Error checking user status:", error);
@@ -198,5 +171,5 @@ const authInfo: AuthInfo = {
     }
 
     // Run on load
-    checkUserStatus();
+    updateAuthUI();
   </script>

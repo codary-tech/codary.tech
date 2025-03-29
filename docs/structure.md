@@ -70,6 +70,8 @@
 │   │       ├───whoAMI-cover.avif
 │   │       ├───whoami.avif
 │   │       └───xAI.avif
+│   ├───auth/
+│   │   └───user.service.ts
 │   ├───components/
 │   │   ├───i18n/
 │   │   │   ├───LocaleHtmlHead.astro
@@ -80,6 +82,7 @@
 │   │   │   └───NotTranslateCaution.astro
 │   │   ├───Analytics.astro
 │   │   ├───ArticleCard.astro
+│   │   ├───AuthButton.astro
 │   │   ├───AuthorCard.astro
 │   │   ├───AuthorSocials.astro
 │   │   ├───AuthorWrapper.astro
