@@ -53,6 +53,9 @@ importers:
       mdast-util-to-string:
         specifier: ^4.0.0
         version: 4.0.0
+      micromatch:
+        specifier: ^4.0.8
+        version: 4.0.8
       reading-time:
         specifier: ^1.5.0
         version: 1.5.0
@@ -75,6 +78,9 @@ importers:
       '@tailwindcss/typography':
         specifier: ^0.5.16
         version: 0.5.16(tailwindcss@4.0.17)
+      '@types/micromatch':
+        specifier: ^4.0.9
+        version: 4.0.9
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
