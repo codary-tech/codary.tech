@@ -4,7 +4,7 @@ logo_url: /favicon.svg
 
 backend:
   name: github
-  repo: yacosta738/astro-cms
+  repo: codary-tech/codary.tech
   branch: main
   base_url: https://codary-sveltia-cms-auth.yunielacosta738.workers.dev/
 
