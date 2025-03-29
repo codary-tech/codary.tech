@@ -53,15 +53,13 @@ cn(
 </section>
 
 <script>
-  // Check authentication status on the client side to handle dynamic changes
+  import {checkUserStatusClient } from "@/models/auth/user.service";
   document.addEventListener('DOMContentLoaded', async () => {
     try {
-      const response = await fetch('/api/user');
-      const data = await response.json<{ isLoggedIn: boolean }>();
+      const isLoggedIn = await checkUserStatusClient();
       const subscriptionFormContainer = document.querySelector('#hero .flex.justify-center.items-center.mt-6');
 
-      // If user is logged in and the form container is visible, hide it
-      if (data.isLoggedIn && subscriptionFormContainer) {
+      if (isLoggedIn && subscriptionFormContainer) {
         subscriptionFormContainer.classList.add('hidden');
       }
     } catch (error) {

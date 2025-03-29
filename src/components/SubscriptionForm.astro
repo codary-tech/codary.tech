@@ -1,5 +1,5 @@
 ---
-import { type Lang, useTranslations } from "@/i18n";
+import { type Lang, useTranslatedPath, useTranslations } from "@/i18n";
 import { cn } from "@/lib/utils";
 import { Icon } from "astro-icon/components";
 import type { HTMLAttributes } from "astro/types";
@@ -28,7 +28,9 @@ const {
 	...attrs
 } = Astro.props;
 
-const t = useTranslations(Astro.currentLocale as Lang);
+const currentLanguage = Astro.currentLocale as Lang;
+const t = useTranslations(currentLanguage);
+const translatePath = useTranslatedPath(currentLanguage);
 const finalButtonText =
 	buttonText ||
 	(formType === "login" ? t("signin.submit") : t("cta.subscribe"));
@@ -100,7 +102,7 @@ const successButtonText =
 			{successText}
 		</p>
 
-		<Link href="/" aria-label="Home Page Link">
+		<Link href={translatePath("/")} aria-label="Home Page Link">
 			{successButtonText}
 			<Icon name="tabler:chevron-right" class="size-5" />
 		</Link>

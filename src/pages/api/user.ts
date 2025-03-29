@@ -1,15 +1,11 @@
 import { supabase } from "@/lib/supabase";
+import type {
+	GetUserResponse,
+	UserAPIErrorResponse,
+	UserAPISuccessResponse,
+} from "@/models/auth/user.api.response";
 
-import type { AuthError, User } from "@supabase/supabase-js";
 import type { APIRoute } from "astro";
-
-// Define type for the response from getUser()
-interface GetUserResponse {
-	data: {
-		user: User | null;
-	};
-	error: AuthError | null;
-}
 
 export const GET: APIRoute = async ({ request }) => {
 	try {
@@ -27,40 +23,34 @@ export const GET: APIRoute = async ({ request }) => {
 		const { data, error }: GetUserResponse = await supabase.auth.getUser();
 
 		if (error) {
-			return new Response(
-				JSON.stringify({
-					error: error.message,
-					isLoggedIn: false,
-					user: null,
-				}),
-				{
-					status: 401,
-					headers: { "Content-Type": "application/json" },
-				},
-			);
-		}
-
-		return new Response(
-			JSON.stringify({
-				isLoggedIn: !!data.user,
-				user: data.user,
-			}),
-			{
-				status: 200,
-				headers: { "Content-Type": "application/json" },
-			},
-		);
-	} catch (error) {
-		return new Response(
-			JSON.stringify({
-				error: "Internal server error",
+			const response: UserAPIErrorResponse = {
+				error: error.message,
 				isLoggedIn: false,
 				user: null,
-			}),
-			{
-				status: 500,
+			};
+			return new Response(JSON.stringify(response), {
+				status: 401,
 				headers: { "Content-Type": "application/json" },
-			},
-		);
+			});
+		}
+
+		const response: UserAPISuccessResponse = {
+			isLoggedIn: !!data.user,
+			user: data.user,
+		};
+		return new Response(JSON.stringify(response), {
+			status: 200,
+			headers: { "Content-Type": "application/json" },
+		});
+	} catch (error) {
+		const response: UserAPIErrorResponse = {
+			error: "Internal server error",
+			isLoggedIn: false,
+			user: null,
+		};
+		return new Response(JSON.stringify(response), {
+			status: 500,
+			headers: { "Content-Type": "application/json" },
+		});
 	}
 };

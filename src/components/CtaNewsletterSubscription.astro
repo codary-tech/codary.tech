@@ -58,12 +58,11 @@ const t = useTranslations(currentLocale);
 </section>
 
 <script is:inline define:vars={{ formId }}>
-	// Check authentication status on the client side to handle dynamic changes
+	import {checkUserStatusClient } from "@/models/auth/user.service";
 	document.addEventListener('DOMContentLoaded', async () => {
 		try {
-			const response = await fetch('/api/user');
-			const data = await response.json();
-			if (data.isLoggedIn) {
+			const isLoggedIn = await checkUserStatusClient();
+			if (isLoggedIn) {
 				document.querySelector(formId).style.display = 'none';
 			}
 		} catch (error) {

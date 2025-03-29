@@ -70,8 +70,6 @@
 │   │       ├───whoAMI-cover.avif
 │   │       ├───whoami.avif
 │   │       └───xAI.avif
-│   ├───auth/
-│   │   └───user.service.ts
 │   ├───components/
 │   │   ├───i18n/
 │   │   │   ├───LocaleHtmlHead.astro
@@ -280,6 +278,9 @@
 │   │   │   ├───article.model.ts
 │   │   │   ├───article.service.ts
 │   │   │   └───index.ts
+│   │   ├───auth/
+│   │   │   ├───user.api.response.ts
+│   │   │   └───user.service.ts
 │   │   ├───author/
 │   │   │   ├───author.criteria.ts
 │   │   │   ├───author.mapper.ts
