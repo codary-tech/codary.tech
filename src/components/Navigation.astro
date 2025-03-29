@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import type { AuthInfo, MenuItem } from "@/models/menu";
 import { Icon } from "astro-icon/components";
 import type { HTMLAttributes } from "astro/types";
+import AuthButton from "./AuthButton.astro";
 import DotMenuIcon from "./DotMenuIcon.astro";
 import IconButton from "./IconButton.astro";
 import Link from "./Link.astro";
@@ -109,10 +110,7 @@ try {
         <SearchButton id="mobile-search-button" />
         <ThemeToggle id="theme-toggle-navigation" />
       </div>
-      <Link href={authInfo.authPath} class="w-full justify-center">
-        <span>{t(authInfo.authText)}</span>
-        <Icon name="tabler:chevron-right" class="size-5" />
-      </Link>
+			<AuthButton showOnMobile={true} class="w-full justify-center" />
     </div>
 
     <div class="mt-6">

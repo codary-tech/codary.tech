@@ -1,5 +1,6 @@
 ---
 import { LOCALES, type Lang, getLocalePaths, useTranslations } from "@/i18n";
+import { cn } from "@/lib/utils";
 import { Icon } from "astro-icon/components";
 import type { HTMLAttributes } from "astro/types";
 
@@ -33,32 +34,41 @@ const localesData = JSON.stringify(LOCALES);
   data-current-locale={JSON.stringify(currentLocale)}
   data-paths={pathsData}
   data-locales={localesData}
-  class={`inline-flex items-center relative ${attrs.class}`}
+  class={cn("inline-flex items-center relative", attrs.class)}
   {...attrs}
 >
   <label
-    class={`relative inline-flex items-center w-full`}
+    class={cn("relative inline-flex items-center w-full")}
     style={width ? `--select-width: ${width}` : `--select-width: ${isTextVariant ? '8rem' : '6rem'}`}
   >
     <span class="sr-only">{t('select.language')}</span>
     {isTextVariant && (
       <Icon
         name="tabler:language"
-        class="absolute text-foreground-light dark:text-foreground-dark text-sm left-2 top-1/2 transform -translate-y-1/2 pointer-events-none z-10"
+        class={cn(
+          "absolute text-sm left-2 top-1/2 transform -translate-y-1/2 pointer-events-none z-10",
+          "text-gray-700 dark:text-gray-300"
+        )}
       />
     )}
 
     <select
-      class={`appearance-none bg-transparent border-0 cursor-pointer text-foreground-light dark:text-foreground-dark outline-none focus:ring-0 focus:text-foreground-light dark:focus:text-foreground-dark py-2 pr-8 w-[var(--select-width)] truncate ${
-        isTextVariant ? 'pl-8' : 'pl-7 text-foreground-light dark:text-foreground-dark'
-      }`}
+      class={cn(
+        "appearance-none bg-transparent border-0 cursor-pointer outline-none",
+        "focus:ring-0 py-2 pr-8 w-[var(--select-width)] truncate",
+        "text-gray-800 dark:text-gray-200 hover:text-black dark:hover:text-white",
+        isTextVariant ? "pl-8" : "pl-7"
+      )}
     >
       {paths.map(({ path, lang: localeLang }) => (
         <option
           value={path}
           selected={localeLang === lang}
           data-lang={localeLang}
-          class="bg-bg-light dark:bg-bg-dark text-foreground-light dark:text-foreground-dark"
+          class={cn(
+            "bg-white dark:bg-gray-900",
+            "text-gray-800 dark:text-gray-200"
+          )}
         >
           {LOCALES[localeLang].label}
         </option>
@@ -68,10 +78,15 @@ const localesData = JSON.stringify(LOCALES);
     {isTextVariant ? (
       <Icon
         name="tabler:chevron-down"
-        class="absolute text-foreground-light dark:text-foreground-dark text-base right-1 top-1/2 transform -translate-y-1/2 pointer-events-none z-10"
+        class={cn(
+          "absolute text-base right-1 top-1/2 transform -translate-y-1/2 pointer-events-none z-10",
+          "text-gray-700 dark:text-gray-300"
+        )}
       />
     ) : (
-      <span class="absolute left-1 top-1/2 transform -translate-y-1/2 pointer-events-none z-10">
+      <span class={cn(
+        "absolute left-1 top-1/2 transform -translate-y-1/2 pointer-events-none z-10"
+      )}>
         <Icon
           name={currentLocale.flag}
           class="w-5 h-5"
@@ -82,7 +97,10 @@ const localesData = JSON.stringify(LOCALES);
     {!isTextVariant && (
       <Icon
         name="tabler:chevron-down"
-        class="absolute text-foreground-light dark:text-foreground-dark text-base right-1 top-1/2 transform -translate-y-1/2 pointer-events-none z-10"
+        class={cn(
+          "absolute text-base right-1 top-1/2 transform -translate-y-1/2 pointer-events-none z-10",
+          "text-gray-700 dark:text-gray-300"
+        )}
       />
     )}
   </label>
