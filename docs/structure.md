@@ -268,6 +268,8 @@
 │   │   ├───supabase.helper.ts
 │   │   ├───supabase.ts
 │   │   └───utils.ts
+│   ├───middleware/
+│   │   └───index.ts
 │   ├───models/
 │   │   ├───article/
 │   │   │   ├───__tests__/
