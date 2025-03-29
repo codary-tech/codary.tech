@@ -27,7 +27,7 @@ const { ...attrs } = Astro.props as Props;
 let isLoggedIn = false;
 
 try {
-	const response = await fetch(`${Astro.url.origin}/api/user`, {
+	const response = await fetch("/api/user", {
 		headers: {
 			cookie: Astro.request.headers.get("cookie") || "",
 		},
