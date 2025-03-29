@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="{{if eq .Data.language "es" }}es{{ else }}en{{end}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{if eq .Data.language "es" }}Confirma el Cambio de Email - Codary{{ else }}Confirm Email Change - Codary{{end}}</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    .container {
+      max-width: 500px;
+      margin: 50px auto;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      color: #333;
+    }
+    p {
+      color: #666;
+      font-size: 16px;
+    }
+    .button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 24px;
+      background-color: #007bff;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 5px;
+    }
+    .button:hover {
+      background-color: #0056b3;
+    }
+    .footer {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #999;
+    }
+    .email-info {
+      margin: 15px 0;
+      padding: 10px;
+      background-color: #f8f9fa;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    {{if eq .Data.language "es" }}
+      <h2>Confirma el Cambio de Email</h2>
+      <p>Has solicitado cambiar tu dirección de email en Codary.</p>
+      <div class="email-info">
+        <strong>Email actual:</strong> {{ .Email }}<br>
+        <strong>Nuevo email:</strong> {{ .NewEmail }}
+      </div>
+      <p>Haz clic en el botón a continuación para confirmar este cambio:</p>
+      <a href="{{ .ConfirmationURL }}" class="button">Confirmar Cambio</a>
+      <p class="footer">Si no solicitaste este cambio, por favor contacta con nuestro equipo de soporte inmediatamente.</p>
+    {{ else }}
+      <h2>Confirm Email Change</h2>
+      <p>You've requested to change your email address on Codary.</p>
+      <div class="email-info">
+        <strong>Current email:</strong> {{ .Email }}<br>
+        <strong>New email:</strong> {{ .NewEmail }}
+      </div>
+      <p>Click the button below to confirm this change:</p>
+      <a href="{{ .ConfirmationURL }}" class="button">Confirm Change</a>
+      <p class="footer">If you didn't request this change, please contact our support team immediately.</p>
+    {{end}}
+  </div>
+</body>
+</html>

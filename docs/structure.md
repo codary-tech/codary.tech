@@ -403,7 +403,11 @@
 │   │   ├───20250227200050_newsletter_subscriptions.sql
 │   │   └───20250228000000_storage_policy_updates.sql
 │   ├───templates/
-│   │   └───magic_link.html
+│   │   ├───change_email.html
+│   │   ├───confirm_signup.html
+│   │   ├───invite_user.html
+│   │   ├───magic_link.html
+│   │   └───reset_password.html
 │   ├───.gitignore
 │   └───config.toml
 ├───.dev.vars

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="{{if eq .Data.language "es" }}es{{ else }}en{{end}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{if eq .Data.language "es" }}Confirma tu Registro - Codary{{ else }}Confirm Your Signup - Codary{{end}}</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    .container {
+      max-width: 500px;
+      margin: 50px auto;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      color: #333;
+    }
+    p {
+      color: #666;
+      font-size: 16px;
+    }
+    .button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 24px;
+      background-color: #007bff;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 5px;
+    }
+    .button:hover {
+      background-color: #0056b3;
+    }
+    .footer {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #999;
+    }
+    .code {
+      display: inline-block;
+      margin: 20px 0;
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 4px;
+      color: #333;
+      padding: 12px 24px;
+      background-color: #f0f0f0;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    {{if eq .Data.language "es" }}
+      <h2>Confirma tu registro en Codary</h2>
+      <p>Gracias por registrarte. Por favor, confirma tu correo electrónico haciendo clic en el siguiente botón:</p>
+      <a href="{{ .ConfirmationURL }}" class="button">Confirmar Registro</a>
+      <p>O utiliza este código de verificación:</p>
+      <div class="code">{{ .Token }}</div>
+      <p class="footer">Si no solicitaste este registro, puedes ignorar este mensaje.</p>
+    {{ else }}
+      <h2>Confirm Your Codary Registration</h2>
+      <p>Thank you for signing up. Please confirm your email address by clicking the button below:</p>
+      <a href="{{ .ConfirmationURL }}" class="button">Confirm Registration</a>
+      <p>Or use this verification code:</p>
+      <div class="code">{{ .Token }}</div>
+      <p class="footer">If you didn't request this registration, you can ignore this message.</p>
+    {{end}}
+  </div>
+</body>
+</html>
