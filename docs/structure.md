@@ -47,29 +47,34 @@
 │   └───organize-articles.js
 ├───src/
 │   ├───assets/
-│   │   └───images/
-│   │       ├───0b716be6-2c45-49eb-8080-4161ceaac542.avif
-│   │       ├───47455.avif
-│   │       ├───7762799e-0693-4292-a309-f6a4eec57dc9.avif
-│   │       ├───Humane-AI.avif
-│   │       ├───apple-tv-netflix.avif
-│   │       ├───b2e160fc-70d4-47ba-8078-60889c495ad2.avif
-│   │       ├───blog-placeholder-1.avif
-│   │       ├───blog-placeholder-2.avif
-│   │       ├───blog-placeholder-3.avif
-│   │       ├───blog-placeholder-4.avif
-│   │       ├───bybit.avif
-│   │       ├───cloudflare-vs-laliga-2.webp
-│   │       ├───cloudflare-vs-laliga.avif
-│   │       ├───dfcf9bb1-fbf6-4f74-bb38-0b53dd8db595.avif
-│   │       ├───grok-3-elonwebp.avif
-│   │       ├───iphone-16e-finish-unselect-gallery.avif
-│   │       ├───la-democratizacion-de-la-ia.avif
-│   │       ├───microsoft-cancela-servidores.avif
-│   │       ├───rust-programming-language.avif
-│   │       ├───whoAMI-cover.avif
-│   │       ├───whoami.avif
-│   │       └───xAI.avif
+│   │   ├───font/
+│   │   │   ├───JetBrainsMono-Bold.ttf
+│   │   │   ├───JetBrainsMono-Regular.ttf
+│   │   │   └───PlusJakartaSans-Bold.ttf
+│   │   ├───images/
+│   │   │   ├───0b716be6-2c45-49eb-8080-4161ceaac542.avif
+│   │   │   ├───47455.avif
+│   │   │   ├───7762799e-0693-4292-a309-f6a4eec57dc9.avif
+│   │   │   ├───Humane-AI.avif
+│   │   │   ├───apple-tv-netflix.avif
+│   │   │   ├───b2e160fc-70d4-47ba-8078-60889c495ad2.avif
+│   │   │   ├───blog-placeholder-1.avif
+│   │   │   ├───blog-placeholder-2.avif
+│   │   │   ├───blog-placeholder-3.avif
+│   │   │   ├───blog-placeholder-4.avif
+│   │   │   ├───bybit.avif
+│   │   │   ├───cloudflare-vs-laliga-2.webp
+│   │   │   ├───cloudflare-vs-laliga.avif
+│   │   │   ├───dfcf9bb1-fbf6-4f74-bb38-0b53dd8db595.avif
+│   │   │   ├───grok-3-elonwebp.avif
+│   │   │   ├───iphone-16e-finish-unselect-gallery.avif
+│   │   │   ├───la-democratizacion-de-la-ia.avif
+│   │   │   ├───microsoft-cancela-servidores.avif
+│   │   │   ├───rust-programming-language.avif
+│   │   │   ├───whoAMI-cover.avif
+│   │   │   ├───whoami.avif
+│   │   │   └───xAI.avif
+│   │   └───.DS_Store
 │   ├───components/
 │   │   ├───i18n/
 │   │   │   ├───LocaleHtmlHead.astro
@@ -156,89 +161,90 @@
 │   │   │       ├───streaming.md
 │   │   │       ├───technology.md
 │   │   │       └───web-development.md
-│   │   └───tags/
-│   │       ├───en/
-│   │       │   ├───ai.md
-│   │       │   ├───apple.md
-│   │       │   ├───automatizacion.md
-│   │       │   ├───aws.md
-│   │       │   ├───chatgpt.md
-│   │       │   ├───china.md
-│   │       │   ├───cloudflare.md
-│   │       │   ├───data-centers.md
-│   │       │   ├───dispositivos-wearable.md
-│   │       │   ├───docker.md
-│   │       │   ├───ee-uu.md
-│   │       │   ├───git.md
-│   │       │   ├───grok.md
-│   │       │   ├───hacking.md
-│   │       │   ├───industria-global.md
-│   │       │   ├───internet.md
-│   │       │   ├───inversores.md
-│   │       │   ├───iphone.md
-│   │       │   ├───isp.md
-│   │       │   ├───javascript.md
-│   │       │   ├───kubernetes.md
-│   │       │   ├───microsoft.md
-│   │       │   ├───netflix.md
-│   │       │   ├───node-js.md
-│   │       │   ├───openai.md
-│   │       │   ├───politicas-de-seguridad.md
-│   │       │   ├───programacion.md
-│   │       │   ├───python.md
-│   │       │   ├───react.md
-│   │       │   ├───rust.md
-│   │       │   ├───seguridad.md
-│   │       │   ├───semiconductores.md
-│   │       │   ├───smartphones.md
-│   │       │   ├───tooling.md
-│   │       │   ├───typescript.md
-│   │       │   ├───vs-code.md
-│   │       │   ├───vue.md
-│   │       │   ├───web-assembly.md
-│   │       │   ├───x.md
-│   │       │   └───youtube.md
-│   │       └───es/
-│   │           ├───ai.md
-│   │           ├───apple.md
-│   │           ├───automatizacion.md
-│   │           ├───aws.md
-│   │           ├───chatgpt.md
-│   │           ├───china.md
-│   │           ├───cloudflare.md
-│   │           ├───data-centers.md
-│   │           ├───dispositivos-wearable.md
-│   │           ├───docker.md
-│   │           ├───ee-uu.md
-│   │           ├───git.md
-│   │           ├───grok.md
-│   │           ├───hacking.md
-│   │           ├───industria-global.md
-│   │           ├───internet.md
-│   │           ├───inversores.md
-│   │           ├───iphone.md
-│   │           ├───isp.md
-│   │           ├───javascript.md
-│   │           ├───kubernetes.md
-│   │           ├───microsoft.md
-│   │           ├───netflix.md
-│   │           ├───node-js.md
-│   │           ├───openai.md
-│   │           ├───politicas-de-seguridad.md
-│   │           ├───programacion.md
-│   │           ├───python.md
-│   │           ├───react.md
-│   │           ├───rust.md
-│   │           ├───seguridad.md
-│   │           ├───semiconductores.md
-│   │           ├───smartphones.md
-│   │           ├───tooling.md
-│   │           ├───typescript.md
-│   │           ├───vs-code.md
-│   │           ├───vue.md
-│   │           ├───web-assembly.md
-│   │           ├───x.md
-│   │           └───youtube.md
+│   │   ├───tags/
+│   │   │   ├───en/
+│   │   │   │   ├───ai.md
+│   │   │   │   ├───apple.md
+│   │   │   │   ├───automatizacion.md
+│   │   │   │   ├───aws.md
+│   │   │   │   ├───chatgpt.md
+│   │   │   │   ├───china.md
+│   │   │   │   ├───cloudflare.md
+│   │   │   │   ├───data-centers.md
+│   │   │   │   ├───dispositivos-wearable.md
+│   │   │   │   ├───docker.md
+│   │   │   │   ├───ee-uu.md
+│   │   │   │   ├───git.md
+│   │   │   │   ├───grok.md
+│   │   │   │   ├───hacking.md
+│   │   │   │   ├───industria-global.md
+│   │   │   │   ├───internet.md
+│   │   │   │   ├───inversores.md
+│   │   │   │   ├───iphone.md
+│   │   │   │   ├───isp.md
+│   │   │   │   ├───javascript.md
+│   │   │   │   ├───kubernetes.md
+│   │   │   │   ├───microsoft.md
+│   │   │   │   ├───netflix.md
+│   │   │   │   ├───node-js.md
+│   │   │   │   ├───openai.md
+│   │   │   │   ├───politicas-de-seguridad.md
+│   │   │   │   ├───programacion.md
+│   │   │   │   ├───python.md
+│   │   │   │   ├───react.md
+│   │   │   │   ├───rust.md
+│   │   │   │   ├───seguridad.md
+│   │   │   │   ├───semiconductores.md
+│   │   │   │   ├───smartphones.md
+│   │   │   │   ├───tooling.md
+│   │   │   │   ├───typescript.md
+│   │   │   │   ├───vs-code.md
+│   │   │   │   ├───vue.md
+│   │   │   │   ├───web-assembly.md
+│   │   │   │   ├───x.md
+│   │   │   │   └───youtube.md
+│   │   │   └───es/
+│   │   │       ├───ai.md
+│   │   │       ├───apple.md
+│   │   │       ├───automatizacion.md
+│   │   │       ├───aws.md
+│   │   │       ├───chatgpt.md
+│   │   │       ├───china.md
+│   │   │       ├───cloudflare.md
+│   │   │       ├───data-centers.md
+│   │   │       ├───dispositivos-wearable.md
+│   │   │       ├───docker.md
+│   │   │       ├───ee-uu.md
+│   │   │       ├───git.md
+│   │   │       ├───grok.md
+│   │   │       ├───hacking.md
+│   │   │       ├───industria-global.md
+│   │   │       ├───internet.md
+│   │   │       ├───inversores.md
+│   │   │       ├───iphone.md
+│   │   │       ├───isp.md
+│   │   │       ├───javascript.md
+│   │   │       ├───kubernetes.md
+│   │   │       ├───microsoft.md
+│   │   │       ├───netflix.md
+│   │   │       ├───node-js.md
+│   │   │       ├───openai.md
+│   │   │       ├───politicas-de-seguridad.md
+│   │   │       ├───programacion.md
+│   │   │       ├───python.md
+│   │   │       ├───react.md
+│   │   │       ├───rust.md
+│   │   │       ├───seguridad.md
+│   │   │       ├───semiconductores.md
+│   │   │       ├───smartphones.md
+│   │   │       ├───tooling.md
+│   │   │       ├───typescript.md
+│   │   │       ├───vs-code.md
+│   │   │       ├───vue.md
+│   │   │       ├───web-assembly.md
+│   │   │       ├───x.md
+│   │   │       └───youtube.md
+│   │   └───.DS_Store
 │   ├───i18n/
 │   │   ├───__tests__/
 │   │   │   └───i18n.test.ts
@@ -254,6 +260,7 @@
 │   │   │   ├───newsletter.ts
 │   │   │   ├───posts.ts
 │   │   │   └───theme.ts
+│   │   ├───.DS_Store
 │   │   ├───i18n.ts
 │   │   ├───index.ts
 │   │   ├───locales.ts
@@ -309,12 +316,13 @@
 │   │   ├───post/
 │   │   │   ├───post.model.ts
 │   │   │   └───post.service.ts
-│   │   └───tag/
-│   │       ├───index.ts
-│   │       ├───tag.criteria.ts
-│   │       ├───tag.mapper.ts
-│   │       ├───tag.model.ts
-│   │       └───tag.service.ts
+│   │   ├───tag/
+│   │   │   ├───index.ts
+│   │   │   ├───tag.criteria.ts
+│   │   │   ├───tag.mapper.ts
+│   │   │   ├───tag.model.ts
+│   │   │   └───tag.service.ts
+│   │   └───.DS_Store
 │   ├───pages/
 │   │   ├───[lang]/
 │   │   │   ├───author/
@@ -352,6 +360,7 @@
 │   │   │   │   └───signup.ts
 │   │   │   ├───newsletter/
 │   │   │   │   └───subscribe.ts
+│   │   │   ├───og/
 │   │   │   ├───refresh-avatar.ts
 │   │   │   └───user.ts
 │   │   ├───en/
@@ -362,10 +371,13 @@
 │   │   │   ├───about.mdx
 │   │   │   ├───privacy-policy.mdx
 │   │   │   └───support.mdx
+│   │   ├───.DS_Store
 │   │   ├───404.astro
 │   │   ├───admin.astro
 │   │   ├───index.astro
 │   │   └───robots.txt.ts
+│   ├───plugin/
+│   │   └───og.plugin.ts
 │   ├───styles/
 │   │   ├───global.css
 │   │   └───scroll-behavior.css
@@ -381,11 +393,13 @@
 │   │   │   ├───category.generator.mock.ts
 │   │   │   ├───image.generator.mock.ts
 │   │   │   └───tag.generator.mock.ts
+│   │   ├───.DS_Store
 │   │   ├───collection.entity.ts
 │   │   ├───date.ts
 │   │   ├───gravatar.service.ts
 │   │   ├───image.utils.ts
 │   │   └───remark-reading-time.mjs
+│   ├───.DS_Store
 │   ├───consts.ts
 │   ├───content.config.ts
 │   └───env.d.ts

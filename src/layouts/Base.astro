@@ -18,10 +18,11 @@ import "@/styles/scroll-behavior.css";
 interface Props {
 	title?: string;
 	description?: string;
+	ogImage?: string | URL;
 	frontmatter?: undefined;
 }
 
-const { title, description } = Astro.props.frontmatter || Astro.props;
+const { title, description, ogImage } = Astro.props.frontmatter || Astro.props;
 
 const locale = Astro.currentLocale as Lang;
 const localeTitle = title ? `${title} - ${t(SITE_TITLE)}` : t(SITE_TITLE);
@@ -59,7 +60,11 @@ const localeDescription = description || t(SITE_DESCRIPTION);
     <meta property="og:title" content={localeTitle} />
     <meta property="og:site_name" content={localeTitle} />
     <meta property="og:description" content={localeDescription} />
-    <meta property="og:image" content={Astro.site + "ogp.png"} />
+		<meta property="og:image" content={
+			ogImage
+			? (typeof ogImage === 'string' ? new URL(ogImage, Astro.url).href : ogImage.href)
+			: new URL('/ogp.png', Astro.site).href
+		} />
     <meta property="og:url" content={Astro.url} />
     <meta property="og:locale" content={LOCALES[locale].lang || locale} />
     <meta name="twitter:card" content="summary" />

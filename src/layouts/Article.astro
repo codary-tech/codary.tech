@@ -18,9 +18,11 @@ const {
 	url = Astro.request.url,
 	minutesRead,
 } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL(`${canonicalURL.pathname}og.png`, Astro.site);
 ---
 
-<BaseLayout {title} {description}>
+<BaseLayout {title} {description} {ogImage}>
 	<div class="fixed" slot="subheader">
 		<HeaderProgressBar
 			title={title}
