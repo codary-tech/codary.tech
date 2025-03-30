@@ -9,7 +9,6 @@ import tailwindcss from "@tailwindcss/vite";
 
 import cloudflare from "@astrojs/cloudflare";
 import { BASE_URL } from "./src/consts.ts";
-import { og } from "./src/plugin/og.plugin.ts";
 import { remarkReadingTime } from "./src/utils/remark-reading-time.mjs";
 
 import partytown from "@astrojs/partytown";
@@ -86,7 +85,6 @@ export default defineConfig({
 				openmoji: ["*"],
 			},
 		}),
-		og(),
 	],
 
 	vite: {

@@ -23,7 +23,7 @@ interface Props {
 }
 
 const { title, description, ogImage } = Astro.props.frontmatter || Astro.props;
-
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const locale = Astro.currentLocale as Lang;
 const localeTitle = title ? `${title} - ${t(SITE_TITLE)}` : t(SITE_TITLE);
 const localeDescription = description || t(SITE_DESCRIPTION);
@@ -36,7 +36,7 @@ const localeDescription = description || t(SITE_DESCRIPTION);
     <meta name="description" content={localeDescription} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <meta name="generator" content={Astro.generator} />
+		<link rel="canonical" href={canonicalURL} />
     {
       getLocalePaths(Astro.url).map((props) => (
         <link
@@ -55,20 +55,23 @@ const localeDescription = description || t(SITE_DESCRIPTION);
 		<link rel="manifest" href="/site.webmanifest">
     <meta name="color-scheme" content="light dark" />
 
-    <!-- OGP -->
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content={localeTitle} />
     <meta property="og:site_name" content={localeTitle} />
     <meta property="og:description" content={localeDescription} />
-		<meta property="og:image" content={
-			ogImage
-			? (typeof ogImage === 'string' ? new URL(ogImage, Astro.url).href : ogImage.href)
-			: new URL('/ogp.png', Astro.site).href
-		} />
+		{ogImage && <meta property="og:image" content={ogImage} />}
     <meta property="og:url" content={Astro.url} />
     <meta property="og:locale" content={LOCALES[locale].lang || locale} />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content={t(X_ACCOUNT)} />
+
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site" content={t(X_ACCOUNT)} />
+		<meta property="twitter:url" content={Astro.url} />
+		<meta property="twitter:title" content={title} />
+		<meta property="twitter:description" content={description} />
+		{ogImage && <meta property="twitter:image" content={ogImage} />}
+
 
 		<Analytics />
     <LocaleHtmlHead />

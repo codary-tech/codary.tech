@@ -114,3 +114,24 @@ type LocalePath = {
 export const localeParams = Object.keys(LOCALES).map((lang) => ({
 	params: { lang },
 }));
+
+/**
+ * Retrieves a localized string based on the provided key.
+ *
+ * If the key is a string, it returns the key as is.
+ * If the key is a Multilingual object, it attempts to retrieve the string for the current language
+ * defined in `import.meta.env.LANG`. If the current language is not available in the Multilingual object,
+ * it falls back to English ('en').
+ *
+ * @param key - A string or Multilingual object containing translations
+ * @returns The localized string based on the current language or a fallback
+ */
+export const retrieveLocalizedString = (key: string | Multilingual): string => {
+	if (typeof key === "string") {
+		return key;
+	}
+	if (key[import.meta.env.LANG as keyof Multilingual]) {
+		return key[import.meta.env.LANG as keyof Multilingual] as string;
+	}
+	return key.en as string;
+};

@@ -21,6 +21,7 @@ This project is built using Astro and Tailwind CSS v4. It's a website for Codary
 - Use meaningful variable and function names
 - Add comments for complex logic
 - Separate concerns between UI components and business logic
+- Prefer `for...of` loops instead of `forEach` for array iteration in JavaScript/TypeScript
 - Code formatting follows Biome configuration:
 - Tabs for indentation
 - Double quotes for strings in JavaScript/TypeScript

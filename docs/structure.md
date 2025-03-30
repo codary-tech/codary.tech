@@ -371,13 +371,14 @@
 │   │   │   ├───about.mdx
 │   │   │   ├───privacy-policy.mdx
 │   │   │   └───support.mdx
+│   │   ├───og/
+│   │   │   └───[lang]/
+│   │   │       └───[...slug].png.ts
 │   │   ├───.DS_Store
 │   │   ├───404.astro
 │   │   ├───admin.astro
 │   │   ├───index.astro
 │   │   └───robots.txt.ts
-│   ├───plugin/
-│   │   └───og.plugin.ts
 │   ├───styles/
 │   │   ├───global.css
 │   │   └───scroll-behavior.css
@@ -387,6 +388,10 @@
 │   │   │   ├───date.test.ts
 │   │   │   ├───gravatar.service.test.ts
 │   │   │   └───image.utils.test.ts
+│   │   ├───open-graph/
+│   │   │   ├───og.service.ts
+│   │   │   ├───og.template.ts
+│   │   │   └───og.types.ts
 │   │   ├───test/
 │   │   │   ├───article.generator.mock.ts
 │   │   │   ├───author.generator.mock.ts

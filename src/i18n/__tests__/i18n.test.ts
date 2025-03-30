@@ -1,5 +1,9 @@
-import { beforeEach, describe, expect, test, vi } from "vitest";
-import { useTranslatedPath, useTranslations } from "../i18n";
+import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
+import {
+	retrieveLocalizedString,
+	useTranslatedPath,
+	useTranslations,
+} from "../i18n";
 import type { Multilingual } from "../types";
 
 // Define mock function before vi.mock
@@ -32,6 +36,15 @@ vi.mock("../types", () => ({
 		return mockShowDefaultLang();
 	},
 }));
+
+// Mock import.meta.env for retrieveLocalizedString tests
+vi.stubGlobal("import", {
+	meta: {
+		env: {
+			LANG: "en",
+		},
+	},
+});
 
 describe("useTranslations", () => {
 	test("returns translation for string key in specified language", () => {
@@ -140,5 +153,59 @@ describe("useTranslatedPath", () => {
 		mockShowDefaultLang.mockReturnValue(false);
 		const translatePath = useTranslatedPath("es");
 		expect(translatePath("/about")).toBe("/es/about");
+	});
+});
+
+describe("retrieveLocalizedString", () => {
+	test("returns string as is when input is a simple string", () => {
+		const result = retrieveLocalizedString("hello world");
+		expect(result).toBe("hello world");
+	});
+
+	test("returns translation for current language from a multilingual object", () => {
+		// Set current language to Spanish
+		import.meta.env.LANG = "es";
+
+		const multilingual: Multilingual = {
+			en: "Hello",
+			es: "Hola",
+			de: "Hallo",
+		};
+
+		const result = retrieveLocalizedString(multilingual);
+		expect(result).toBe("Hola");
+	});
+
+	test("falls back to English when current language is not available", () => {
+		// Set current language to French (which is not in our multilingual object)
+		import.meta.env.LANG = "fr";
+
+		const multilingual: Multilingual = {
+			en: "Hello",
+			es: "Hola",
+			de: "Hallo",
+		};
+
+		const result = retrieveLocalizedString(multilingual);
+		expect(result).toBe("Hello");
+	});
+
+	test("handles multilingual object with only non-default languages", () => {
+		// Set current language to German
+		import.meta.env.LANG = "de";
+
+		const multilingual: Multilingual = {
+			es: "Hola",
+			de: "Hallo",
+			// No English translation
+		};
+
+		const result = retrieveLocalizedString(multilingual);
+		expect(result).toBe("Hallo");
+	});
+
+	// Reset LANG after tests
+	afterEach(() => {
+		import.meta.env.LANG = "en";
 	});
 });

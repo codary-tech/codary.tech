@@ -5,6 +5,7 @@
 import HeaderProgressBar from "@/components/HeaderProgressBar.astro";
 import BaseLayout from "@/layouts/General.astro";
 import type Post from "@/models/post/post.model";
+import { getOgImagePath } from "@/utils/open-graph/og.service";
 
 interface Props extends Post {
 	url: string;
@@ -19,7 +20,8 @@ const {
 	minutesRead,
 } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const ogImage = new URL(`${canonicalURL.pathname}og.png`, Astro.site);
+const ogImage = new URL(getOgImagePath(Astro.url.pathname), Astro.url.origin)
+	.href;
 ---
 
 <BaseLayout {title} {description} {ogImage}>

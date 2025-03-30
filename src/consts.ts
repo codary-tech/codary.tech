@@ -3,6 +3,7 @@
 
 import type { Multilingual } from "@/i18n";
 
+export const BRAND_NAME: string | Multilingual = "Codary";
 export const SITE_TITLE: string | Multilingual = "Codary";
 
 export const SITE_DESCRIPTION: string | Multilingual = {
