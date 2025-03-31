@@ -15,6 +15,10 @@ export const Template = (props: OgData) => {
 		lang = DEFAULT_LOCALE_SETTING,
 	} = props;
 
+	if (!title) {
+		throw new Error("Title is required for Open Graph image generation");
+	}
+
 	const dateLocale = lang === "es" ? "es-ES" : "en-US";
 	const dateFormatter = {
 		year: "numeric",
