@@ -22,9 +22,13 @@ export function useTranslations(lang: Lang) {
 
 		if (typeof multilingualOrKey === "string") {
 			// When it's a string, look in ui[lang] or ui[DEFAULT_LOCALE]
+			// Add safety checks to handle undefined ui entries
+			const langUI = ui[lang] || {};
+			const defaultUI = ui[DEFAULT_LOCALE] || {};
+
 			text =
-				ui[lang][multilingualOrKey] ??
-				ui[DEFAULT_LOCALE][multilingualOrKey] ??
+				langUI[multilingualOrKey] ??
+				defaultUI[multilingualOrKey] ??
 				multilingualOrKey;
 		} else {
 			// When it's a TextMultilingual object, return the value for lang or DEFAULT_LOCALE
@@ -114,3 +118,9 @@ type LocalePath = {
 export const localeParams = Object.keys(LOCALES).map((lang) => ({
 	params: { lang },
 }));
+
+export const retrieveLocalizedString = (key: string | Multilingual): string => {
+	const currentLang = (import.meta.env.LANG as Lang) || DEFAULT_LOCALE;
+	const t = useTranslations(currentLang);
+	return t(key);
+};

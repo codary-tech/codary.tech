@@ -8,13 +8,14 @@ import Base from "@/layouts/Base.astro";
 interface Props {
 	title?: string;
 	description?: string;
+	ogImage?: string | URL;
 	frontmatter?: undefined;
 }
 
-const { title, description } = Astro.props.frontmatter || Astro.props;
+const { title, description, ogImage } = Astro.props.frontmatter || Astro.props;
 ---
 
-<Base {title} {description}>
+<Base {title} {description} {ogImage}>
 	<slot name="header" />
 	<slot name="subheader" />
   <slot />
