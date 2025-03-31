@@ -203,9 +203,4 @@ describe("retrieveLocalizedString", () => {
 		const result = retrieveLocalizedString(multilingual);
 		expect(result).toBe("Hallo");
 	});
-
-	// Reset LANG after tests
-	afterEach(() => {
-		import.meta.env.LANG = "en";
-	});
 });
