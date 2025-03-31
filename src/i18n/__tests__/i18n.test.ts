@@ -37,15 +37,6 @@ vi.mock("../types", () => ({
 	},
 }));
 
-// Mock import.meta.env for retrieveLocalizedString tests
-vi.stubGlobal("import", {
-	meta: {
-		env: {
-			LANG: "en",
-		},
-	},
-});
-
 describe("useTranslations", () => {
 	test("returns translation for string key in specified language", () => {
 		const t = useTranslations("es");
