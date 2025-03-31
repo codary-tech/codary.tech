@@ -35,6 +35,7 @@ export const getOgImagePath = (filename: string = siteTitle) => {
  * @param category Category name
  * @param tags Array of tags
  * @param lang Language code
+ * @param renderOptions Rendering options
  */
 const generateOgImage = async (
 	title: string = siteTitle,
@@ -53,6 +54,12 @@ const generateOgImage = async (
 				name: "JetBrainsMono",
 				data: await readFile("./src/assets/font/JetBrainsMono-Bold.ttf"),
 				weight: 600,
+				style: "normal",
+			},
+			{
+				name: "JetBrains Mono",
+				data: await readFile("./src/assets/font/JetBrainsMono-Regular.ttf"),
+				weight: 400,
 				style: "normal",
 			},
 			{

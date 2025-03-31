@@ -22,6 +22,12 @@ export const Template = (props: OgData) => {
 		day: "numeric",
 	} as const;
 
+	const formattedDate = date
+		? typeof date === "string"
+			? date
+			: new Date(date).toLocaleDateString(dateLocale, dateFormatter)
+		: new Date().toLocaleDateString(dateLocale, dateFormatter);
+
 	return {
 		type: "div",
 		props: {
@@ -34,35 +40,35 @@ export const Template = (props: OgData) => {
 						{
 							type: "div",
 							props: {
-								tw: "flex justify-between mb-4",
+								tw: "flex justify-between w-full",
 								children: [
 									category
 										? {
 												type: "span",
 												props: {
-													tw: "text-xl text-emerald-400",
+													tw: "text-xl text-emerald-400 font-semibold",
+													style: { fontFamily: "JetBrainsMono" },
 													children: category,
 												},
 											}
 										: null,
-									...(tags?.length
-										? [
-												{
-													type: "div",
-													props: {
-														tw: "flex flex-wrap text-xl text-emerald-400",
-														children: tags.map((tag) => ({
-															type: "span",
-															props: {
-																tw: "mx-1",
-																children: tag,
-															},
-														})),
-													},
+									tags?.length
+										? {
+												type: "div",
+												props: {
+													tw: "flex flex-wrap text-xl text-emerald-400",
+													children: tags.map((tag) => ({
+														type: "span",
+														props: {
+															tw: "mx-1 font-semibold",
+															style: { fontFamily: "JetBrainsMono" },
+															children: tag,
+														},
+													})),
 												},
-											]
-										: []),
-								],
+											}
+										: null,
+								].filter(Boolean),
 							},
 						},
 						{
@@ -73,6 +79,7 @@ export const Template = (props: OgData) => {
 									type: "h1",
 									props: {
 										tw: "text-6xl font-bold text-[#70E1C8] leading-snug",
+										style: { fontFamily: "PlusJakartaSans" },
 										children: title,
 									},
 								},
@@ -81,14 +88,14 @@ export const Template = (props: OgData) => {
 						{
 							type: "div",
 							props: {
-								tw: "flex items-center justify-between",
+								tw: "flex items-center justify-between w-full",
 								children: [
 									{
 										type: "svg",
 										props: {
 											xmlns: "http://www.w3.org/2000/svg",
-											width: "130",
-											height: "130",
+											width: "130px",
+											height: "130px",
 											preserveAspectRatio: "xMidYMid",
 											version: "1.0",
 											viewBox: "0 0 500 500",
@@ -140,12 +147,13 @@ export const Template = (props: OgData) => {
 									{
 										type: "div",
 										props: {
-											tw: "flex items-center justify-center",
+											tw: "flex flex-col items-end",
 											children: [
 												{
 													type: "p",
 													props: {
 														tw: "text-2xl text-white font-medium mx-2",
+														style: { fontFamily: "JetBrains Mono" },
 														children: author || BRAND_NAME,
 													},
 												},
@@ -153,12 +161,8 @@ export const Template = (props: OgData) => {
 													type: "p",
 													props: {
 														tw: "text-xl uppercase text-gray-300",
-														children:
-															date ||
-															new Date().toLocaleDateString(
-																dateLocale,
-																dateFormatter,
-															),
+														style: { fontFamily: "JetBrains Mono" },
+														children: formattedDate,
 													},
 												},
 											],
