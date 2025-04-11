@@ -1,0 +1,8 @@
+{
+	"name": "Excalidraw",
+	"description": "Virtual whiteboard for sketching hand-drawn like diagrams",
+	"icon": "/src/assets/images/Excalidraw.png",
+	"url": "https://excalidraw.com/",
+	"isSponsored": false,
+	"tags": ["en/ai"]
+}

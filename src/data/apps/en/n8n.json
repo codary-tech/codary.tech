@@ -1,0 +1,8 @@
+{
+	"name": "n8n",
+	"description": "Workflow automation platform that connects apps, services, and APIs",
+	"icon": "/src/assets/images/n8n.png",
+	"url": "https://n8n.io/",
+	"isSponsored": false,
+	"tags": ["en/automation", "en/workflow"]
+}

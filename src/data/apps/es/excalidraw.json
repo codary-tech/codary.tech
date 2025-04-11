@@ -1,0 +1,8 @@
+{
+	"name": "Excalidraw",
+	"description": "Pizarra virtual para dibujar diagramas a mano",
+	"icon": "/src/assets/images/Excalidraw.png",
+	"url": "https://excalidraw.com/",
+	"isSponsored": false,
+	"tags": ["es/ai"]
+}

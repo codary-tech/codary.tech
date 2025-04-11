@@ -1,5 +1,5 @@
 ---
-import { type Lang, useTranslatedPath, useTranslations } from "@/i18n";
+import { type Lang, useTranslations } from "@/i18n";
 import Layout from "@/layouts/Base.astro";
 import { supabase } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
@@ -8,7 +8,6 @@ import { Icon } from "astro-icon/components";
 
 const currentLanguage = Astro.currentLocale as Lang;
 const t = useTranslations(currentLanguage);
-const translatePath = useTranslatedPath(currentLanguage);
 
 // Check if user is logged in
 let user = null;
@@ -293,6 +292,7 @@ const displayName =
 		</div>
 	</div>
 </Layout>
+
 <script>
 	// Define interface for the API response
 	interface RefreshAvatarResponse {

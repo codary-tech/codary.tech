@@ -77,4 +77,24 @@ const authors = defineCollection({
 	}),
 });
 
-export const collections = { articles, tags, categories, authors, newsletter };
+const apps = defineCollection({
+	loader: glob({ pattern: "**/[^_]*.json", base: "./src/data/apps" }),
+	schema: ({ image }: SchemaContext) =>
+		z.object({
+			name: z.string(),
+			description: z.string(),
+			icon: image(),
+			url: z.string().url(),
+			isSponsored: z.boolean().default(false),
+			tags: z.array(reference("tags")).optional(),
+		}),
+});
+
+export const collections = {
+	articles,
+	tags,
+	categories,
+	authors,
+	newsletter,
+	apps,
+};

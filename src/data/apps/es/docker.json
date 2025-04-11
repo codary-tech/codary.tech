@@ -1,0 +1,8 @@
+{
+	"name": "Docker",
+	"description": "Plataforma para desarrollar, enviar y ejecutar aplicaciones en contenedores",
+	"icon": "/src/assets/images/Docker.png",
+	"url": "https://www.docker.com/",
+	"isSponsored": false,
+	"tags": ["es/devops", "es/containerization"]
+}

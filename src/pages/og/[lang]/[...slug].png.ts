@@ -1,6 +1,6 @@
 export const prerender = true;
 import { BRAND_NAME, SITE_TITLE } from "@/consts";
-import { useTranslatedPath, useTranslations } from "@/i18n";
+import { useTranslations } from "@/i18n";
 import { DEFAULT_LOCALE_SETTING, LOCALES_SETTING } from "@/i18n/locales";
 import { getArticles } from "@/models/article";
 import { getCategories } from "@/models/category";
@@ -9,11 +9,6 @@ import { cleanEntityId } from "@/utils/collection.entity";
 import generateOgImage from "@/utils/open-graph/og.service";
 import type { OgData } from "@/utils/open-graph/og.types";
 import type { APIRoute, GetStaticPaths, GetStaticPathsItem } from "astro";
-
-interface StaticPaths extends OgData {
-	slug: string;
-	lang?: string;
-}
 
 const STATIC_PATH = [
 	{
@@ -34,7 +29,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 	// Generate paths for each supported language
 	for (const lang of supportedLanguages) {
 		const t = useTranslations(lang);
-		const translatePath = useTranslatedPath(lang);
+		// const translatePath = useTranslatedPath(lang);
 
 		// Static paths
 		for (const item of STATIC_PATH) {
@@ -88,7 +83,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 						author: article.author.name,
 						category: article.category.title,
 						tags: article.tags.map((tag) => tag.title),
-						date: article.date,
+						date: dateObj,
 						lang,
 					},
 				});

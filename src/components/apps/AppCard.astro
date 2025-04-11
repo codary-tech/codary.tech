@@ -1,0 +1,54 @@
+---
+import { Image } from "astro:assets";
+import { type Lang, useTranslations } from "@/i18n";
+import type App from "@/models/apps/app.model";
+
+interface Props {
+	app: App;
+	locale: Lang;
+	loading?: "lazy" | "eager";
+}
+
+const { app, locale, loading = "lazy" } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<div class="group relative flex flex-col justify-between h-full w-full bg-hero-bg-light dark:bg-hero-bg-dark rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.15)] transition-all duration-200 ease-in-out hover:-translate-y-0.5 p-4">
+  {app.isSponsored && (
+    <div class="absolute top-3 left-3 bg-amber-500 text-white text-xs px-2 py-1 rounded-full z-10">
+      {t("apps.sponsored")}
+    </div>
+  )}
+
+  <div class="flex flex-col mb-3">
+    <div class="flex items-center mb-3">
+      <div class="w-10 h-10 mr-3 rounded-lg overflow-hidden">
+        <Image
+          src={app.icon}
+          alt={app.name}
+          width={40}
+          height={40}
+          class="w-full h-full object-fit"
+          loading={loading}
+          priority={loading === "eager" ? true : false}
+        />
+      </div>
+      <a href={app.url} target="_blank" rel="noopener noreferrer"
+         class="text-lg font-semibold text-main-light dark:text-main-dark hover:underline">
+        {app.name}
+      </a>
+    </div>
+
+    <p class="text-xs text-start text-wrap text-secondary-foreground-light dark:text-secondary-foreground-dark line-clamp-3">
+      {app.description}
+    </p>
+  </div>
+
+  <div class="flex flex-wrap justify-center gap-2 mt-auto pt-2">
+    {app.tags.map((tag) => (
+      <span class="text-xs px-2 py-1 rounded-full bg-square-light dark:bg-square-dark text-shark-600 dark:text-shark-300">
+        {tag.title}
+      </span>
+    ))}
+  </div>
+</div>

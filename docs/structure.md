@@ -33,6 +33,7 @@
 │   │   └───config.yml
 │   ├───rss/
 │   │   └───styles.xsl
+│   ├───.DS_Store
 │   ├───.assetsignore
 │   ├───android-chrome-192x192.png
 │   ├───android-chrome-512x512.png
@@ -55,7 +56,18 @@
 │   │   │   ├───0b716be6-2c45-49eb-8080-4161ceaac542.avif
 │   │   │   ├───47455.avif
 │   │   │   ├───7762799e-0693-4292-a309-f6a4eec57dc9.avif
+│   │   │   ├───Docker.png
+│   │   │   ├───Excalidraw.png
+│   │   │   ├───Grafana.png
+│   │   │   ├───HomeAssistant.png
 │   │   │   ├───Humane-AI.avif
+│   │   │   ├───N8n.png
+│   │   │   ├───NodeRED.png
+│   │   │   ├───Pihole.png
+│   │   │   ├───Prometheus.png
+│   │   │   ├───Supabase.png
+│   │   │   ├───TailwindCSS.png
+│   │   │   ├───VSCode.png
 │   │   │   ├───apple-tv-netflix.avif
 │   │   │   ├───b2e160fc-70d4-47ba-8078-60889c495ad2.avif
 │   │   │   ├───blog-placeholder-1.avif
@@ -76,6 +88,10 @@
 │   │   │   └───xAI.avif
 │   │   └───.DS_Store
 │   ├───components/
+│   │   ├───apps/
+│   │   │   ├───AppCard.astro
+│   │   │   ├───AppFilters.astro
+│   │   │   └───AppGrid.astro
 │   │   ├───i18n/
 │   │   │   ├───LocaleHtmlHead.astro
 │   │   │   ├───LocaleSelect.astro
@@ -83,6 +99,7 @@
 │   │   │   ├───LocaleSuggest.astro
 │   │   │   ├───LocalesHomeList.astro
 │   │   │   └───NotTranslateCaution.astro
+│   │   ├───.DS_Store
 │   │   ├───Analytics.astro
 │   │   ├───ArticleCard.astro
 │   │   ├───AuthButton.astro
@@ -128,6 +145,31 @@
 │   │   ├───SubscriptionForm.astro
 │   │   └───ThemeToggle.astro
 │   ├───data/
+│   │   ├───apps/
+│   │   │   ├───en/
+│   │   │   │   ├───docker.json
+│   │   │   │   ├───excalidraw.json
+│   │   │   │   ├───grafana.json
+│   │   │   │   ├───homeassistant.json
+│   │   │   │   ├───n8n.json
+│   │   │   │   ├───nodered.json
+│   │   │   │   ├───pihole.json
+│   │   │   │   ├───prometheus.json
+│   │   │   │   ├───supabase.json
+│   │   │   │   ├───tailwindcss.json
+│   │   │   │   └───vscode.json
+│   │   │   └───es/
+│   │   │       ├───docker.json
+│   │   │       ├───excalidraw.json
+│   │   │       ├───grafana.json
+│   │   │       ├───homeassistant.json
+│   │   │       ├───n8n.json
+│   │   │       ├───nodered.json
+│   │   │       ├───pihole.json
+│   │   │       ├───prometheus.json
+│   │   │       ├───supabase.json
+│   │   │       ├───tailwindcss.json
+│   │   │       └───vscode.json
 │   │   ├───articles/
 │   │   │   ├───en/
 │   │   │   │   └───2025/
@@ -164,31 +206,45 @@
 │   │   ├───tags/
 │   │   │   ├───en/
 │   │   │   │   ├───ai.md
+│   │   │   │   ├───analytics.md
 │   │   │   │   ├───apple.md
+│   │   │   │   ├───automation.md
 │   │   │   │   ├───automatizacion.md
 │   │   │   │   ├───aws.md
+│   │   │   │   ├───backend.md
 │   │   │   │   ├───chatgpt.md
 │   │   │   │   ├───china.md
 │   │   │   │   ├───cloudflare.md
+│   │   │   │   ├───containerization.md
+│   │   │   │   ├───css.md
 │   │   │   │   ├───data-centers.md
+│   │   │   │   ├───database.md
+│   │   │   │   ├───development.md
+│   │   │   │   ├───devops.md
+│   │   │   │   ├───diagrams.md
 │   │   │   │   ├───dispositivos-wearable.md
 │   │   │   │   ├───docker.md
 │   │   │   │   ├───ee-uu.md
+│   │   │   │   ├───frontend.md
 │   │   │   │   ├───git.md
 │   │   │   │   ├───grok.md
 │   │   │   │   ├───hacking.md
 │   │   │   │   ├───industria-global.md
 │   │   │   │   ├───internet.md
 │   │   │   │   ├───inversores.md
+│   │   │   │   ├───iot.md
 │   │   │   │   ├───iphone.md
 │   │   │   │   ├───isp.md
 │   │   │   │   ├───javascript.md
 │   │   │   │   ├───kubernetes.md
 │   │   │   │   ├───microsoft.md
+│   │   │   │   ├───monitoring.md
 │   │   │   │   ├───netflix.md
+│   │   │   │   ├───networking.md
 │   │   │   │   ├───node-js.md
 │   │   │   │   ├───openai.md
 │   │   │   │   ├───politicas-de-seguridad.md
+│   │   │   │   ├───privacy.md
 │   │   │   │   ├───programacion.md
 │   │   │   │   ├───python.md
 │   │   │   │   ├───react.md
@@ -197,39 +253,57 @@
 │   │   │   │   ├───semiconductores.md
 │   │   │   │   ├───smartphones.md
 │   │   │   │   ├───tooling.md
+│   │   │   │   ├───tools.md
 │   │   │   │   ├───typescript.md
+│   │   │   │   ├───visualization.md
 │   │   │   │   ├───vs-code.md
 │   │   │   │   ├───vue.md
 │   │   │   │   ├───web-assembly.md
+│   │   │   │   ├───whiteboard.md
+│   │   │   │   ├───workflow.md
 │   │   │   │   ├───x.md
 │   │   │   │   └───youtube.md
 │   │   │   └───es/
 │   │   │       ├───ai.md
+│   │   │       ├───analytics.md
 │   │   │       ├───apple.md
+│   │   │       ├───automation.md
 │   │   │       ├───automatizacion.md
 │   │   │       ├───aws.md
+│   │   │       ├───backend.md
 │   │   │       ├───chatgpt.md
 │   │   │       ├───china.md
 │   │   │       ├───cloudflare.md
+│   │   │       ├───containerization.md
+│   │   │       ├───css.md
 │   │   │       ├───data-centers.md
+│   │   │       ├───database.md
+│   │   │       ├───development.md
+│   │   │       ├───devops.md
+│   │   │       ├───diagrams.md
 │   │   │       ├───dispositivos-wearable.md
 │   │   │       ├───docker.md
 │   │   │       ├───ee-uu.md
+│   │   │       ├───frontend.md
 │   │   │       ├───git.md
 │   │   │       ├───grok.md
 │   │   │       ├───hacking.md
 │   │   │       ├───industria-global.md
 │   │   │       ├───internet.md
 │   │   │       ├───inversores.md
+│   │   │       ├───iot.md
 │   │   │       ├───iphone.md
 │   │   │       ├───isp.md
 │   │   │       ├───javascript.md
 │   │   │       ├───kubernetes.md
 │   │   │       ├───microsoft.md
+│   │   │       ├───monitoring.md
 │   │   │       ├───netflix.md
+│   │   │       ├───networking.md
 │   │   │       ├───node-js.md
 │   │   │       ├───openai.md
 │   │   │       ├───politicas-de-seguridad.md
+│   │   │       ├───privacy.md
 │   │   │       ├───programacion.md
 │   │   │       ├───python.md
 │   │   │       ├───react.md
@@ -238,10 +312,14 @@
 │   │   │       ├───semiconductores.md
 │   │   │       ├───smartphones.md
 │   │   │       ├───tooling.md
+│   │   │       ├───tools.md
 │   │   │       ├───typescript.md
+│   │   │       ├───visualization.md
 │   │   │       ├───vs-code.md
 │   │   │       ├───vue.md
 │   │   │       ├───web-assembly.md
+│   │   │       ├───whiteboard.md
+│   │   │       ├───workflow.md
 │   │   │       ├───x.md
 │   │   │       └───youtube.md
 │   │   └───.DS_Store
@@ -250,6 +328,7 @@
 │   │   │   └───i18n.test.ts
 │   │   ├───translations/
 │   │   │   ├───account.ts
+│   │   │   ├───apps.ts
 │   │   │   ├───auth.ts
 │   │   │   ├───common.ts
 │   │   │   ├───contact.ts
@@ -278,6 +357,12 @@
 │   ├───middleware/
 │   │   └───index.ts
 │   ├───models/
+│   │   ├───apps/
+│   │   │   ├───app.criteria.ts
+│   │   │   ├───app.mapper.ts
+│   │   │   ├───app.model.ts
+│   │   │   ├───app.service.ts
+│   │   │   └───index.ts
 │   │   ├───article/
 │   │   │   ├───__tests__/
 │   │   │   │   └───article-selection.strategy.test.ts
@@ -325,6 +410,8 @@
 │   │   └───.DS_Store
 │   ├───pages/
 │   │   ├───[lang]/
+│   │   │   ├───apps/
+│   │   │   │   └───index.astro
 │   │   │   ├───author/
 │   │   │   │   └───[...id].astro
 │   │   │   ├───news/
@@ -429,6 +516,7 @@
 │   │   ├───invite_user.html
 │   │   ├───magic_link.html
 │   │   └───reset_password.html
+│   ├───.DS_Store
 │   ├───.gitignore
 │   └───config.toml
 ├───.dev.vars

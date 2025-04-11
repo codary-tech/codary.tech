@@ -1,0 +1,190 @@
+---
+import { type Lang, useTranslations } from "@/i18n";
+import type App from "@/models/apps/app.model";
+import AppCard from "./AppCard.astro";
+
+interface Props {
+	apps: App[];
+}
+
+const { apps } = Astro.props;
+const { lang } = Astro.params;
+const currentLocale = lang as Lang;
+const t = useTranslations(currentLocale);
+
+// Initial apps to show (rest will load as user scrolls)
+const initialCount = 10;
+
+// Create a template for new cards - this will be rendered on the server but hidden
+const templateApp = apps[0] || null;
+---
+
+<div id="app-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+  {apps.slice(0, initialCount).map((app) => (
+    <AppCard app={app} locale={currentLocale} loading="eager"/>
+  ))}
+</div>
+
+<div id="load-more-container" class="flex justify-center mt-8 pb-8">
+  {apps.length > initialCount && (
+    <button
+      id="load-more-button"
+      class="px-6 py-3 bg-main-button-bg-light dark:bg-main-button-bg-dark text-main-button-light dark:text-main-button-dark rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.1)] hover:opacity-90 transition-opacity"
+    >
+      {t("apps.loadMore")}
+    </button>
+  )}
+</div>
+
+<div id="no-results" class="hidden text-center py-12 text-xl text-main-light dark:text-main-dark">
+  {t("apps.noResults")}
+</div>
+
+<!-- Hidden template for new cards -->
+{templateApp && (
+  <template id="app-card-template">
+    <AppCard app={templateApp} locale={currentLocale} loading="lazy" />
+  </template>
+)}
+
+<script is:inline define:vars={{ apps, initialCount, currentLocale }}>
+  // Store all apps for client-side filtering
+  const allApps = apps;
+  let visibleCount = initialCount;
+
+  // Elements
+  const appGrid = document.getElementById('app-grid');
+  const loadMoreButton = document.getElementById('load-more-button');
+  const loadMoreContainer = document.getElementById('load-more-container');
+  const noResultsElement = document.getElementById('no-results');
+
+  // Function to render app cards by using the same structure as AppCard.astro
+  function renderApp(app) {
+    const appElement = document.createElement('div');
+    appElement.setAttribute('data-app-id', app.id);
+
+    // Create the card HTML using the same classes and structure as AppCard
+    appElement.innerHTML = `
+      <div class="group relative flex flex-col justify-between h-full w-full bg-hero-bg-light dark:bg-hero-bg-dark rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.15)] transition-all duration-200 ease-in-out hover:-translate-y-0.5 p-4">
+        ${app.isSponsored ? `<div class="absolute top-3 left-3 bg-amber-500 text-white text-xs px-2 py-1 rounded-full z-10">
+          ${currentLocale === 'en' ? 'Sponsored' : 'Patrocinado'}
+        </div>` : ''}
+
+        <div class="flex flex-col mb-3">
+          <div class="flex items-center mb-3">
+            <div class="w-10 h-10 mr-3 rounded-lg overflow-hidden">
+              <img
+                src="${app.icon.src}"
+                alt="${app.name}"
+                width="40"
+                height="40"
+                class="w-full h-full object-fit"
+                loading="lazy"
+              />
+            </div>
+            <a href="${app.url}" target="_blank" rel="noopener noreferrer"
+              class="text-lg font-semibold text-main-light dark:text-main-dark hover:underline">
+              ${app.name}
+            </a>
+          </div>
+
+          <p class="text-xs text-start text-wrap text-secondary-foreground-light dark:text-secondary-foreground-dark line-clamp-3">
+            ${app.description}
+          </p>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-2 mt-auto pt-2">
+          ${app.tags.map(tag => `
+            <span class="text-xs px-2 py-1 rounded-full bg-square-light dark:bg-square-dark text-shark-600 dark:text-shark-300">
+              ${tag.title}
+            </span>
+          `).join('')}
+        </div>
+      </div>
+    `;
+
+    return appElement;
+  }
+
+  // Load more apps
+  function loadMore() {
+    const currentlyFiltered = filteredApps || allApps;
+    const nextBatch = currentlyFiltered.slice(visibleCount, visibleCount + 10);
+
+    if (nextBatch.length === 0) {
+      loadMoreContainer.classList.add('hidden');
+      return;
+    }
+
+    for (const app of nextBatch) {
+      appGrid.appendChild(renderApp(app));
+    }
+
+    visibleCount += nextBatch.length;
+
+    // Hide the button if we've shown all apps
+    if (visibleCount >= currentlyFiltered.length) {
+      loadMoreContainer.classList.add('hidden');
+    }
+  }
+
+  // Setup infinite scroll with Intersection Observer
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        loadMore();
+      }
+    });
+  }, { rootMargin: '100px' });
+
+  if (loadMoreContainer) {
+    observer.observe(loadMoreContainer);
+  }
+
+  // Click handler for load more button
+  loadMoreButton?.addEventListener('click', loadMore);
+
+  // Filter apps based on search and tag selection
+  let filteredApps = null;
+
+  window.addEventListener('app-filter-change', (event) => {
+    const { searchTerm, selectedTag } = event.detail;
+
+    // Reset display
+    appGrid.innerHTML = '';
+    visibleCount = 0;
+
+    // Filter apps
+    filteredApps = allApps.filter(app => {
+      const matchesSearch = searchTerm ?
+        app.name.toLowerCase().includes(searchTerm) ||
+        app.description.toLowerCase().includes(searchTerm) : true;
+
+      const matchesTag = selectedTag ?
+        app.tags.some(tag => tag.id === selectedTag) : true;
+
+      return matchesSearch && matchesTag;
+    });
+
+    // Show or hide no results message
+    if (filteredApps.length === 0) {
+      noResultsElement.classList.remove('hidden');
+      loadMoreContainer.classList.add('hidden');
+    } else {
+      noResultsElement.classList.add('hidden');
+      loadMoreContainer.classList.remove('hidden');
+
+      // Show first batch of filtered apps
+      const initialBatch = filteredApps.slice(0, 10);
+      for (const app of initialBatch) {
+        appGrid.appendChild(renderApp(app));
+      }
+      visibleCount = initialBatch.length;
+
+      // Hide load more button if all filtered apps are shown
+      if (visibleCount >= filteredApps.length) {
+        loadMoreContainer.classList.add('hidden');
+      }
+    }
+  });
+</script>

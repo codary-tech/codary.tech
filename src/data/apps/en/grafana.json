@@ -1,0 +1,8 @@
+{
+	"name": "Grafana",
+	"description": "Open and composable observability and data visualization platform for all your metrics",
+	"icon": "/src/assets/images/Grafana.png",
+	"url": "https://grafana.com/",
+	"isSponsored": false,
+	"tags": ["en/analytics", "en/visualization"]
+}

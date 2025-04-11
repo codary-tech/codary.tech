@@ -1,0 +1,8 @@
+{
+	"name": "VS Code",
+	"description": "Editor de código fuente ligero pero potente con soporte para miles de extensiones",
+	"icon": "/src/assets/images/VSCode.png",
+	"url": "https://code.visualstudio.com/",
+	"isSponsored": false,
+	"tags": ["es/development", "es/tools"]
+}

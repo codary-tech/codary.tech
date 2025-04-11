@@ -1,0 +1,8 @@
+{
+	"name": "Tailwind CSS",
+	"description": "Utility-first CSS framework for rapidly building custom user interfaces",
+	"icon": "/src/assets/images/TailwindCSS.png",
+	"url": "https://tailwindcss.com/",
+	"isSponsored": true,
+	"tags": ["en/frontend", "en/css"]
+}
