@@ -8,6 +8,10 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read  # Read-only access
+  pull-requests: write  # Write access to pull requests, if needed
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
