@@ -1,0 +1,32 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run linting and formatting checks
+        run: pnpm check
+
+      - name: Build the Astro project
+        run: pnpm build
+
+      - name: Run unit tests
+        run: pnpm test
+
+      - name: Generate test coverage reports
+        run: pnpm test -- --coverage
