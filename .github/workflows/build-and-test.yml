@@ -1,0 +1,42 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read  # Read-only access
+  pull-requests: write  # Write access to pull requests, if needed
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    env:
+      AHREFS_KEY: ${{ secrets.AHREFS_KEY }}
+      RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Tools & Dependencies
+        uses: ./.github/actions/install/node
+
+      - name: Run linting and formatting checks
+        run: pnpm check
+
+      - name: Build the Astro project
+        run: pnpm build
+
+      - name: Run unit tests
+        run: pnpm test
+
+      - name: Generate test coverage reports
+        run: pnpm test -- --coverage
