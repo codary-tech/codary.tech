@@ -1,0 +1,32 @@
+name: Greetings
+
+on: [pull_request, issues]
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/first-interaction@v1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        issue-message: |
+          👋 Welcome to Codary 🧠💻
+        
+          Thanks for opening your first issue!  
+          Codary is a community focused on technology, computing, and artificial intelligence. We're thrilled to have you here.
+        
+          Please describe your suggestion, bug, or idea with as much detail as possible.  
+          We're always aiming to improve and bring the best tech content to our readers 🚀
+        
+          If you have any questions, feel free to ask. Happy coding! 🔧✨
+        
+        pr-message: |
+          🎉 Thanks for your first Pull Request to Codary! 🧬🖥️
+        
+          We truly appreciate your contribution.  
+          It's amazing to see the community grow with passionate tech enthusiasts like you.
+        
+          Make sure everything is well-documented and follows the repo’s guidelines.  
+          Need feedback or help? Just reach out — we’re here to support you 🤖
+        
+          Let’s make Codary the best tech news hub together! 🚀
