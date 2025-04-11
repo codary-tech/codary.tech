@@ -16,6 +16,12 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
+    env:
+      AHREFS_KEY: ${{ secrets.AHREFS_KEY }}
+      RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
