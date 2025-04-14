@@ -11,7 +11,7 @@ interface Props extends HTMLAttributes<"div"> {
 	showDetails?: boolean;
 }
 
-const { app, showDetails = false, ...attrs } = Astro.props;
+const { app, showDetails = true, ...attrs } = Astro.props;
 
 const currentLocale = Astro.currentLocale as Lang;
 const t = useTranslations(currentLocale);
@@ -28,55 +28,51 @@ const repositoryLicense = () => {
 ---
 
 <div class={cn("flex flex-col w-full", attrs.class)}>
-  {showDetails && (
-    <>
-      <div class="flex flex-wrap justify-start gap-2 mt-auto mb-3" aria-label={t("apps.tags.aria")}>
-        {app.tags.length > 0 ? (
-          app.tags.map((tag) => (
-            <span class="text-xs font-medium px-2 py-0.5 rounded bg-square-light dark:bg-square-dark text-main-light dark:text-main-dark">
-              {tag.title}
-            </span>
-          ))
-        ) : (
-          <span class="text-xs text-secondary-foreground-light dark:text-secondary-foreground-dark">{t("apps.tags.noTags")}</span>
-        )}
-      </div>
+  <div class="flex flex-wrap justify-start gap-2 mt-auto mb-3" aria-label={t("apps.tags.aria")}>
+    {app.tags.length > 0 ? (
+      app.tags.map((tag) => (
+        <span class="text-xs font-medium px-2 py-0.5 rounded bg-square-light dark:bg-square-dark text-main-light dark:text-main-dark">
+          {tag.title}
+        </span>
+      ))
+    ) : (
+      <span class="text-xs text-secondary-foreground-light dark:text-secondary-foreground-dark">{t("apps.tags.noTags")}</span>
+    )}
+  </div>
 
-      <dl class="space-y-2 text-xs text-main-light dark:text-main-dark">
-        <div class="flex items-center justify-between border-b border-section-border-light dark:border-section-border-dark pb-1">
-          <dt class="font-medium text-secondary-foreground-light dark:text-secondary-foreground-dark">{t('apps.source')}:</dt>
-          <dd class="flex items-center gap-1">
-            <a href={app.repository.url}
-               class="text-blue-600 dark:text-blue-400 hover:underline capitalize"
-               target="_blank">
-              {platformToName(app.repository.platform) ?? 'GitHub'}
-            </a>
-            <span class="flex items-center text-[9px] text-secondary-foreground-light dark:text-secondary-foreground-dark">
-              (
-              <Icon name="tabler:star" class="size-3" />
-              {formatStars(app.repository.stars ?? 0)}
-              )
-            </span>
-          </dd>
-        </div>
+  <dl class="space-y-2 text-xs text-main-light dark:text-main-dark">
+    <div class="flex items-center justify-between border-b border-section-border-light dark:border-section-border-dark pb-1">
+      <dt class="font-medium text-secondary-foreground-light dark:text-secondary-foreground-dark">{t('apps.source')}:</dt>
+      <dd class="flex items-center gap-1">
+        <a href={app.repository.url}
+            class="text-blue-600 dark:text-blue-400 hover:underline capitalize"
+            target="_blank">
+          {platformToName(app.repository.platform) ?? 'GitHub'}
+        </a>
+        <span class="flex items-center text-[9px] text-secondary-foreground-light dark:text-secondary-foreground-dark">
+          (
+          <Icon name="tabler:star" class="size-3" />
+          {formatStars(app.repository.stars ?? 0)}
+          )
+        </span>
+      </dd>
+    </div>
 
-        <div class="flex items-center justify-between border-b border-section-border-light dark:border-section-border-dark pb-1">
-          <dt class="font-medium text-secondary-foreground-light dark:text-secondary-foreground-dark">{t('apps.license')}:</dt>
-          <dd class="uppercase">{repositoryLicense()}</dd>
-        </div>
+    <div class="flex items-center justify-between border-b border-section-border-light dark:border-section-border-dark pb-1">
+      <dt class="font-medium text-secondary-foreground-light dark:text-secondary-foreground-dark">{t('apps.license')}:</dt>
+      <dd class="uppercase">{repositoryLicense()}</dd>
+    </div>
 
-        <div class="flex items-center justify-between border-b border-section-border-light dark:border-section-border-dark pb-1">
-          <dt class="font-medium text-secondary-foreground-light dark:text-secondary-foreground-dark">{t('apps.language')}:</dt>
-          <dd>{app.repository.language || "TypeScript"}</dd>
-        </div>
+    <div class="flex items-center justify-between border-b border-section-border-light dark:border-section-border-dark pb-1">
+      <dt class="font-medium text-secondary-foreground-light dark:text-secondary-foreground-dark">{t('apps.language')}:</dt>
+      <dd>{app.repository.language || "TypeScript"}</dd>
+    </div>
 
-        <div class="flex items-center justify-between">
-          <dt class="font-medium text-secondary-foreground-light dark:text-secondary-foreground-dark">{t('apps.lastActivity')}:</dt>
-          <dd class="text-shark-500 dark:text-shark-300">
-            {new Date(app.repository.lastActivity || new Date()).toISOString().split("T")[0]}
-          </dd>
-        </div>
-      </dl>
-    </>
-  )}
+    <div class="flex items-center justify-between">
+      <dt class="font-medium text-secondary-foreground-light dark:text-secondary-foreground-dark">{t('apps.lastActivity')}:</dt>
+      <dd class="text-shark-500 dark:text-shark-300">
+        {new Date(app.repository.lastActivity || new Date()).toISOString().split("T")[0]}
+      </dd>
+    </div>
+  </dl>
 </div>

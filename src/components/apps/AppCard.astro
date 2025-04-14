@@ -2,19 +2,29 @@
 import { Image } from "astro:assets";
 import { type Lang, useTranslations } from "@/i18n";
 import type App from "@/models/apps/app.model";
+import { Icon } from "astro-icon/components";
 import AppDetails from "./AppDetails.astro";
 
 interface Props {
 	app: App;
 	locale: Lang;
 	loading?: "lazy" | "eager";
+	initialShowDetails?: boolean;
 }
 
-const { app, locale, loading = "lazy" } = Astro.props;
+const {
+	app,
+	locale,
+	loading = "lazy",
+	initialShowDetails = false,
+} = Astro.props;
 const t = useTranslations(locale);
 ---
 
-<div class="group relative flex flex-col justify-between h-full w-full bg-hero-bg-light dark:bg-hero-bg-dark rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.15)] transition-all duration-200 ease-in-out hover:-translate-y-0.5 p-4">
+<div
+  class="group cursor-pointer relative flex flex-col justify-between h-full w-full bg-hero-bg-light dark:bg-hero-bg-dark rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.15)] transition-all duration-200 ease-in-out hover:-translate-y-0.5 p-4"
+  data-app-card
+>
   {app.isSponsored && (
     <div class="absolute top-3 left-3 bg-amber-500 text-white text-xs px-2 py-1 rounded-full z-10">
       {t("apps.sponsored")}
@@ -22,22 +32,35 @@ const t = useTranslations(locale);
   )}
 
   <div class="flex flex-col mb-3">
-    <div class="flex items-center mb-3">
-      <div class="w-10 h-10 mr-3 rounded-lg overflow-hidden">
-        <Image
-          src={app.icon}
-          alt={app.name}
-          width={40}
-          height={40}
-          class="w-full h-full object-fit"
-          loading={loading}
-          priority={loading === "eager" ? true : false}
-        />
+    <div class="flex items-center justify-between mb-3">
+      <div class="flex items-center">
+        <div class="w-10 h-10 mr-3 rounded-lg overflow-hidden">
+          <Image
+            src={app.icon}
+            alt={app.name}
+            width={40}
+            height={40}
+            class="w-full h-full object-fit"
+            loading={loading}
+            priority={loading === "eager" ? true : false}
+          />
+        </div>
+        <a href={app.url} target="_blank" rel="noopener noreferrer"
+          class="text-lg font-semibold text-main-light dark:text-main-dark hover:underline"
+          aria-label={t("apps.appLink", { appName: app.name })}
+					title={t("apps.appLink", { appName: app.name })}
+					>
+          {app.name}
+        </a>
       </div>
-      <a href={app.url} target="_blank" rel="noopener noreferrer"
-         class="text-lg font-semibold text-main-light dark:text-main-dark hover:underline">
-        {app.name}
-      </a>
+      <button
+        type="button"
+        class="toggle-details p-1 rounded-full text-secondary-foreground-light dark:text-secondary-foreground-dark hover:bg-square-light dark:hover:bg-square-dark transition-colors"
+        aria-expanded={initialShowDetails ? "true" : "false"}
+        aria-label={initialShowDetails ? t("apps.hideDetails") : t("apps.showDetails")}
+      >
+        <Icon name={initialShowDetails ? "tabler:chevron-up" : "tabler:chevron-down"} class="size-5" />
+      </button>
     </div>
 
     <p class="text-xs text-start text-wrap text-secondary-foreground-light dark:text-secondary-foreground-dark line-clamp-3">
@@ -45,5 +68,57 @@ const t = useTranslations(locale);
     </p>
   </div>
 
-  <AppDetails app={app} showDetails={true} />
+  <div class="details-container overflow-hidden transition-all duration-300" style={initialShowDetails ? "max-height: 1000px; opacity: 1;" : "max-height: 0; opacity: 0;"}>
+    <AppDetails app={app} showDetails={true} />
+  </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const appCards = document.querySelectorAll('[data-app-card]');
+
+    for (const card of appCards) {
+      const toggleBtn = card.querySelector('.toggle-details');
+      const detailsContainer = card.querySelector('.details-container');
+
+      if (toggleBtn && detailsContainer) {
+        toggleBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+
+          const expanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+          const icon = toggleBtn.querySelector('svg');
+
+          // Toggle state
+          toggleBtn.setAttribute('aria-expanded', (!expanded).toString());
+
+          // Update icon
+          if (icon) {
+            if (expanded) {
+              icon.outerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5"><path d="m6 9 6 6 6 -6"/></svg>';
+            } else {
+              icon.outerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5"><path d="m18 15-6-6-6 6"/></svg>';
+            }
+          }
+
+          // Toggle details visibility with animation
+          if (expanded) {
+            (detailsContainer as HTMLElement).style.maxHeight = '0';
+            (detailsContainer as HTMLElement).style.opacity = '0';
+          } else {
+            (detailsContainer as HTMLElement).style.maxHeight = '1000px';
+            (detailsContainer as HTMLElement).style.opacity = '1';
+          }
+        });
+
+        // Add click handler to the entire card (except for links)
+        card.addEventListener('click', (e) => {
+          // Only toggle if we didn't click a link or button inside the card
+          const target = e.target as Element;
+          if (!target.closest('a') && !target.closest('button')) {
+            (toggleBtn as HTMLElement).click();
+          }
+        });
+      }
+    }
+  });
+</script>

@@ -94,7 +94,7 @@ export function platformToName(platform: VersionControlPlatform): string {
  * formatStars(2500000)
  *
  * @example
- * // eturns "42" (no suffix for values less than 1000)
+ * // returns "42" (no suffix for values less than 1000)
  * formatStars(42)
  */
 export function formatStars(stars: number): string {
