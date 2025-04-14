@@ -1,8 +1,12 @@
 {
 	"name": "n8n",
 	"description": "Workflow automation platform that connects apps, services, and APIs",
-	"icon": "/src/assets/images/n8n.png",
+	"icon": "/src/assets/images/N8n.png",
 	"url": "https://n8n.io/",
+	"repository": {
+		"url": "https://github.com/n8n-io/n8n",
+		"platform": "github"
+	},
 	"isSponsored": false,
 	"tags": ["en/automation", "en/workflow"]
 }

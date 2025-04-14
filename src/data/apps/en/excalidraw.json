@@ -3,6 +3,10 @@
 	"description": "Virtual whiteboard for sketching hand-drawn like diagrams",
 	"icon": "/src/assets/images/Excalidraw.png",
 	"url": "https://excalidraw.com/",
+	"repository": {
+		"url": "https://github.com/excalidraw/excalidraw",
+		"platform": "github"
+	},
 	"isSponsored": false,
-	"tags": ["en/ai"]
+	"tags": ["en/diagrams", "en/whiteboard"]
 }

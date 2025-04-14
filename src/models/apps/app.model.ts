@@ -1,4 +1,5 @@
 import type { ImageMetadata } from "astro";
+import type Repo from "../repo/repo.model";
 import type Tag from "../tag/tag.model";
 
 export default interface App {
@@ -7,6 +8,7 @@ export default interface App {
 	description: string;
 	icon: ImageMetadata;
 	url: string;
+	repository: Repo;
 	isSponsored: boolean;
 	tags: Tag[];
 }

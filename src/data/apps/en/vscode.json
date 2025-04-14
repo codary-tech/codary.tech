@@ -3,6 +3,10 @@
 	"description": "Lightweight but powerful source code editor with support for thousands of extensions",
 	"icon": "/src/assets/images/VSCode.png",
 	"url": "https://code.visualstudio.com/",
+	"repository": {
+		"url": "https://github.com/microsoft/vscode",
+		"platform": "github"
+	},
 	"isSponsored": false,
 	"tags": ["en/development", "en/tools"]
 }

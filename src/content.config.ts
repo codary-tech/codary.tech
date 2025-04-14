@@ -5,6 +5,9 @@ import {
 	z,
 } from "astro:content";
 import { glob } from "astro/loaders";
+import { githubReposLoader } from "./lib/loaders/github";
+import { getGitHubRepoUrlsFromApps } from "./lib/loaders/github/helper";
+import { RepoSchema } from "./lib/loaders/github/schema";
 
 const articles = defineCollection({
 	loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: "./src/data/articles" }),
@@ -85,9 +88,21 @@ const apps = defineCollection({
 			description: z.string(),
 			icon: image(),
 			url: z.string().url(),
+			repository: z.object({
+				url: z.string().url(),
+				platform: z.enum(["github", "gitlab", "bitbucket", "other"]),
+			}),
 			isSponsored: z.boolean().default(false),
 			tags: z.array(reference("tags")).optional(),
 		}),
+});
+
+const repositories = defineCollection({
+	schema: RepoSchema,
+	loader: githubReposLoader({
+		auth: import.meta.env.GITHUB_TOKEN,
+		repoUrls: (await getGitHubRepoUrlsFromApps()) || [],
+	}),
 });
 
 export const collections = {
@@ -97,4 +112,5 @@ export const collections = {
 	authors,
 	newsletter,
 	apps,
+	repositories,
 };

@@ -3,6 +3,10 @@
 	"description": "Low-code programming for event-driven applications with a browser-based flow editor",
 	"icon": "/src/assets/images/NodeRED.png",
 	"url": "https://nodered.org/",
+	"repository": {
+		"url": "https://github.com/node-red/node-red",
+		"platform": "github"
+	},
 	"isSponsored": false,
 	"tags": ["en/iot", "en/automation"]
 }

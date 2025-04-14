@@ -3,6 +3,10 @@
 	"description": "Alternativa de código abierto a Firebase con base de datos Postgres, autenticación y almacenamiento",
 	"icon": "/src/assets/images/Supabase.png",
 	"url": "https://supabase.com/",
+	"repository": {
+		"url": "https://github.com/supabase/supabase",
+		"platform": "github"
+	},
 	"isSponsored": true,
 	"tags": ["es/database", "es/backend"]
 }

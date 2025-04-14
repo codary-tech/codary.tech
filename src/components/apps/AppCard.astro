@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import { type Lang, useTranslations } from "@/i18n";
 import type App from "@/models/apps/app.model";
+import AppDetails from "./AppDetails.astro";
 
 interface Props {
 	app: App;
@@ -44,11 +45,5 @@ const t = useTranslations(locale);
     </p>
   </div>
 
-  <div class="flex flex-wrap justify-center gap-2 mt-auto pt-2">
-    {app.tags.map((tag) => (
-      <span class="text-xs px-2 py-1 rounded-full bg-square-light dark:bg-square-dark text-shark-600 dark:text-shark-300">
-        {tag.title}
-      </span>
-    ))}
-  </div>
+  <AppDetails app={app} showDetails={true} />
 </div>

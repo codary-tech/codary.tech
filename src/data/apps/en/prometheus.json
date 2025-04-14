@@ -3,6 +3,10 @@
 	"description": "Open-source systems monitoring and alerting toolkit built for reliability and scalability",
 	"icon": "/src/assets/images/Prometheus.png",
 	"url": "https://prometheus.io/",
+	"repository": {
+		"url": "https://github.com/prometheus/prometheus",
+		"platform": "github"
+	},
 	"isSponsored": false,
 	"tags": ["en/monitoring", "en/analytics"]
 }

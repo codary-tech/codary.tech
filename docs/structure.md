@@ -90,6 +90,7 @@
 │   ├───components/
 │   │   ├───apps/
 │   │   │   ├───AppCard.astro
+│   │   │   ├───AppDetails.astro
 │   │   │   ├───AppFilters.astro
 │   │   │   └───AppGrid.astro
 │   │   ├───i18n/
@@ -351,6 +352,11 @@
 │   │   ├───General.astro
 │   │   └───Page.astro
 │   ├───lib/
+│   │   ├───loaders/
+│   │   │   └───github/
+│   │   │       ├───helper.ts
+│   │   │       ├───index.ts
+│   │   │       └───schema.ts
 │   │   ├───supabase.helper.ts
 │   │   ├───supabase.ts
 │   │   └───utils.ts
@@ -401,6 +407,12 @@
 │   │   ├───post/
 │   │   │   ├───post.model.ts
 │   │   │   └───post.service.ts
+│   │   ├───repo/
+│   │   │   ├───index.ts
+│   │   │   ├───repo.criteria.ts
+│   │   │   ├───repo.mapper.ts
+│   │   │   ├───repo.model.ts
+│   │   │   └───repo.service.ts
 │   │   ├───tag/
 │   │   │   ├───index.ts
 │   │   │   ├───tag.criteria.ts

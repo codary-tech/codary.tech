@@ -1,4 +1,5 @@
 import { type CollectionEntry, getEntries } from "astro:content";
+import { getRepo } from "../repo";
 import { toTag } from "../tag";
 import type App from "./app.model";
 
@@ -11,6 +12,7 @@ import type App from "./app.model";
 export async function toApp(appData: CollectionEntry<"apps">): Promise<App> {
 	const tagEntries = appData.data.tags || [];
 	const tags = await getEntries(tagEntries);
+	const repository = await getRepo({ url: appData.data.repository.url });
 
 	return {
 		id: appData.id,
@@ -18,6 +20,7 @@ export async function toApp(appData: CollectionEntry<"apps">): Promise<App> {
 		description: appData.data.description,
 		icon: appData.data.icon,
 		url: appData.data.url,
+		repository: repository,
 		isSponsored: appData.data.isSponsored,
 		tags: tags.map(toTag),
 	};

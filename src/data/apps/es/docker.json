@@ -3,6 +3,10 @@
 	"description": "Plataforma para desarrollar, enviar y ejecutar aplicaciones en contenedores",
 	"icon": "/src/assets/images/Docker.png",
 	"url": "https://www.docker.com/",
+	"repository": {
+		"url": "https://github.com/moby/moby",
+		"platform": "github"
+	},
 	"isSponsored": false,
 	"tags": ["es/devops", "es/containerization"]
 }

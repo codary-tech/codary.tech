@@ -3,6 +3,10 @@
 	"description": "Open source Firebase alternative with a Postgres database, Authentication, and Storage",
 	"icon": "/src/assets/images/Supabase.png",
 	"url": "https://supabase.com/",
+	"repository": {
+		"url": "https://github.com/supabase/supabase",
+		"platform": "github"
+	},
 	"isSponsored": true,
 	"tags": ["en/database", "en/backend"]
 }
