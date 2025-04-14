@@ -31,12 +31,12 @@ const repositoryLicense = () => {
   <div class="flex flex-wrap justify-start gap-2 mt-auto mb-3" aria-label={t("apps.tags.aria")}>
     {app.tags.length > 0 ? (
       app.tags.map((tag) => (
-        <span class="text-xs font-medium px-2 py-0.5 rounded bg-square-light dark:bg-square-dark text-main-light dark:text-main-dark">
+        <span class="text-xs font-medium px-2 py-0.5 rounded bg-main-light dark:bg-main-dark text-main-dark dark:text-main-light hover:bg-main-light/50 dark:hover:bg-main-dark/50 transition-colors">
           {tag.title}
         </span>
       ))
     ) : (
-      <span class="text-xs text-secondary-foreground-light dark:text-secondary-foreground-dark">{t("apps.tags.noTags")}</span>
+      <span class="text-xs text-main-dark dark:text-main-light">{t("apps.tags.noTags")}</span>
     )}
   </div>
 
