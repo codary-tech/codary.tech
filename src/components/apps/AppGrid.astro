@@ -54,10 +54,10 @@ const templateApp = apps[0] || null;
   let showAllDetails = false;
 
   // Elements
-  const appGrid = document.getElementById('app-grid');
-  const loadMoreButton = document.getElementById('load-more-button');
-  const loadMoreContainer = document.getElementById('load-more-container');
-  const noResultsElement = document.getElementById('no-results');
+  const appGrid = document.getElementById("app-grid");
+  const loadMoreButton = document.getElementById("load-more-button");
+  const loadMoreContainer = document.getElementById("load-more-container");
+  const noResultsElement = document.getElementById("no-results");
 
   // Function to render app cards by using the same structure as AppCard.astro
   function renderApp(app) {
@@ -276,17 +276,49 @@ const templateApp = apps[0] || null;
   // Click handler for load more button
   loadMoreButton?.addEventListener('click', loadMore);
 
-  // Filter apps based on search, tag selection, open source and show details settings
+  // Sort apps based on sort criteria
+  function sortApps(apps, sortBy) {
+    const appsCopy = [...apps];
+
+    switch (sortBy) {
+      case "stars":
+        // Ordenar por número de estrellas (de mayor a menor)
+        return appsCopy.sort((a, b) => {
+          const starsA = a.repository?.stars || 0;
+          const starsB = b.repository?.stars || 0;
+          return starsB - starsA;
+        });
+
+      case "activity":
+        // Ordenar por actividad más reciente
+        return appsCopy.sort((a, b) => {
+          const dateA = new Date(a.repository?.lastActivity || 0);
+          const dateB = new Date(b.repository?.lastActivity || 0);
+          return dateB.getTime() - dateA.getTime();
+        });
+
+      case "random":
+        // Ordenar aleatoriamente
+        return appsCopy.sort(() => Math.random() - 0.5);
+
+      case "alphabetical":
+      default:
+        // Ordenar alfabéticamente por nombre
+        return appsCopy.sort((a, b) => a.name.localeCompare(b.name));
+    }
+  }
+
+  // Filter and sort apps based on search, tag selection, open source, show details and sort criteria
   let filteredApps = null;
 
-  window.addEventListener('app-filter-change', (event) => {
-    const { searchTerm, selectedTag, showDetails, openSourceOnly } = event.detail;
+  window.addEventListener("app-filter-change", (event) => {
+    const { searchTerm, selectedTag, showDetails, openSourceOnly, sortBy } = event.detail;
 
     // Update global showAllDetails state
     showAllDetails = showDetails;
 
     // Reset display
-    appGrid.innerHTML = '';
+    appGrid.innerHTML = "";
     visibleCount = 0;
 
     // Filter apps
@@ -305,13 +337,18 @@ const templateApp = apps[0] || null;
       return matchesSearch && matchesTag && matchesOpenSource;
     });
 
+    // Sort the filtered apps based on the selected sort criteria
+    if (sortBy) {
+      filteredApps = sortApps(filteredApps, sortBy);
+    }
+
     // Show or hide no results message
     if (filteredApps.length === 0) {
-      noResultsElement.classList.remove('hidden');
-      loadMoreContainer.classList.add('hidden');
+      noResultsElement.classList.remove("hidden");
+      loadMoreContainer.classList.add("hidden");
     } else {
-      noResultsElement.classList.add('hidden');
-      loadMoreContainer.classList.remove('hidden');
+      noResultsElement.classList.add("hidden");
+      loadMoreContainer.classList.remove("hidden");
 
       // Show first batch of filtered apps
       const initialBatch = filteredApps.slice(0, 10);
@@ -322,27 +359,27 @@ const templateApp = apps[0] || null;
 
       // Hide load more button if all filtered apps are shown
       if (visibleCount >= filteredApps.length) {
-        loadMoreContainer.classList.add('hidden');
+        loadMoreContainer.classList.add("hidden");
       }
     }
 
     // Update all existing cards' details state
-    const allDetailContainers = document.querySelectorAll('.details-container');
-    const allToggleButtons = document.querySelectorAll('.toggle-details');
+    const allDetailContainers = document.querySelectorAll(".details-container");
+    const allToggleButtons = document.querySelectorAll(".toggle-details");
 
     allDetailContainers.forEach(container => {
       if (showAllDetails) {
-        container.style.maxHeight = '1000px';
-        container.style.opacity = '1';
+        container.style.maxHeight = "1000px";
+        container.style.opacity = "1";
       } else {
-        container.style.maxHeight = '0';
-        container.style.opacity = '0';
+        container.style.maxHeight = "0";
+        container.style.opacity = "0";
       }
     });
 
     allToggleButtons.forEach(button => {
-      button.setAttribute('aria-expanded', showAllDetails.toString());
-      const icon = button.querySelector('svg');
+      button.setAttribute("aria-expanded", showAllDetails.toString());
+      const icon = button.querySelector("svg");
       if (icon) {
         icon.innerHTML = showAllDetails ?
           '<path d="m18 15-6-6-6 6"/>' :

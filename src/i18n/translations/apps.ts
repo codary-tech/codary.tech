@@ -27,6 +27,11 @@ export const apps: { en: UIDict; es: UIDict } = {
 		"apps.filters.all": "All",
 		"apps.filters.showDetails": "Show details",
 		"apps.filters.openSourceOnly": "Open Source Only",
+		"apps.sort.label": "Sort by",
+		"apps.sort.alphabetical": "Alphabetical",
+		"apps.sort.stars": "Stars",
+		"apps.sort.activity": "Last Activity",
+		"apps.sort.random": "Random",
 	},
 	es: {
 		"apps.title": "Aplicaciones | Últimas Actualizaciones y Noticias",
@@ -55,5 +60,10 @@ export const apps: { en: UIDict; es: UIDict } = {
 		"apps.filters.all": "Todas",
 		"apps.filters.showDetails": "Mostrar detalles",
 		"apps.filters.openSourceOnly": "Solo Código Abierto",
+		"apps.sort.label": "Ordenar por",
+		"apps.sort.alphabetical": "Alfabético",
+		"apps.sort.stars": "Estrellas",
+		"apps.sort.activity": "Última Actividad",
+		"apps.sort.random": "Aleatorio",
 	},
 };
