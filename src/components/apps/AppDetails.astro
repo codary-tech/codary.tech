@@ -17,7 +17,7 @@ const currentLocale = Astro.currentLocale as Lang;
 const t = useTranslations(currentLocale);
 
 const repositoryLicense = () => {
-	const { license } = app.repository;
+	const { license } = app.repository || {};
 
 	if (!license) {
 		return "MIT"; // Default fallback
