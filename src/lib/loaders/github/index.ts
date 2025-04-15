@@ -35,11 +35,9 @@ export function githubReposLoader({
 			for (const url of repoUrls) {
 				try {
 					// Extract owner and repo name from URL
-					const urlParts = new URL(url).pathname.split("/").filter(Boolean);
-					if (urlParts.length < 2) continue;
-
-					const owner = urlParts[0];
-					const repo = urlParts[1];
+					const pathSegments = new URL(url).pathname.split("/").filter(Boolean);
+					if (pathSegments.length < 2) continue;
+					const [owner, repo] = pathSegments;
 
 					// Fetch repository data
 					const { data } = await octokit.rest.repos.get({

@@ -22,8 +22,8 @@ const repositoryLicense = () => {
 	if (!license) {
 		return "MIT"; // Default fallback
 	}
-
-	return license === "other" ? t("apps.license.other") : license.toUpperCase(); // Ensure consistent uppercase formatting
+	const isOther = ["other", "custom"].includes(license);
+	return isOther ? t("apps.license.other") : license.toUpperCase();
 };
 ---
 
