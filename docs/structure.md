@@ -9,10 +9,16 @@
 │   ├───ISSUE_TEMPLATE/
 │   │   ├───bug_report.md
 │   │   └───feature_request.md
+│   ├───actions/
+│   │   └───install/
+│   │       └───node/
+│   │           └───action.yml
 │   ├───workflows/
 │   │   ├───.DS_Store
+│   │   ├───build-and-test.yml
 │   │   ├───cleanup.yml
 │   │   ├───codeql.yml
+│   │   ├───first-interaction.yml
 │   │   ├───image-actions.yml
 │   │   └───links.yml
 │   ├───.DS_Store
@@ -124,6 +130,7 @@
 │   │   ├───LatestNewsletter.astro
 │   │   ├───LatestPosts.astro
 │   │   ├───Link.astro
+│   │   ├───LiteYouTube.astro
 │   │   ├───Logo.astro
 │   │   ├───NavLink.astro
 │   │   ├───Navigation.astro
