@@ -37,7 +37,7 @@ export async function getRepos(criteria?: RepoCriteria): Promise<Repo[]> {
 				}
 			} catch (error) {
 				// Fallback to direct comparison if URL parsing fails
-				if (data.url !== url) {
+				if (data.html_url !== url) {
 					return false;
 				}
 			}
