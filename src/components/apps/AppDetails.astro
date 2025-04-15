@@ -1,0 +1,111 @@
+---
+import { type Lang, useTranslations } from "@/i18n";
+import { cn } from "@/lib/utils";
+import type App from "@/models/apps/app.model";
+import { formatStars, platformToName } from "@/models/repo";
+import { Icon } from "astro-icon/components";
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"div"> {
+	app: App;
+	showDetails?: boolean;
+}
+
+const { app, showDetails = true, ...attrs } = Astro.props;
+
+const currentLocale = Astro.currentLocale as Lang;
+const t = useTranslations(currentLocale);
+
+const repositoryLicense = () => {
+	const { license } = app.repository || {};
+
+	if (!license) {
+		return "MIT"; // Default fallback
+	}
+	const isOther = ["other", "custom"].includes(license);
+	return isOther ? t("apps.license.other") : license.toUpperCase();
+};
+
+const repository = app.repository;
+---
+
+<div class={cn("flex flex-col w-full", attrs.class)}>
+  <div class="flex flex-wrap justify-start gap-2 mt-auto mb-3" aria-label={t("apps.tags.aria")}>
+    {app.tags.length > 0 ? (
+      app.tags.map((tag) => (
+        <button
+          type="button"
+          class="tag-filter text-xs font-medium px-2 py-0.5 rounded bg-main-light dark:bg-main-dark text-main-dark dark:text-main-light hover:bg-main-light/50 dark:hover:bg-main-dark/50 transition-colors cursor-pointer"
+          data-tag-id={tag.id}
+          data-tag-title={tag.title}
+          aria-label={t("apps.filters.filterByTag", { tag: tag.title })}
+        >
+          {tag.title}
+        </button>
+      ))
+    ) : (
+      <span class="text-xs text-main-dark dark:text-main-light">{t("apps.tags.noTags")}</span>
+    )}
+  </div>
+
+	{showDetails && repository && (
+		<dl class="space-y-2 text-xs text-main-light dark:text-main-dark">
+			<div class="flex items-center justify-between border-b border-section-border-light dark:border-section-border-dark pb-1">
+				<dt class="font-medium text-secondary-foreground-light dark:text-secondary-foreground-dark">{t('apps.source')}:</dt>
+				<dd class="flex items-center gap-1">
+					<a href={repository.url}
+							class="text-blue-600 dark:text-blue-400 hover:underline capitalize"
+							target="_blank">
+						{platformToName(repository.platform) ?? 'GitHub'}
+					</a>
+					<span class="flex items-center text-[9px] text-secondary-foreground-light dark:text-secondary-foreground-dark">
+						(
+						<Icon name="tabler:star" class="size-2 mr-0.5" />
+						{formatStars(repository.stars ?? 0)}
+						)
+					</span>
+				</dd>
+			</div>
+
+			<div class="flex items-center justify-between border-b border-section-border-light dark:border-section-border-dark pb-1">
+				<dt class="font-medium text-secondary-foreground-light dark:text-secondary-foreground-dark">{t('apps.license')}:</dt>
+				<dd class="uppercase">{repositoryLicense()}</dd>
+			</div>
+
+			<div class="flex items-center justify-between border-b border-section-border-light dark:border-section-border-dark pb-1">
+				<dt class="font-medium text-secondary-foreground-light dark:text-secondary-foreground-dark">{t('apps.language')}:</dt>
+				<dd>{repository.language || "TypeScript"}</dd>
+			</div>
+
+			<div class="flex items-center justify-between">
+				<dt class="font-medium text-secondary-foreground-light dark:text-secondary-foreground-dark">{t('apps.lastActivity')}:</dt>
+				<dd class="text-shark-500 dark:text-shark-300">
+					{new Date(repository.lastActivity || new Date()).toISOString().split("T")[0]}
+				</dd>
+			</div>
+		</dl>
+	)}
+</div>
+
+<script>
+	document.addEventListener("DOMContentLoaded", () => {
+		// Añadir event listeners a los botones de etiqueta
+		const tagButtons = document.querySelectorAll(".tag-filter");
+
+		for (const button of tagButtons) {
+			button.addEventListener("click", (e) => {
+				e.stopPropagation(); // Prevenir que el evento se propague al card
+
+				const tagId = (button as HTMLElement).dataset.tagId;
+				if (tagId) {
+					// Disparar un evento personalizado para aplicar el filtro
+					window.dispatchEvent(
+						new CustomEvent("app-tag-selected", {
+							detail: { tagId }
+						})
+					);
+				}
+			});
+		}
+	});
+</script>

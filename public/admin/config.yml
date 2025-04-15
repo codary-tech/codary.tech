@@ -264,3 +264,66 @@ collections:
         widget: 'markdown'
         label: 'Body'
         i18n: true
+
+  - name: 'apps'
+    label: 'Applications'
+    label_singular: 'Application'
+    folder: 'src/data/apps'
+    create: true
+    slug: '{{name}}'
+    extension: json
+    i18n: true
+    fields:
+      - name: 'name'
+        widget: 'string'
+        label: 'Name'
+        i18n: true
+      - name: 'description'
+        widget: 'string'
+        label: 'Description'
+        i18n: true
+      - name: 'icon'
+        widget: 'image'
+        label: 'Icon'
+        i18n: 'duplicate'
+      - name: 'url'
+        widget: 'string'
+        label: 'URL'
+        i18n: 'duplicate'
+      - name: 'repository'
+        widget: 'object'
+        label: 'Repository'
+        i18n: 'duplicate'
+        fields:
+          - name: 'url'
+            widget: 'string'
+            label: 'URL'
+            i18n: 'duplicate'
+          - name: 'platform'
+            widget: 'select'
+            label: 'Platform'
+            i18n: 'duplicate'
+            options:
+              - label: 'GitHub'
+                value: 'github'
+              - label: 'GitLab'
+                value: 'gitlab'
+              - label: 'Bitbucket'
+                value: 'bitbucket'
+              - label: 'Other'
+                value: 'other'
+            default: 'github'
+      - name: 'isSponsored'
+        widget: 'boolean'
+        label: 'Is Sponsored'
+        default: false
+        i18n: 'duplicate'
+      - name: 'tags'
+        widget: 'relation'
+        collection: 'tags'
+        value_field: '{{locale}}/{{slug}}'
+        search_fields: ['title']
+        display_fields: ['title']
+        multiple: true
+        i18n: 'duplicate'
+        required: false

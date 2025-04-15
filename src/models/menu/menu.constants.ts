@@ -1,9 +1,11 @@
+import { hasApps } from "../apps/app.service";
 import { hasArticles } from "../article";
 import { hasNewsletters } from "../newsletter";
 import type { MenuItem } from "./menu.type";
 
 const hasNewsletter = await hasNewsletters();
 const hasArticle = await hasArticles();
+const hasApp = await hasApps();
 
 // Define menu items with translation keys and conditions
 export const mainMenuItems: MenuItem[] = [
@@ -13,7 +15,7 @@ export const mainMenuItems: MenuItem[] = [
 		condition: hasNewsletter,
 	},
 	{ href: "/news", translationKey: "nav.news", condition: hasArticle },
-	{ href: "/apps", translationKey: "nav.apps", condition: false }, // Coming soon
+	{ href: "/apps", translationKey: "nav.apps", condition: hasApp }, // Coming soon
 	{ href: "/podcast", translationKey: "nav.podcast", condition: false }, // Coming soon
 ];
 

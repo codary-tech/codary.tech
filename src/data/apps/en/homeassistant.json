@@ -1,0 +1,12 @@
+{
+	"name": "Home Assistant",
+	"description": "Open source home automation platform that puts local control and privacy first",
+	"icon": "/src/assets/images/HomeAssistant.png",
+	"url": "https://www.home-assistant.io/",
+	"repository": {
+		"url": "https://github.com/home-assistant/core",
+		"platform": "github"
+	},
+	"isSponsored": false,
+	"tags": ["en/iot"]
+}

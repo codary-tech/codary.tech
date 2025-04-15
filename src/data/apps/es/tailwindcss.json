@@ -1,0 +1,12 @@
+{
+	"name": "Tailwind CSS",
+	"description": "Framework CSS basado en utilidades para construir rápidamente interfaces de usuario personalizadas",
+	"icon": "/src/assets/images/TailwindCSS.png",
+	"url": "https://tailwindcss.com/",
+	"repository": {
+		"url": "https://github.com/tailwindlabs/tailwindcss",
+		"platform": "github"
+	},
+	"isSponsored": true,
+	"tags": ["es/frontend", "es/css"]
+}

@@ -19,7 +19,7 @@ const {
 	url = Astro.request.url,
 	minutesRead,
 } = Astro.props;
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+// const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(getOgImagePath(Astro.url.pathname), Astro.url.origin)
 	.href;
 ---

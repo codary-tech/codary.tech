@@ -1,0 +1,12 @@
+{
+	"name": "Node-RED",
+	"description": "Programación de bajo código para aplicaciones basadas en eventos con un editor de flujos basado en navegador",
+	"icon": "/src/assets/images/NodeRED.png",
+	"url": "https://nodered.org/",
+	"repository": {
+		"url": "https://github.com/node-red/node-red",
+		"platform": "github"
+	},
+	"isSponsored": false,
+	"tags": ["es/iot", "es/automation"]
+}

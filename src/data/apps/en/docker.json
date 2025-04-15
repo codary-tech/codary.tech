@@ -1,0 +1,12 @@
+{
+	"name": "Docker",
+	"description": "Platform for developing, shipping, and running applications in containers",
+	"icon": "/src/assets/images/Docker.png",
+	"url": "https://www.docker.com/",
+	"repository": {
+		"url": "https://github.com/moby/moby",
+		"platform": "github"
+	},
+	"isSponsored": false,
+	"tags": ["en/devops", "en/containerization"]
+}

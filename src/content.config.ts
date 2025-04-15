@@ -5,6 +5,9 @@ import {
 	z,
 } from "astro:content";
 import { glob } from "astro/loaders";
+import { githubReposLoader } from "./lib/loaders/github";
+import { getGitHubRepoUrlsFromApps } from "./lib/loaders/github/helper";
+import { RepoSchema } from "./lib/loaders/github/schema";
 
 const articles = defineCollection({
 	loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: "./src/data/articles" }),
@@ -77,4 +80,37 @@ const authors = defineCollection({
 	}),
 });
 
-export const collections = { articles, tags, categories, authors, newsletter };
+const apps = defineCollection({
+	loader: glob({ pattern: "**/[^_]*.json", base: "./src/data/apps" }),
+	schema: ({ image }: SchemaContext) =>
+		z.object({
+			name: z.string(),
+			description: z.string(),
+			icon: image(),
+			url: z.string().url(),
+			repository: z.object({
+				url: z.string().url(),
+				platform: z.enum(["github", "gitlab", "bitbucket", "other"]),
+			}),
+			isSponsored: z.boolean().default(false),
+			tags: z.array(reference("tags")).optional(),
+		}),
+});
+
+const repositories = defineCollection({
+	schema: RepoSchema,
+	loader: githubReposLoader({
+		auth: import.meta.env.GITHUB_TOKEN,
+		repoUrls: (await getGitHubRepoUrlsFromApps()) || [],
+	}),
+});
+
+export const collections = {
+	articles,
+	tags,
+	categories,
+	authors,
+	newsletter,
+	apps,
+	repositories,
+};

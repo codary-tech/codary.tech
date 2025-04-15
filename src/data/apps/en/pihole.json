@@ -1,0 +1,12 @@
+{
+	"name": "Pi-hole",
+	"description": "Network-level advertisement and Internet tracker blocking application that acts as a DNS sinkhole",
+	"icon": "/src/assets/images/Pihole.png",
+	"url": "https://pi-hole.net/",
+	"repository": {
+		"url": "https://github.com/pi-hole/pi-hole",
+		"platform": "github"
+	},
+	"isSponsored": false,
+	"tags": ["en/privacy", "en/networking"]
+}
