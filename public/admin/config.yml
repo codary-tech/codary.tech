@@ -312,7 +312,7 @@ collections:
                 value: 'bitbucket'
               - label: 'Other'
                 value: 'other'
-            default: ['github']
+            default: 'github'
       - name: 'isSponsored'
         widget: 'boolean'
         label: 'Is Sponsored'
