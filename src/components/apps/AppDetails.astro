@@ -31,9 +31,15 @@ const repositoryLicense = () => {
   <div class="flex flex-wrap justify-start gap-2 mt-auto mb-3" aria-label={t("apps.tags.aria")}>
     {app.tags.length > 0 ? (
       app.tags.map((tag) => (
-        <span class="text-xs font-medium px-2 py-0.5 rounded bg-main-light dark:bg-main-dark text-main-dark dark:text-main-light hover:bg-main-light/50 dark:hover:bg-main-dark/50 transition-colors">
+        <button
+          type="button"
+          class="tag-filter text-xs font-medium px-2 py-0.5 rounded bg-main-light dark:bg-main-dark text-main-dark dark:text-main-light hover:bg-main-light/50 dark:hover:bg-main-dark/50 transition-colors cursor-pointer"
+          data-tag-id={tag.id}
+          data-tag-title={tag.title}
+          aria-label={t("apps.filters.filterByTag", { tag: tag.title })}
+        >
           {tag.title}
-        </span>
+        </button>
       ))
     ) : (
       <span class="text-xs text-main-dark dark:text-main-light">{t("apps.tags.noTags")}</span>
@@ -76,3 +82,26 @@ const repositoryLicense = () => {
     </div>
   </dl>
 </div>
+
+<script>
+	document.addEventListener("DOMContentLoaded", () => {
+		// Añadir event listeners a los botones de etiqueta
+		const tagButtons = document.querySelectorAll(".tag-filter");
+
+		for (const button of tagButtons) {
+			button.addEventListener("click", (e) => {
+				e.stopPropagation(); // Prevenir que el evento se propague al card
+
+				const tagId = (button as HTMLElement).dataset.tagId;
+				if (tagId) {
+					// Disparar un evento personalizado para aplicar el filtro
+					window.dispatchEvent(
+						new CustomEvent("app-tag-selected", {
+							detail: { tagId }
+						})
+					);
+				}
+			});
+		}
+	});
+</script>

@@ -97,31 +97,78 @@ const tags = await getAppTags(currentLocale);
 </style>
 
 <script>
+  // Define TypeScript interface for filter parameters
+  interface FilterParams {
+    searchTerm?: string;
+    selectedTag?: string;
+    showDetails?: boolean;
+    openSourceOnly?: boolean;
+  }
+
+  // Función para generar URL con parámetros de filtro
+  function updateUrlParams(filterParams: FilterParams) {
+    const url = new URL(window.location.href);
+
+		// Eliminar parámetros actuales
+		url.searchParams.delete("tag");
+		url.searchParams.delete("search");
+		url.searchParams.delete("details");
+		url.searchParams.delete("opensource");
+
+		// Añadir nuevos parámetros si existen
+		if (filterParams.selectedTag) {
+			url.searchParams.set("tag", filterParams.selectedTag);
+		}
+
+		if (filterParams.searchTerm) {
+			url.searchParams.set("search", filterParams.searchTerm);
+		}
+
+		if (filterParams.showDetails) {
+			url.searchParams.set("details", "true");
+		}
+
+		if (filterParams.openSourceOnly) {
+			url.searchParams.set("opensource", "true");
+		}
+
+		// Actualizar URL sin recargar la página
+		window.history.pushState({}, "", url.toString());
+	}
+
   // Add client-side filter functionality
-  document.addEventListener('DOMContentLoaded', () => {
-    const searchInput = document.getElementById('search') as HTMLInputElement | null;
-    const clearButton = document.getElementById('clear-search');
-    const tagsSelect = document.getElementById('filter-tags') as HTMLSelectElement | null;
-    const showDetailsToggle = document.getElementById('show-details') as HTMLInputElement | null;
-    const openSourceOnlyToggle = document.getElementById('open-source-only') as HTMLInputElement | null;
+  document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.getElementById("search") as HTMLInputElement | null;
+    const clearButton = document.getElementById("clear-search");
+    const tagsSelect = document.getElementById("filter-tags") as HTMLSelectElement | null;
+    const showDetailsToggle = document.getElementById("show-details") as HTMLInputElement | null;
+    const openSourceOnlyToggle = document.getElementById("open-source-only") as HTMLInputElement | null;
 
     // Clear search input
-    clearButton?.addEventListener('click', () => {
+    clearButton?.addEventListener("click", () => {
       if (searchInput) {
-        searchInput.value = '';
-        searchInput.dispatchEvent(new Event('input'));
+        searchInput.value = "";
+        searchInput.dispatchEvent(new Event("input"));
       }
     });
 
     // Apply filters when inputs change
     const applyFilters = () => {
-      const searchTerm = searchInput?.value.toLowerCase() || '';
-      const selectedTag = tagsSelect?.value || '';
+      const searchTerm = searchInput?.value.toLowerCase() || "";
+      const selectedTag = tagsSelect?.value || "";
       const showDetails = showDetailsToggle?.checked || false;
       const openSourceOnly = openSourceOnlyToggle?.checked || false;
 
+      // Actualizar la URL con los parámetros de filtro
+      updateUrlParams({
+				searchTerm,
+				selectedTag,
+				showDetails,
+				openSourceOnly
+			});
+
       // Dispatch custom event for the AppGrid to handle
-      window.dispatchEvent(new CustomEvent('app-filter-change', {
+      window.dispatchEvent(new CustomEvent("app-filter-change", {
         detail: {
           searchTerm,
           selectedTag,
@@ -132,9 +179,58 @@ const tags = await getAppTags(currentLocale);
     };
 
     // Add event listeners
-    searchInput?.addEventListener('input', applyFilters);
-    tagsSelect?.addEventListener('change', applyFilters);
-    showDetailsToggle?.addEventListener('change', applyFilters);
-    openSourceOnlyToggle?.addEventListener('change', applyFilters);
+    searchInput?.addEventListener("input", applyFilters);
+    tagsSelect?.addEventListener("change", applyFilters);
+    showDetailsToggle?.addEventListener("change", applyFilters);
+    openSourceOnlyToggle?.addEventListener("change", applyFilters);
+
+    // Escuchar el evento cuando se selecciona una etiqueta
+    window.addEventListener("app-tag-selected", (e: Event) => {
+      const customEvent = e as CustomEvent;
+      const tagId = customEvent.detail.tagId;
+
+      if (tagsSelect && tagId) {
+        // Establecer el valor del select
+        tagsSelect.value = tagId;
+
+        // Disparar el evento de cambio para aplicar el filtro
+        tagsSelect.dispatchEvent(new Event("change"));
+      }
+    });
+
+    // Aplicar filtros desde URL al cargar la página
+    const url = new URL(window.location.href);
+
+    // Aplicar filtro de etiqueta desde URL
+    const urlTag = url.searchParams.get("tag");
+    if (urlTag && tagsSelect) {
+      tagsSelect.value = urlTag;
+    }
+
+    // Aplicar término de búsqueda desde URL
+    const urlSearch = url.searchParams.get("search");
+    if (urlSearch && searchInput) {
+      searchInput.value = urlSearch;
+    }
+
+    // Aplicar mostrar detalles desde URL
+    const urlDetails = url.searchParams.get("details");
+    if (urlDetails === "true" && showDetailsToggle) {
+      showDetailsToggle.checked = true;
+    }
+
+    // Aplicar filtro de código abierto desde URL
+    const urlOpenSource = url.searchParams.get("opensource");
+    if (urlOpenSource === "true" && openSourceOnlyToggle) {
+      openSourceOnlyToggle.checked = true;
+    }
+
+    // Si hay algún filtro en la URL, aplicarlos
+    if (urlTag || urlSearch || urlDetails || urlOpenSource) {
+      // Disparar evento después de un pequeño retraso para asegurar que los elementos están listos
+      setTimeout(() => {
+        applyFilters();
+      }, 100);
+    }
   });
 </script>
