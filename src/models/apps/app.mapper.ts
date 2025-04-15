@@ -33,5 +33,8 @@ export async function toApp(appData: CollectionEntry<"apps">): Promise<App> {
  * @returns Promise containing an array of mapped App objects
  */
 export async function toApps(apps: CollectionEntry<"apps">[]): Promise<App[]> {
-	return Promise.all(apps.map(toApp));
+	const results = await Promise.allSettled(apps.map(toApp));
+	return results
+		.filter((result): result is PromiseFulfilledResult<App> => result.status === 'fulfilled')
+		.map(result => result.value);
 }
