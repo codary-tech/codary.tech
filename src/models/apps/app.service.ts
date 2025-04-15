@@ -1,5 +1,7 @@
 import { getCollection } from "astro:content";
+import type { Lang } from "@/i18n";
 import { parseEntityId } from "@/utils/collection.entity";
+import type Tag from "../tag/tag.model";
 import type { AppCriteria } from "./app.criteria";
 import { toApps } from "./app.mapper";
 import type App from "./app.model";
@@ -60,4 +62,30 @@ export async function getApp(id: string): Promise<App | null> {
 export async function hasApps(criteria: AppCriteria = {}): Promise<boolean> {
 	const apps = await getApps(criteria);
 	return apps.length > 0;
+}
+
+/**
+ * Retrieves all tags available in the apps collection
+ * @async
+ * @param {Lang} lang - The language for the tags
+ * @returns {Promise<Tag[]>} A promise that resolves to an array of Tag objects
+ */
+export async function getAppTags(lang: Lang): Promise<Tag[]> {
+	// Get all apps for the specified language
+	const apps = await getApps({ lang });
+
+	// Extract all tags from the apps and create a map to deduplicate by tag ID
+	const tagsMap = new Map<string, Tag>();
+
+	for (const app of apps) {
+		for (const tag of app.tags) {
+			tagsMap.set(tag.id, tag);
+		}
+	}
+
+	// Convert the map values to an array and sort by title
+	const uniqueTags = Array.from(tagsMap.values());
+	uniqueTags.sort((a, b) => a.title.localeCompare(b.title));
+
+	return uniqueTags;
 }

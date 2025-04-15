@@ -1,5 +1,6 @@
 ---
 import { type Lang, useTranslations } from "@/i18n";
+import { getAppTags } from "@/models/apps/app.service";
 
 interface Props {
 	currentLocale: Lang;
@@ -7,6 +8,9 @@ interface Props {
 
 const { currentLocale } = Astro.props;
 const t = useTranslations(currentLocale);
+
+// Get all available tags for the current language
+const tags = await getAppTags(currentLocale);
 ---
 
 <div class="mb-8 bg-bg-light dark:bg-bg-dark rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.1)] p-4">
@@ -46,7 +50,9 @@ const t = useTranslations(currentLocale);
         class="w-full px-4 py-2 rounded-lg border border-input-border-light dark:border-input-border-dark bg-bg-light dark:bg-hero-bg-dark text-main-light dark:text-main-dark focus:outline-none focus:ring-2 focus:ring-input-border--focus-light dark:focus:ring-input-border--focus-dark"
       >
         <option value="">{t("apps.filters.all")}</option>
-        <!-- Tags will be loaded via JavaScript -->
+        {tags.map((tag) => (
+          <option value={tag.id}>{tag.title}</option>
+        ))}
       </select>
     </div>
 
