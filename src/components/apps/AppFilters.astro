@@ -75,7 +75,8 @@ const tags = await getAppTags(currentLocale);
     <div class="md:col-span-6 flex items-center mt-4 md:mt-2">
       <label for="show-details" class="flex items-center cursor-pointer">
         <div class="relative">
-          <input type="checkbox" id="show-details" class="sr-only">
+-          <input type="checkbox" id="show-details" class="sr-only">
++          <input type="checkbox" id="show-details" class="sr-only" aria-checked="false" role="switch">
           <div class="block w-10 h-6 rounded-full bg-input-border-light dark:bg-input-border-dark"></div>
           <div class="dot absolute left-1 top-1 bg-white dark:bg-slate-200 w-4 h-4 rounded-full transition-transform"></div>
         </div>
@@ -88,7 +89,8 @@ const tags = await getAppTags(currentLocale);
     <div class="md:col-span-6 flex items-center mt-4 md:mt-2">
       <label for="open-source-only" class="flex items-center cursor-pointer">
         <div class="relative">
-          <input type="checkbox" id="open-source-only" class="sr-only">
+-          <input type="checkbox" id="open-source-only" class="sr-only">
++          <input type="checkbox" id="open-source-only" class="sr-only" aria-checked="false" role="switch">
           <div class="block w-10 h-6 rounded-full bg-input-border-light dark:bg-input-border-dark"></div>
           <div class="dot absolute left-1 top-1 bg-white dark:bg-slate-200 w-4 h-4 rounded-full transition-transform"></div>
         </div>
