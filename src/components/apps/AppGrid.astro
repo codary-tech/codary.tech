@@ -21,7 +21,7 @@ const templateApp = apps[0] || null;
 
 <div id="app-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
   {apps.slice(0, initialCount).map((app) => (
-    <AppCard app={app} locale={currentLocale} loading="eager"/>
+    <AppCard app={app} locale={currentLocale} loading="eager" initialShowDetails={false}/>
   ))}
 </div>
 
@@ -51,6 +51,7 @@ const templateApp = apps[0] || null;
   // Store all apps for client-side filtering
   const allApps = apps;
   let visibleCount = initialCount;
+  let showAllDetails = false;
 
   // Elements
   const appGrid = document.getElementById('app-grid');
@@ -63,29 +64,45 @@ const templateApp = apps[0] || null;
     const appElement = document.createElement('div');
     appElement.setAttribute('data-app-id', app.id);
 
+    // Determine if the app is open source (has a public repository)
+    const isOpenSource = app.repository && app.repository.isOpenSource !== false;
+
     // Create the card HTML using the same classes and structure as AppCard
     appElement.innerHTML = `
-      <div class="group relative flex flex-col justify-between h-full w-full bg-hero-bg-light dark:bg-hero-bg-dark rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.15)] transition-all duration-200 ease-in-out hover:-translate-y-0.5 p-4">
+      <div class="group relative flex flex-col justify-between h-full w-full bg-square-light dark:bg-square-dark rounded-lg cursor-pointer transition-all duration-200 ease-in-out hover:-translate-y-0.5 p-4" data-app-card>
         ${app.isSponsored ? `<div class="absolute top-3 left-3 bg-amber-500 text-white text-xs px-2 py-1 rounded-full z-10">
           ${currentLocale === 'en' ? 'Sponsored' : 'Patrocinado'}
         </div>` : ''}
 
         <div class="flex flex-col mb-3">
-          <div class="flex items-center mb-3">
-            <div class="w-10 h-10 mr-3 rounded-lg overflow-hidden">
-              <img
-                src="${app.icon.src}"
-                alt="${app.name}"
-                width="40"
-                height="40"
-                class="w-full h-full object-fit"
-                loading="lazy"
-              />
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center">
+              <div class="w-10 h-10 mr-3 rounded-lg overflow-hidden">
+                <img
+                  src="${app.icon.src}"
+                  alt="${app.name}"
+                  width="40"
+                  height="40"
+                  class="w-full h-full object-fit"
+                  loading="lazy"
+                />
+              </div>
+              <a href="${app.url}" target="_blank" rel="noopener noreferrer"
+                class="text-lg font-semibold text-main-light dark:text-main-dark hover:underline">
+                ${app.name}
+              </a>
             </div>
-            <a href="${app.url}" target="_blank" rel="noopener noreferrer"
-              class="text-lg font-semibold text-main-light dark:text-main-dark hover:underline">
-              ${app.name}
-            </a>
+            <button
+              type="button"
+              class="toggle-details p-1 rounded-full text-secondary-foreground-light dark:text-secondary-foreground-dark hover:bg-square-light dark:hover:bg-square-dark transition-colors"
+              aria-expanded="${showAllDetails ? 'true' : 'false'}"
+              aria-label="${showAllDetails ? 'Hide details' : 'Show details'}"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5">
+                <path d="${showAllDetails ? 'm18 15-6-6-6 6' : 'm6 9 6 6 6 -6'}"/>
+              </svg>
+            </button>
           </div>
 
           <p class="text-xs text-start text-wrap text-secondary-foreground-light dark:text-secondary-foreground-dark line-clamp-3">
@@ -93,17 +110,132 @@ const templateApp = apps[0] || null;
           </p>
         </div>
 
-        <div class="flex flex-wrap justify-center gap-2 mt-auto pt-2">
-          ${app.tags.map(tag => `
-            <span class="text-xs px-2 py-1 rounded-full bg-square-light dark:bg-square-dark text-shark-600 dark:text-shark-300">
-              ${tag.title}
-            </span>
-          `).join('')}
+        <div class="details-container overflow-hidden transition-all duration-300"
+          style="${showAllDetails ? 'max-height: 1000px; opacity: 1;' : 'max-height: 0; opacity: 0;'}">
+          <div class="flex flex-wrap justify-start gap-2 mt-auto mb-3">
+            ${app.tags.map(tag => `
+              <span class="text-xs font-medium px-2 py-0.5 rounded bg-main-light dark:bg-main-dark text-main-dark dark:text-main-light hover:bg-main-light/50 dark:hover:bg-main-dark/50 transition-colors">
+                ${tag.title}
+              </span>
+            `).join('')}
+          </div>
+
+          <dl class="space-y-2 text-xs text-main-light dark:text-main-dark">
+            <div class="flex items-center justify-between border-b border-section-border-light dark:border-section-border-dark pb-1">
+              <dt class="font-medium text-secondary-foreground-light dark:text-secondary-foreground-dark">
+                ${currentLocale === 'en' ? 'Source' : 'Fuente'}:
+              </dt>
+              <dd class="flex items-center gap-1">
+                <a href="${app.repository.url}"
+                    class="text-blue-600 dark:text-blue-400 hover:underline capitalize"
+                    target="_blank">
+                  ${app.repository.platform || 'GitHub'}
+                </a>
+                <span class="flex items-center text-[9px] text-secondary-foreground-light dark:text-secondary-foreground-dark">
+                  (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-2 mr-0.5">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                  ${app.repository.stars ? formatStars(app.repository.stars) : '0'}
+                  )
+                </span>
+              </dd>
+            </div>
+
+            <div class="flex items-center justify-between border-b border-section-border-light dark:border-section-border-dark pb-1">
+              <dt class="font-medium text-secondary-foreground-light dark:text-secondary-foreground-dark">
+                ${currentLocale === 'en' ? 'License' : 'Licencia'}:
+              </dt>
+              <dd class="uppercase">${app.repository.license || 'MIT'}</dd>
+            </div>
+
+            <div class="flex items-center justify-between border-b border-section-border-light dark:border-section-border-dark pb-1">
+              <dt class="font-medium text-secondary-foreground-light dark:text-secondary-foreground-dark">
+                ${currentLocale === 'en' ? 'Language' : 'Lenguaje'}:
+              </dt>
+              <dd>${app.repository.language || "TypeScript"}</dd>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <dt class="font-medium text-secondary-foreground-light dark:text-secondary-foreground-dark">
+                ${currentLocale === 'en' ? 'Last Activity' : 'Última Actividad'}:
+              </dt>
+              <dd class="text-shark-500 dark:text-shark-300">
+                ${new Date(app.repository.lastActivity || new Date()).toISOString().split("T")[0]}
+              </dd>
+            </div>
+          </dl>
         </div>
       </div>
     `;
 
+    // Add event listeners to the newly created card
+    setupCardEventListeners(appElement);
+
     return appElement;
+  }
+
+  // Helper function to format stars count
+  function formatStars(stars) {
+    if (stars >= 1000) {
+      return (stars / 1000).toFixed(1) + 'k';
+    }
+    return stars.toString();
+  }
+
+  // Setup event listeners for app cards
+  function setupCardEventListeners(cardElement) {
+    const card = cardElement.querySelector('[data-app-card]');
+    if (!card) return;
+
+    const toggleBtn = card.querySelector('.toggle-details');
+    const detailsContainer = card.querySelector('.details-container');
+
+    if (toggleBtn && detailsContainer) {
+      toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+
+        // Skip toggle if we're in global show details mode
+        if (showAllDetails) return;
+
+        const expanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+        const icon = toggleBtn.querySelector('svg');
+
+        // Toggle state
+        toggleBtn.setAttribute('aria-expanded', (!expanded).toString());
+
+        // Update icon
+        if (icon) {
+          if (expanded) {
+            icon.innerHTML = '<path d="m6 9 6 6 6 -6"/>';
+          } else {
+            icon.innerHTML = '<path d="m18 15-6-6-6 6"/>';
+          }
+        }
+
+        // Toggle details visibility with animation
+        if (expanded) {
+          detailsContainer.style.maxHeight = '0';
+          detailsContainer.style.opacity = '0';
+        } else {
+          detailsContainer.style.maxHeight = '1000px';
+          detailsContainer.style.opacity = '1';
+        }
+      });
+
+      // Add click handler to the entire card (except for links)
+      card.addEventListener('click', (e) => {
+        // Skip toggle if we're in global show details mode
+        if (showAllDetails) return;
+
+        // Only toggle if we didn't click a link or button inside the card
+        const target = e.target;
+        if (!target.closest('a') && !target.closest('button')) {
+          toggleBtn.click();
+        }
+      });
+    }
   }
 
   // Load more apps
@@ -144,11 +276,14 @@ const templateApp = apps[0] || null;
   // Click handler for load more button
   loadMoreButton?.addEventListener('click', loadMore);
 
-  // Filter apps based on search and tag selection
+  // Filter apps based on search, tag selection, open source and show details settings
   let filteredApps = null;
 
   window.addEventListener('app-filter-change', (event) => {
-    const { searchTerm, selectedTag } = event.detail;
+    const { searchTerm, selectedTag, showDetails, openSourceOnly } = event.detail;
+
+    // Update global showAllDetails state
+    showAllDetails = showDetails;
 
     // Reset display
     appGrid.innerHTML = '';
@@ -157,13 +292,17 @@ const templateApp = apps[0] || null;
     // Filter apps
     filteredApps = allApps.filter(app => {
       const matchesSearch = searchTerm ?
-        app.name.toLowerCase().includes(searchTerm) ||
-        app.description.toLowerCase().includes(searchTerm) : true;
+        app.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        app.description.toLowerCase().includes(searchTerm.toLowerCase()) : true;
 
       const matchesTag = selectedTag ?
         app.tags.some(tag => tag.id === selectedTag) : true;
 
-      return matchesSearch && matchesTag;
+      // Check if the app is open source when filter is active
+      const matchesOpenSource = openSourceOnly ?
+        (app.repository && app.repository.isOpenSource !== false) : true;
+
+      return matchesSearch && matchesTag && matchesOpenSource;
     });
 
     // Show or hide no results message
@@ -186,5 +325,29 @@ const templateApp = apps[0] || null;
         loadMoreContainer.classList.add('hidden');
       }
     }
+
+    // Update all existing cards' details state
+    const allDetailContainers = document.querySelectorAll('.details-container');
+    const allToggleButtons = document.querySelectorAll('.toggle-details');
+
+    allDetailContainers.forEach(container => {
+      if (showAllDetails) {
+        container.style.maxHeight = '1000px';
+        container.style.opacity = '1';
+      } else {
+        container.style.maxHeight = '0';
+        container.style.opacity = '0';
+      }
+    });
+
+    allToggleButtons.forEach(button => {
+      button.setAttribute('aria-expanded', showAllDetails.toString());
+      const icon = button.querySelector('svg');
+      if (icon) {
+        icon.innerHTML = showAllDetails ?
+          '<path d="m18 15-6-6-6 6"/>' :
+          '<path d="m6 9 6 6 6 -6"/>';
+      }
+    });
   });
 </script>

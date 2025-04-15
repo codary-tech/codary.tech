@@ -14,6 +14,18 @@ export type VersionControlPlatform =
  * @property {string} [license] - The license under which the repository is published (optional).
  * @property {string} [language] - The primary programming language used in the repository (optional).
  * @property {Date|string} [lastActivity] - The date of the last activity in the repository (optional).
+ * @property {boolean} [isOpenSource] - Indicates whether the repository is open source (optional).
+ * @example
+ * const repo: Repo = {
+ *  id: "12345",
+ *  url: "https://example.com/repo",
+ *  platform: "github",
+ *  stars: 100,
+ *  license: "MIT",
+ *  language: "TypeScript",
+ *  lastActivity: new Date(),
+ *  isOpenSource: true,
+ * };
  */
 export default interface Repo {
 	id: string;
@@ -23,6 +35,7 @@ export default interface Repo {
 	license?: string;
 	language?: string;
 	lastActivity?: Date | string;
+	isOpenSource?: boolean;
 }
 
 /**

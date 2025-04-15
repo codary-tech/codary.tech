@@ -37,20 +37,58 @@ const t = useTranslations(currentLocale);
     </div>
 
     <div class="md:col-span-4">
-      <label for="filter-tags" class="block text-sm font-medium mb-1 text-[var(--color-main-light)] dark:text-[var(--color-main-dark)]">
+      <label for="filter-tags" class="block text-sm font-medium mb-1 text-main-light dark:text-main-dark">
         {t("apps.filters.tags")}
       </label>
       <select
         id="filter-tags"
         name="tags"
-        class="w-full px-4 py-2 rounded-lg border border-[var(--color-input-border-light)] dark:border-[var(--color-input-border-dark)] bg-[var(--color-bg-light)] dark:bg-[var(--color-hero-bg-dark)] text-[var(--color-main-light)] dark:text-[var(--color-main-dark)] focus:outline-none focus:ring-2 focus:ring-[var(--color-input-border--focus-light)] dark:focus:ring-[var(--color-input-border--focus-dark)]"
+        class="w-full px-4 py-2 rounded-lg border border-input-border-light dark:border-input-border-dark bg-bg-light dark:bg-hero-bg-dark text-main-light dark:text-main-dark focus:outline-none focus:ring-2 focus:ring-input-border--focus-light dark:focus:ring-input-border--focus-dark"
       >
         <option value="">{t("apps.filters.all")}</option>
         <!-- Tags will be loaded via JavaScript -->
       </select>
     </div>
+
+    <div class="md:col-span-6 flex items-center mt-4 md:mt-2">
+      <label for="show-details" class="flex items-center cursor-pointer">
+        <div class="relative">
+          <input type="checkbox" id="show-details" class="sr-only">
+          <div class="block w-10 h-6 rounded-full bg-input-border-light dark:bg-input-border-dark"></div>
+          <div class="dot absolute left-1 top-1 bg-white dark:bg-slate-200 w-4 h-4 rounded-full transition-transform"></div>
+        </div>
+        <span class="ml-2 text-sm text-main-light dark:text-main-dark">
+          {t("apps.filters.showDetails")}
+        </span>
+      </label>
+    </div>
+
+    <div class="md:col-span-6 flex items-center mt-4 md:mt-2">
+      <label for="open-source-only" class="flex items-center cursor-pointer">
+        <div class="relative">
+          <input type="checkbox" id="open-source-only" class="sr-only">
+          <div class="block w-10 h-6 rounded-full bg-input-border-light dark:bg-input-border-dark"></div>
+          <div class="dot absolute left-1 top-1 bg-white dark:bg-slate-200 w-4 h-4 rounded-full transition-transform"></div>
+        </div>
+        <span class="ml-2 text-sm text-main-light dark:text-main-dark">
+          {t("apps.filters.openSourceOnly")}
+        </span>
+      </label>
+    </div>
   </form>
 </div>
+
+<style>
+  input:checked ~ .dot {
+    transform: translateX(100%);
+  }
+  input:checked ~ .block {
+    background-color: var(--color-accent-green-light);
+  }
+  .dark input:checked ~ .block {
+    background-color: var(--color-accent-green-dark);
+  }
+</style>
 
 <script>
   // Add client-side filter functionality
@@ -58,6 +96,8 @@ const t = useTranslations(currentLocale);
     const searchInput = document.getElementById('search') as HTMLInputElement | null;
     const clearButton = document.getElementById('clear-search');
     const tagsSelect = document.getElementById('filter-tags') as HTMLSelectElement | null;
+    const showDetailsToggle = document.getElementById('show-details') as HTMLInputElement | null;
+    const openSourceOnlyToggle = document.getElementById('open-source-only') as HTMLInputElement | null;
 
     // Clear search input
     clearButton?.addEventListener('click', () => {
@@ -71,15 +111,24 @@ const t = useTranslations(currentLocale);
     const applyFilters = () => {
       const searchTerm = searchInput?.value.toLowerCase() || '';
       const selectedTag = tagsSelect?.value || '';
+      const showDetails = showDetailsToggle?.checked || false;
+      const openSourceOnly = openSourceOnlyToggle?.checked || false;
 
       // Dispatch custom event for the AppGrid to handle
       window.dispatchEvent(new CustomEvent('app-filter-change', {
-        detail: { searchTerm, selectedTag }
+        detail: {
+          searchTerm,
+          selectedTag,
+          showDetails,
+          openSourceOnly
+        }
       }));
     };
 
     // Add event listeners
     searchInput?.addEventListener('input', applyFilters);
     tagsSelect?.addEventListener('change', applyFilters);
+    showDetailsToggle?.addEventListener('change', applyFilters);
+    openSourceOnlyToggle?.addEventListener('change', applyFilters);
   });
 </script>

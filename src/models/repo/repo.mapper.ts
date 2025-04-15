@@ -21,6 +21,7 @@ export async function toRepo(
 		lastActivity: data.updated_at
 			? new Date(data.updated_at).toISOString()
 			: new Date().toISOString(),
+		isOpenSource: !(data.private ?? false),
 	};
 }
 

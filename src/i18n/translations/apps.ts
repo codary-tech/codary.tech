@@ -25,6 +25,8 @@ export const apps: { en: UIDict; es: UIDict } = {
 		"apps.appLink": "View App {appName}",
 		"apps.filters.tags": "Tags",
 		"apps.filters.all": "All",
+		"apps.filters.showDetails": "Show details",
+		"apps.filters.openSourceOnly": "Open Source Only",
 	},
 	es: {
 		"apps.title": "Aplicaciones | Últimas Actualizaciones y Noticias",
@@ -51,5 +53,7 @@ export const apps: { en: UIDict; es: UIDict } = {
 		"apps.appLink": "Ver Aplicación {appName}",
 		"apps.filters.tags": "Etiquetas",
 		"apps.filters.all": "Todas",
+		"apps.filters.showDetails": "Mostrar detalles",
+		"apps.filters.openSourceOnly": "Solo Código Abierto",
 	},
 };
