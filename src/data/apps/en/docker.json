@@ -7,6 +7,6 @@
 		"url": "https://github.com/moby/moby",
 		"platform": "github"
 	},
-	"isSponsored": true,
+	"isSponsored": false,
 	"tags": ["en/devops", "en/containerization"]
 }

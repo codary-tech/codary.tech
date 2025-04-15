@@ -1,6 +1,6 @@
 import { getCollection } from "astro:content";
 import type { RepoCriteria } from "./repo.criteria";
-import { toRepo, toRepos } from "./repo.mapper";
+import { toRepos } from "./repo.mapper";
 import type Repo from "./repo.model";
 
 /**

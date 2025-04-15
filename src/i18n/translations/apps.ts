@@ -23,6 +23,8 @@ export const apps: { en: UIDict; es: UIDict } = {
 		"apps.loadMore": "Load more",
 		"apps.noResults": "No apps found matching your search criteria",
 		"apps.appLink": "View App {appName}",
+		"apps.filters.tags": "Tags",
+		"apps.filters.all": "All",
 	},
 	es: {
 		"apps.title": "Aplicaciones | Últimas Actualizaciones y Noticias",
@@ -47,5 +49,7 @@ export const apps: { en: UIDict; es: UIDict } = {
 		"apps.noResults":
 			"No se encontraron aplicaciones que coincidan con su criterio de búsqueda",
 		"apps.appLink": "Ver Aplicación {appName}",
+		"apps.filters.tags": "Etiquetas",
+		"apps.filters.all": "Todas",
 	},
 };
