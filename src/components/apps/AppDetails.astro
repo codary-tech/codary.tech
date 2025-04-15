@@ -25,6 +25,8 @@ const repositoryLicense = () => {
 	const isOther = ["other", "custom"].includes(license);
 	return isOther ? t("apps.license.other") : license.toUpperCase();
 };
+
+const repository = app.repository;
 ---
 
 <div class={cn("flex flex-col w-full", attrs.class)}>
@@ -46,41 +48,43 @@ const repositoryLicense = () => {
     )}
   </div>
 
-  <dl class="space-y-2 text-xs text-main-light dark:text-main-dark">
-    <div class="flex items-center justify-between border-b border-section-border-light dark:border-section-border-dark pb-1">
-      <dt class="font-medium text-secondary-foreground-light dark:text-secondary-foreground-dark">{t('apps.source')}:</dt>
-      <dd class="flex items-center gap-1">
-        <a href={app.repository.url}
-            class="text-blue-600 dark:text-blue-400 hover:underline capitalize"
-            target="_blank">
-          {platformToName(app.repository.platform) ?? 'GitHub'}
-        </a>
-        <span class="flex items-center text-[9px] text-secondary-foreground-light dark:text-secondary-foreground-dark">
-          (
-          <Icon name="tabler:star" class="size-2 mr-0.5" />
-          {formatStars(app.repository.stars ?? 0)}
-          )
-        </span>
-      </dd>
-    </div>
+	{showDetails && repository && (
+		<dl class="space-y-2 text-xs text-main-light dark:text-main-dark">
+			<div class="flex items-center justify-between border-b border-section-border-light dark:border-section-border-dark pb-1">
+				<dt class="font-medium text-secondary-foreground-light dark:text-secondary-foreground-dark">{t('apps.source')}:</dt>
+				<dd class="flex items-center gap-1">
+					<a href={repository.url}
+							class="text-blue-600 dark:text-blue-400 hover:underline capitalize"
+							target="_blank">
+						{platformToName(repository.platform) ?? 'GitHub'}
+					</a>
+					<span class="flex items-center text-[9px] text-secondary-foreground-light dark:text-secondary-foreground-dark">
+						(
+						<Icon name="tabler:star" class="size-2 mr-0.5" />
+						{formatStars(repository.stars ?? 0)}
+						)
+					</span>
+				</dd>
+			</div>
 
-    <div class="flex items-center justify-between border-b border-section-border-light dark:border-section-border-dark pb-1">
-      <dt class="font-medium text-secondary-foreground-light dark:text-secondary-foreground-dark">{t('apps.license')}:</dt>
-      <dd class="uppercase">{repositoryLicense()}</dd>
-    </div>
+			<div class="flex items-center justify-between border-b border-section-border-light dark:border-section-border-dark pb-1">
+				<dt class="font-medium text-secondary-foreground-light dark:text-secondary-foreground-dark">{t('apps.license')}:</dt>
+				<dd class="uppercase">{repositoryLicense()}</dd>
+			</div>
 
-    <div class="flex items-center justify-between border-b border-section-border-light dark:border-section-border-dark pb-1">
-      <dt class="font-medium text-secondary-foreground-light dark:text-secondary-foreground-dark">{t('apps.language')}:</dt>
-      <dd>{app.repository.language || "TypeScript"}</dd>
-    </div>
+			<div class="flex items-center justify-between border-b border-section-border-light dark:border-section-border-dark pb-1">
+				<dt class="font-medium text-secondary-foreground-light dark:text-secondary-foreground-dark">{t('apps.language')}:</dt>
+				<dd>{repository.language || "TypeScript"}</dd>
+			</div>
 
-    <div class="flex items-center justify-between">
-      <dt class="font-medium text-secondary-foreground-light dark:text-secondary-foreground-dark">{t('apps.lastActivity')}:</dt>
-      <dd class="text-shark-500 dark:text-shark-300">
-        {new Date(app.repository.lastActivity || new Date()).toISOString().split("T")[0]}
-      </dd>
-    </div>
-  </dl>
+			<div class="flex items-center justify-between">
+				<dt class="font-medium text-secondary-foreground-light dark:text-secondary-foreground-dark">{t('apps.lastActivity')}:</dt>
+				<dd class="text-shark-500 dark:text-shark-300">
+					{new Date(repository.lastActivity || new Date()).toISOString().split("T")[0]}
+				</dd>
+			</div>
+		</dl>
+	)}
 </div>
 
 <script>

@@ -64,9 +64,6 @@ const templateApp = apps[0] || null;
     const appElement = document.createElement('div');
     appElement.setAttribute('data-app-id', app.id);
 
-    // Determine if the app is open source (has a public repository)
-    const isOpenSource = app.repository && app.repository.isOpenSource !== false;
-
     // Create the card HTML using the same classes and structure as AppCard
     appElement.innerHTML = `
       <div class="group relative flex flex-col justify-between h-full w-full bg-square-light dark:bg-square-dark rounded-lg cursor-pointer transition-all duration-200 ease-in-out hover:-translate-y-0.5 p-4" data-app-card>

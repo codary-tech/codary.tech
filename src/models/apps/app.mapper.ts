@@ -27,7 +27,7 @@ export async function toApp(appData: CollectionEntry<"apps">): Promise<App> {
 		description: appData.data.description,
 		icon: appData.data.icon,
 		url: appData.data.url,
-		repository: repository || null,
+		repository: repository || undefined,
 		isSponsored: appData.data.isSponsored,
 		tags: tags.map(toTag),
 	};
@@ -42,6 +42,9 @@ export async function toApp(appData: CollectionEntry<"apps">): Promise<App> {
 export async function toApps(apps: CollectionEntry<"apps">[]): Promise<App[]> {
 	const results = await Promise.allSettled(apps.map(toApp));
 	return results
-		.filter((result): result is PromiseFulfilledResult<App> => result.status === 'fulfilled')
-		.map(result => result.value);
+		.filter(
+			(result): result is PromiseFulfilledResult<App> =>
+				result.status === "fulfilled",
+		)
+		.map((result) => result.value);
 }

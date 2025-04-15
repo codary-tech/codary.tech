@@ -8,7 +8,7 @@ export default interface App {
 	description: string;
 	icon: ImageMetadata;
 	url: string;
-	repository: Repo;
+	repository?: Repo;
 	isSponsored: boolean;
 	tags: Tag[];
 }
