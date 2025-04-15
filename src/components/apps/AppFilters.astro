@@ -259,12 +259,11 @@ const tags = await getAppTags(currentLocale);
       sortSelect.value = urlSort;
     }
 
-    // Si hay algún filtro en la URL, aplicarlos
+    // Apply filters if any exists in URL
     if (urlTag || urlSearch || urlDetails || urlOpenSource || urlSort) {
-      // Disparar evento después de un pequeño retraso para asegurar que los elementos están listos
-      setTimeout(() => {
+      // Use requestAnimationFrame to ensure DOM is ready
+      requestAnimationFrame(() => {
         applyFilters();
-      }, 100);
+      });
     }
-  });
 </script>
