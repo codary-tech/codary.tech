@@ -12,7 +12,14 @@ import type App from "./app.model";
 export async function toApp(appData: CollectionEntry<"apps">): Promise<App> {
 	const tagEntries = appData.data.tags || [];
 	const tags = await getEntries(tagEntries);
-	const repository = await getRepo({ url: appData.data.repository.url });
+	let repository = null;
+	try {
+		if (appData.data.repository?.url) {
+			repository = await getRepo({ url: appData.data.repository.url });
+		}
+	} catch (error) {
+		console.error(`Failed to fetch repository for app ${appData.id}:`, error);
+	}
 
 	return {
 		id: appData.id,
@@ -20,7 +27,7 @@ export async function toApp(appData: CollectionEntry<"apps">): Promise<App> {
 		description: appData.data.description,
 		icon: appData.data.icon,
 		url: appData.data.url,
-		repository: repository,
+		repository: repository || null,
 		isSponsored: appData.data.isSponsored,
 		tags: tags.map(toTag),
 	};
