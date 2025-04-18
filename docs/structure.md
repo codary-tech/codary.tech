@@ -253,6 +253,7 @@
 │       │   ├───@astrojs/
 │       │   ├───@biomejs/
 │       │   ├───@cloudflare/
+│       │   ├───@codary/
 │       │   ├───@faker-js/
 │       │   ├───@fontsource-variable/
 │       │   ├───@iconify-json/
@@ -443,6 +444,13 @@
 │   ├───lighthouse.png
 │   └───structure.md
 ├───packages/
+│   └───tsconfig/
+│       ├───package.json
+│       ├───tsconfig.base.json
+│       ├───tsconfig.node.json
+│       ├───tsconfig.strict.json
+│       ├───tsconfig.strictest.json
+│       └───tsconfig.vue.json
 ├───supabase/
 │   ├───.branches/
 │   │   └───_current_branch

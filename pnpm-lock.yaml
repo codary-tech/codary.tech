@@ -90,6 +90,9 @@ importers:
       '@cloudflare/workers-types':
         specifier: ^4.20250327.0
         version: 4.20250418.0
+      '@codary/tsconfig':
+        specifier: workspace:*
+        version: link:../../packages/tsconfig
       '@faker-js/faker':
         specifier: ^9.6.0
         version: 9.7.0
@@ -117,6 +120,8 @@ importers:
       wrangler:
         specifier: ^4.6.0
         version: 4.12.0(@cloudflare/workers-types@4.20250418.0)
+
+  packages/tsconfig: {}
 
 packages:
 
