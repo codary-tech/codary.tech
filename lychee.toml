@@ -21,7 +21,7 @@ exclude_path = [
 	"node_modules",
 	"utils/.*",         # Use regex to match any utils directory
 	".*utils.*",
-	"public/admin",
+	"apps/website/public/admin",
 	"supabase",
 	"__tests__/.*",     # Use regex to match any __tests__ directory
 	".*/utils/.*",      # Match utils directory at any level
