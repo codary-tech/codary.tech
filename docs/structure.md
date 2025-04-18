@@ -250,6 +250,7 @@
 │       │   ├───.vite/
 │       │   │   └───deps/
 │       │   │       └───...
+│       │   ├───.vite-temp/
 │       │   ├───@astrojs/
 │       │   ├───@biomejs/
 │       │   ├───@cloudflare/
