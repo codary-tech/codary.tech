@@ -23,7 +23,7 @@
 		"start": "pnpm --filter @codary/website start",
 		"build": "pnpm --filter @codary/website build",
 		"preview": "pnpm --filter @codary/website preview",
-		"deploy": "pnpm --filter @codary/website deploy"
+		"deploy": "pnpm --filter @codary/website run deploy"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
