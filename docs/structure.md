@@ -30,490 +30,419 @@
 │   ├───extensions.json
 │   ├───launch.json
 │   └───settings.sample.json
+├───apps/
+│   └───website/
+│       ├───.astro/
+│       │   ├───collections/
+│       │   │   ├───apps.schema.json
+│       │   │   ├───articles.schema.json
+│       │   │   ├───authors.schema.json
+│       │   │   ├───categories.schema.json
+│       │   │   ├───newsletter.schema.json
+│       │   │   ├───repositories.schema.json
+│       │   │   └───tags.schema.json
+│       │   ├───integrations/
+│       │   │   └───_astrojs_cloudflare/
+│       │   ├───content-assets.mjs
+│       │   ├───content-modules.mjs
+│       │   ├───content.d.ts
+│       │   ├───data-store.json
+│       │   ├───env.d.ts
+│       │   ├───settings.json
+│       │   └───types.d.ts
+│       ├───.wrangler/
+│       │   ├───state/
+│       │   │   └───v3/
+│       │   │       └───...
+│       │   ├───tmp/
+│       │   └───.DS_Store
+│       ├───dist/
+│       │   ├───_astro/
+│       │   │   ├───0b716be6-2c45-49eb-8080-4161ceaac542.DU11Ocdk.avif
+│       │   │   ├───0b716be6-2c45-49eb-8080-4161ceaac542.DU11Ocdk_1hzdID.webp
+│       │   │   ├───0b716be6-2c45-49eb-8080-4161ceaac542.DU11Ocdk_Z2oKXdN.avif
+│       │   │   ├───7762799e-0693-4292-a309-f6a4eec57dc9.UsJNU5xO.avif
+│       │   │   ├───7762799e-0693-4292-a309-f6a4eec57dc9.UsJNU5xO_1CD16a.webp
+│       │   │   ├───7762799e-0693-4292-a309-f6a4eec57dc9.UsJNU5xO_Z23HaQh.avif
+│       │   │   ├───AuthButton.astro_astro_type_script_index_0_lang.Cdlp0Xu4.js
+│       │   │   ├───Docker.Dm4Tl1hP.png
+│       │   │   ├───Excalidraw.Dgkre1O1.png
+│       │   │   ├───Grafana.BGoaC8aw.png
+│       │   │   ├───Header.astro_astro_type_script_index_0_lang.DdwlMVEo.js
+│       │   │   ├───Hero.astro_astro_type_script_index_0_lang.CO_pgPF5.js
+│       │   │   ├───HomeAssistant.BZPywLFY.png
+│       │   │   ├───Humane-AI.DDCUawI7.avif
+│       │   │   ├───Humane-AI.DDCUawI7_Z12kpkR.avif
+│       │   │   ├───Humane-AI.DDCUawI7_mmbxB.webp
+│       │   │   ├───N8n.DLUwoOIW.png
+│       │   │   ├───NodeRED.BqutSHc6.png
+│       │   │   ├───Pihole.DvfUFYVx.png
+│       │   │   ├───Prometheus.DzHRzETm.png
+│       │   │   ├───Search.astro_astro_type_script_index_0_lang.mBpmxV9R.js
+│       │   │   ├───Supabase.Xe1Gzhob.png
+│       │   │   ├───TailwindCSS.D43_eTwl.png
+│       │   │   ├───VSCode.B3hz57G5.png
+│       │   │   ├───_id_.DLDaIcpj.css
+│       │   │   ├───apple-tv-netflix.fp5SXD8M.avif
+│       │   │   ├───apple-tv-netflix.fp5SXD8M_Z1MrbvP.webp
+│       │   │   ├───apple-tv-netflix.fp5SXD8M_a0ATg.avif
+│       │   │   ├───b2e160fc-70d4-47ba-8078-60889c495ad2.DJqYc4Q_.avif
+│       │   │   ├───b2e160fc-70d4-47ba-8078-60889c495ad2.DJqYc4Q__A8nD3.avif
+│       │   │   ├───b2e160fc-70d4-47ba-8078-60889c495ad2.DJqYc4Q__ZMHydr.webp
+│       │   │   ├───bybit.DDHkpZMN.avif
+│       │   │   ├───bybit.DDHkpZMN_Z1KvC5t.avif
+│       │   │   ├───bybit.DDHkpZMN_Z2cVAYh.webp
+│       │   │   ├───cloudflare-vs-laliga-2.Bfvv6cgV.webp
+│       │   │   ├───cloudflare-vs-laliga-2.Bfvv6cgV_Z3vcc1.webp
+│       │   │   ├───cloudflare-vs-laliga-2.Bfvv6cgV_jGf4L.avif
+│       │   │   ├───cloudflare-vs-laliga.D4KgojTp.avif
+│       │   │   ├───cloudflare-vs-laliga.D4KgojTp_2mhant.webp
+│       │   │   ├───cloudflare-vs-laliga.D4KgojTp_Z2kHw9F.avif
+│       │   │   ├───dfcf9bb1-fbf6-4f74-bb38-0b53dd8db595.CtaNsZvs.avif
+│       │   │   ├───dfcf9bb1-fbf6-4f74-bb38-0b53dd8db595.CtaNsZvs_SY6h9.avif
+│       │   │   ├───dfcf9bb1-fbf6-4f74-bb38-0b53dd8db595.CtaNsZvs_ZtQPzl.webp
+│       │   │   ├───grok-3-elonwebp.B2uOaqAn.avif
+│       │   │   ├───grok-3-elonwebp.B2uOaqAn_YCAT6.avif
+│       │   │   ├───grok-3-elonwebp.B2uOaqAn_Z1z7CCA.webp
+│       │   │   ├───inter-cyrillic-ext-wght-normal.B2xhLi22.woff2
+│       │   │   ├───inter-cyrillic-wght-normal.CMZtQduZ.woff2
+│       │   │   ├───inter-greek-ext-wght-normal.CGAr0uHJ.woff2
+│       │   │   ├───inter-greek-wght-normal.CaVNZxsx.woff2
+│       │   │   ├───inter-latin-ext-wght-normal.CFHvXkgd.woff2
+│       │   │   ├───inter-latin-wght-normal.C2S99t-D.woff2
+│       │   │   ├───inter-vietnamese-wght-normal.CBcvBZtf.woff2
+│       │   │   ├───iphone-16e-finish-unselect-gallery.BScdJee0.avif
+│       │   │   ├───iphone-16e-finish-unselect-gallery.BScdJee0_2am7HT.avif
+│       │   │   ├───iphone-16e-finish-unselect-gallery.BScdJee0_LvaQp.webp
+│       │   │   ├───la-democratizacion-de-la-ia.DXxHLJ2k.avif
+│       │   │   ├───la-democratizacion-de-la-ia.DXxHLJ2k_1pLDf7.avif
+│       │   │   ├───la-democratizacion-de-la-ia.DXxHLJ2k_Zqs4gm.webp
+│       │   │   ├───microsoft-cancela-servidores.BCLsoflq.avif
+│       │   │   ├───microsoft-cancela-servidores.BCLsoflq_2jQx6n.avif
+│       │   │   ├───microsoft-cancela-servidores.BCLsoflq_Z29WQI2.webp
+│       │   │   ├───rust-programming-language.BTgxkMKQ.avif
+│       │   │   ├───rust-programming-language.BTgxkMKQ_Jea7O.webp
+│       │   │   ├───rust-programming-language.BTgxkMKQ_ZzYwWb.avif
+│       │   │   ├───search.CXOjeUv_.css
+│       │   │   ├───user.service.B6hO99z-.js
+│       │   │   ├───whoAMI-cover.C9Hc_YOJ.avif
+│       │   │   ├───whoAMI-cover.C9Hc_YOJ_1FnY3J.webp
+│       │   │   ├───whoAMI-cover.C9Hc_YOJ_Z1bEB4w.avif
+│       │   │   ├───xAI.21f2Gr9k.avif
+│       │   │   ├───xAI.21f2Gr9k_2hvzw5.avif
+│       │   │   └───xAI.21f2Gr9k_Z1z8SSE.webp
+│       │   ├───_worker.js/
+│       │   │   ├───chunks/
+│       │   │   │   └───...
+│       │   │   ├───pages/
+│       │   │   │   └───...
+│       │   │   ├───_@astrojs-ssr-adapter.mjs
+│       │   │   ├───_astro-internal_middleware.mjs
+│       │   │   ├───_noop-actions.mjs
+│       │   │   ├───index.js
+│       │   │   ├───manifest_CkV_B3qp.mjs
+│       │   │   └───renderers.mjs
+│       │   ├───admin/
+│       │   │   └───config.yml
+│       │   ├───en/
+│       │   │   ├───404/
+│       │   │   │   └───...
+│       │   │   ├───author/
+│       │   │   │   └───...
+│       │   │   ├───news/
+│       │   │   │   └───...
+│       │   │   ├───newsletter/
+│       │   │   │   └───...
+│       │   │   ├───search/
+│       │   │   │   └───...
+│       │   │   ├───tag/
+│       │   │   │   └───...
+│       │   │   ├───index.html
+│       │   │   └───rss.xml
+│       │   ├───es/
+│       │   │   ├───404/
+│       │   │   │   └───...
+│       │   │   ├───author/
+│       │   │   │   └───...
+│       │   │   ├───news/
+│       │   │   │   └───...
+│       │   │   ├───newsletter/
+│       │   │   │   └───...
+│       │   │   ├───search/
+│       │   │   │   └───...
+│       │   │   ├───tag/
+│       │   │   │   └───...
+│       │   │   ├───index.html
+│       │   │   └───rss.xml
+│       │   ├───og/
+│       │   │   ├───en/
+│       │   │   │   └───...
+│       │   │   └───es/
+│       │   │       └───...
+│       │   ├───pagefind/
+│       │   │   ├───fragment/
+│       │   │   │   └───...
+│       │   │   ├───index/
+│       │   │   │   └───...
+│       │   │   ├───pagefind-entry.json
+│       │   │   ├───pagefind-highlight.js
+│       │   │   ├───pagefind-modular-ui.css
+│       │   │   ├───pagefind-modular-ui.js
+│       │   │   ├───pagefind-ui.css
+│       │   │   ├───pagefind-ui.js
+│       │   │   ├───pagefind.en-us_c587e1e0dc72e.pf_meta
+│       │   │   ├───pagefind.en_49ca315537.pf_meta
+│       │   │   ├───pagefind.es_4ef1d4d8db.pf_meta
+│       │   │   ├───pagefind.js
+│       │   │   ├───wasm.en-us.pagefind
+│       │   │   ├───wasm.en.pagefind
+│       │   │   ├───wasm.es.pagefind
+│       │   │   └───wasm.unknown.pagefind
+│       │   ├───rss/
+│       │   │   └───styles.xsl
+│       │   ├───~partytown/
+│       │   │   ├───partytown-atomics.js
+│       │   │   ├───partytown-media.js
+│       │   │   ├───partytown-sw.js
+│       │   │   └───partytown.js
+│       │   ├───.DS_Store
+│       │   ├───.assetsignore
+│       │   ├───404.html
+│       │   ├───_routes.json
+│       │   ├───android-chrome-192x192.png
+│       │   ├───android-chrome-512x512.png
+│       │   ├───apple-touch-icon.png
+│       │   ├───favicon-16x16.png
+│       │   ├───favicon-32x32.png
+│       │   ├───favicon.ico
+│       │   ├───favicon.svg
+│       │   ├───index.html
+│       │   ├───ogp.png
+│       │   ├───site.webmanifest
+│       │   ├───sitemap-0.xml
+│       │   └───sitemap-index.xml
+│       ├───node_modules/
+│       │   ├───.astro/
+│       │   │   ├───assets/
+│       │   │   │   └───...
+│       │   │   └───data-store.json
+│       │   ├───.bin/
+│       │   │   ├───acorn
+│       │   │   ├───astro
+│       │   │   ├───astro-check
+│       │   │   ├───biome
+│       │   │   ├───browserslist
+│       │   │   ├───jiti
+│       │   │   ├───rollup
+│       │   │   ├───tsc
+│       │   │   ├───tsserver
+│       │   │   ├───vite
+│       │   │   ├───vitest
+│       │   │   ├───workerd
+│       │   │   ├───wrangler
+│       │   │   ├───wrangler2
+│       │   │   └───yaml
+│       │   ├───.cache/
+│       │   │   └───wrangler/
+│       │   │       └───...
+│       │   ├───.mf/
+│       │   │   └───cf.json
+│       │   ├───.vite/
+│       │   │   └───deps/
+│       │   │       └───...
+│       │   ├───@astrojs/
+│       │   ├───@biomejs/
+│       │   ├───@cloudflare/
+│       │   ├───@faker-js/
+│       │   ├───@fontsource-variable/
+│       │   ├───@iconify-json/
+│       │   ├───@supabase/
+│       │   ├───@tailwindcss/
+│       │   └───@types/
+│       ├───public/
+│       │   ├───admin/
+│       │   │   └───config.yml
+│       │   ├───rss/
+│       │   │   └───styles.xsl
+│       │   ├───.DS_Store
+│       │   ├───.assetsignore
+│       │   ├───android-chrome-192x192.png
+│       │   ├───android-chrome-512x512.png
+│       │   ├───apple-touch-icon.png
+│       │   ├───favicon-16x16.png
+│       │   ├───favicon-32x32.png
+│       │   ├───favicon.ico
+│       │   ├───favicon.svg
+│       │   ├───ogp.png
+│       │   └───site.webmanifest
+│       ├───scripts/
+│       │   └───organize-articles.js
+│       ├───src/
+│       │   ├───assets/
+│       │   │   ├───font/
+│       │   │   │   └───...
+│       │   │   ├───images/
+│       │   │   │   └───...
+│       │   │   └───.DS_Store
+│       │   ├───components/
+│       │   │   ├───apps/
+│       │   │   │   └───...
+│       │   │   ├───i18n/
+│       │   │   │   └───...
+│       │   │   ├───.DS_Store
+│       │   │   ├───Analytics.astro
+│       │   │   ├───ArticleCard.astro
+│       │   │   ├───AuthButton.astro
+│       │   │   ├───AuthorCard.astro
+│       │   │   ├───AuthorSocials.astro
+│       │   │   ├───AuthorWrapper.astro
+│       │   │   ├───BackToTop.astro
+│       │   │   ├───Button.astro
+│       │   │   ├───ByAuthor.astro
+│       │   │   ├───ContactBox.astro
+│       │   │   ├───CtaNewsletterSubscription.astro
+│       │   │   ├───DotMenuIcon.astro
+│       │   │   ├───Footer.astro
+│       │   │   ├───FormattedDate.astro
+│       │   │   ├───GridContainer.astro
+│       │   │   ├───Header.astro
+│       │   │   ├───HeaderProgressBar.astro
+│       │   │   ├───Hero.astro
+│       │   │   ├───IconButton.astro
+│       │   │   ├───Input.astro
+│       │   │   ├───LatestNewsletter.astro
+│       │   │   ├───LatestPosts.astro
+│       │   │   ├───Link.astro
+│       │   │   ├───LiteYouTube.astro
+│       │   │   ├───Logo.astro
+│       │   │   ├───NavLink.astro
+│       │   │   ├───Navigation.astro
+│       │   │   ├───ObfuscateEmail.astro
+│       │   │   ├───OptimizedPicture.astro
+│       │   │   ├───PageHeadline.astro
+│       │   │   ├───Pagination.astro
+│       │   │   ├───PostCard.astro
+│       │   │   ├───PostCategory.astro
+│       │   │   ├───PostFooter.astro
+│       │   │   ├───PostHeader.astro
+│       │   │   ├───PostTag.astro
+│       │   │   ├───PostTags.astro
+│       │   │   ├───PostsList.astro
+│       │   │   ├───ReadingTime.astro
+│       │   │   ├───SearchButton.astro
+│       │   │   ├───SignupForm.astro
+│       │   │   ├───SocialLinks.astro
+│       │   │   ├───SocialMediaShare.astro
+│       │   │   ├───SubscriptionForm.astro
+│       │   │   └───ThemeToggle.astro
+│       │   ├───data/
+│       │   │   ├───apps/
+│       │   │   │   └───...
+│       │   │   ├───articles/
+│       │   │   │   └───...
+│       │   │   ├───authors/
+│       │   │   │   └───...
+│       │   │   ├───categories/
+│       │   │   │   └───...
+│       │   │   ├───tags/
+│       │   │   │   └───...
+│       │   │   └───.DS_Store
+│       │   ├───i18n/
+│       │   │   ├───__tests__/
+│       │   │   │   └───...
+│       │   │   ├───translations/
+│       │   │   │   └───...
+│       │   │   ├───.DS_Store
+│       │   │   ├───i18n.ts
+│       │   │   ├───index.ts
+│       │   │   ├───locales.ts
+│       │   │   ├───types.ts
+│       │   │   └───ui.ts
+│       │   ├───layouts/
+│       │   │   ├───Article.astro
+│       │   │   ├───Base.astro
+│       │   │   ├───General.astro
+│       │   │   └───Page.astro
+│       │   ├───lib/
+│       │   │   ├───loaders/
+│       │   │   │   └───...
+│       │   │   ├───supabase.helper.ts
+│       │   │   ├───supabase.ts
+│       │   │   └───utils.ts
+│       │   ├───middleware/
+│       │   │   └───index.ts
+│       │   ├───models/
+│       │   │   ├───apps/
+│       │   │   │   └───...
+│       │   │   ├───article/
+│       │   │   │   └───...
+│       │   │   ├───auth/
+│       │   │   │   └───...
+│       │   │   ├───author/
+│       │   │   │   └───...
+│       │   │   ├───category/
+│       │   │   │   └───...
+│       │   │   ├───menu/
+│       │   │   │   └───...
+│       │   │   ├───newsletter/
+│       │   │   │   └───...
+│       │   │   ├───post/
+│       │   │   │   └───...
+│       │   │   ├───repo/
+│       │   │   │   └───...
+│       │   │   ├───tag/
+│       │   │   │   └───...
+│       │   │   └───.DS_Store
+│       │   ├───pages/
+│       │   │   ├───[lang]/
+│       │   │   │   └───...
+│       │   │   ├───api/
+│       │   │   │   └───...
+│       │   │   ├───en/
+│       │   │   │   └───...
+│       │   │   ├───es/
+│       │   │   │   └───...
+│       │   │   ├───og/
+│       │   │   │   └───...
+│       │   │   ├───.DS_Store
+│       │   │   ├───404.astro
+│       │   │   ├───admin.astro
+│       │   │   ├───index.astro
+│       │   │   └───robots.txt.ts
+│       │   ├───styles/
+│       │   │   ├───global.css
+│       │   │   └───scroll-behavior.css
+│       │   ├───utils/
+│       │   │   ├───__tests__/
+│       │   │   │   └───...
+│       │   │   ├───open-graph/
+│       │   │   │   └───...
+│       │   │   ├───test/
+│       │   │   │   └───...
+│       │   │   ├───.DS_Store
+│       │   │   ├───collection.entity.ts
+│       │   │   ├───date.ts
+│       │   │   ├───gravatar.service.ts
+│       │   │   ├───image.utils.ts
+│       │   │   └───remark-reading-time.mjs
+│       │   ├───.DS_Store
+│       │   ├───consts.ts
+│       │   ├───content.config.ts
+│       │   └───env.d.ts
+│       ├───.env
+│       ├───.env.example
+│       ├───astro.config.mjs
+│       ├───package.json
+│       ├───pnpm-lock.yaml
+│       ├───tsconfig.json
+│       ├───vitest.config.ts
+│       ├───worker-configuration.d.ts
+│       └───wrangler.jsonc
 ├───docs/
 │   ├───hero.svg
 │   ├───lighthouse.png
 │   └───structure.md
-├───public/
-│   ├───admin/
-│   │   └───config.yml
-│   ├───rss/
-│   │   └───styles.xsl
-│   ├───.DS_Store
-│   ├───.assetsignore
-│   ├───android-chrome-192x192.png
-│   ├───android-chrome-512x512.png
-│   ├───apple-touch-icon.png
-│   ├───favicon-16x16.png
-│   ├───favicon-32x32.png
-│   ├───favicon.ico
-│   ├───favicon.svg
-│   ├───ogp.png
-│   └───site.webmanifest
-├───scripts/
-│   └───organize-articles.js
-├───src/
-│   ├───assets/
-│   │   ├───font/
-│   │   │   ├───JetBrainsMono-Bold.ttf
-│   │   │   ├───JetBrainsMono-Regular.ttf
-│   │   │   └───PlusJakartaSans-Bold.ttf
-│   │   ├───images/
-│   │   │   ├───0b716be6-2c45-49eb-8080-4161ceaac542.avif
-│   │   │   ├───47455.avif
-│   │   │   ├───7762799e-0693-4292-a309-f6a4eec57dc9.avif
-│   │   │   ├───Docker.png
-│   │   │   ├───Excalidraw.png
-│   │   │   ├───Grafana.png
-│   │   │   ├───HomeAssistant.png
-│   │   │   ├───Humane-AI.avif
-│   │   │   ├───N8n.png
-│   │   │   ├───NodeRED.png
-│   │   │   ├───Pihole.png
-│   │   │   ├───Prometheus.png
-│   │   │   ├───Supabase.png
-│   │   │   ├───TailwindCSS.png
-│   │   │   ├───VSCode.png
-│   │   │   ├───apple-tv-netflix.avif
-│   │   │   ├───b2e160fc-70d4-47ba-8078-60889c495ad2.avif
-│   │   │   ├───blog-placeholder-1.avif
-│   │   │   ├───blog-placeholder-2.avif
-│   │   │   ├───blog-placeholder-3.avif
-│   │   │   ├───blog-placeholder-4.avif
-│   │   │   ├───bybit.avif
-│   │   │   ├───cloudflare-vs-laliga-2.webp
-│   │   │   ├───cloudflare-vs-laliga.avif
-│   │   │   ├───dfcf9bb1-fbf6-4f74-bb38-0b53dd8db595.avif
-│   │   │   ├───grok-3-elonwebp.avif
-│   │   │   ├───iphone-16e-finish-unselect-gallery.avif
-│   │   │   ├───la-democratizacion-de-la-ia.avif
-│   │   │   ├───microsoft-cancela-servidores.avif
-│   │   │   ├───rust-programming-language.avif
-│   │   │   ├───whoAMI-cover.avif
-│   │   │   ├───whoami.avif
-│   │   │   └───xAI.avif
-│   │   └───.DS_Store
-│   ├───components/
-│   │   ├───apps/
-│   │   │   ├───AppCard.astro
-│   │   │   ├───AppDetails.astro
-│   │   │   ├───AppFilters.astro
-│   │   │   └───AppGrid.astro
-│   │   ├───i18n/
-│   │   │   ├───LocaleHtmlHead.astro
-│   │   │   ├───LocaleSelect.astro
-│   │   │   ├───LocaleSelectSingle.astro
-│   │   │   ├───LocaleSuggest.astro
-│   │   │   ├───LocalesHomeList.astro
-│   │   │   └───NotTranslateCaution.astro
-│   │   ├───.DS_Store
-│   │   ├───Analytics.astro
-│   │   ├───ArticleCard.astro
-│   │   ├───AuthButton.astro
-│   │   ├───AuthorCard.astro
-│   │   ├───AuthorSocials.astro
-│   │   ├───AuthorWrapper.astro
-│   │   ├───BackToTop.astro
-│   │   ├───Button.astro
-│   │   ├───ByAuthor.astro
-│   │   ├───ContactBox.astro
-│   │   ├───CtaNewsletterSubscription.astro
-│   │   ├───DotMenuIcon.astro
-│   │   ├───Footer.astro
-│   │   ├───FormattedDate.astro
-│   │   ├───GridContainer.astro
-│   │   ├───Header.astro
-│   │   ├───HeaderProgressBar.astro
-│   │   ├───Hero.astro
-│   │   ├───IconButton.astro
-│   │   ├───Input.astro
-│   │   ├───LatestNewsletter.astro
-│   │   ├───LatestPosts.astro
-│   │   ├───Link.astro
-│   │   ├───LiteYouTube.astro
-│   │   ├───Logo.astro
-│   │   ├───NavLink.astro
-│   │   ├───Navigation.astro
-│   │   ├───ObfuscateEmail.astro
-│   │   ├───OptimizedPicture.astro
-│   │   ├───PageHeadline.astro
-│   │   ├───Pagination.astro
-│   │   ├───PostCard.astro
-│   │   ├───PostCategory.astro
-│   │   ├───PostFooter.astro
-│   │   ├───PostHeader.astro
-│   │   ├───PostTag.astro
-│   │   ├───PostTags.astro
-│   │   ├───PostsList.astro
-│   │   ├───ReadingTime.astro
-│   │   ├───SearchButton.astro
-│   │   ├───SignupForm.astro
-│   │   ├───SocialLinks.astro
-│   │   ├───SocialMediaShare.astro
-│   │   ├───SubscriptionForm.astro
-│   │   └───ThemeToggle.astro
-│   ├───data/
-│   │   ├───apps/
-│   │   │   ├───en/
-│   │   │   │   ├───docker.json
-│   │   │   │   ├───excalidraw.json
-│   │   │   │   ├───grafana.json
-│   │   │   │   ├───homeassistant.json
-│   │   │   │   ├───n8n.json
-│   │   │   │   ├───nodered.json
-│   │   │   │   ├───pihole.json
-│   │   │   │   ├───prometheus.json
-│   │   │   │   ├───supabase.json
-│   │   │   │   ├───tailwindcss.json
-│   │   │   │   └───vscode.json
-│   │   │   └───es/
-│   │   │       ├───docker.json
-│   │   │       ├───excalidraw.json
-│   │   │       ├───grafana.json
-│   │   │       ├───homeassistant.json
-│   │   │       ├───n8n.json
-│   │   │       ├───nodered.json
-│   │   │       ├───pihole.json
-│   │   │       ├───prometheus.json
-│   │   │       ├───supabase.json
-│   │   │       ├───tailwindcss.json
-│   │   │       └───vscode.json
-│   │   ├───articles/
-│   │   │   ├───en/
-│   │   │   │   └───2025/
-│   │   │   │       └───...
-│   │   │   └───es/
-│   │   │       └───2025/
-│   │   │           └───...
-│   │   ├───authors/
-│   │   │   ├───en/
-│   │   │   │   └───yuniel-acosta.json
-│   │   │   └───es/
-│   │   │       └───yuniel-acosta.json
-│   │   ├───categories/
-│   │   │   ├───en/
-│   │   │   │   ├───ai.md
-│   │   │   │   ├───cybersecurity.md
-│   │   │   │   ├───internet.md
-│   │   │   │   ├───smartphones.md
-│   │   │   │   ├───social-networks.md
-│   │   │   │   ├───startups.md
-│   │   │   │   ├───streaming.md
-│   │   │   │   ├───technology.md
-│   │   │   │   └───web-development.md
-│   │   │   └───es/
-│   │   │       ├───ai.md
-│   │   │       ├───cybersecurity.md
-│   │   │       ├───internet.md
-│   │   │       ├───smartphones.md
-│   │   │       ├───social-networks.md
-│   │   │       ├───startups.md
-│   │   │       ├───streaming.md
-│   │   │       ├───technology.md
-│   │   │       └───web-development.md
-│   │   ├───tags/
-│   │   │   ├───en/
-│   │   │   │   ├───ai.md
-│   │   │   │   ├───analytics.md
-│   │   │   │   ├───apple.md
-│   │   │   │   ├───automation.md
-│   │   │   │   ├───automatizacion.md
-│   │   │   │   ├───aws.md
-│   │   │   │   ├───backend.md
-│   │   │   │   ├───chatgpt.md
-│   │   │   │   ├───china.md
-│   │   │   │   ├───cloudflare.md
-│   │   │   │   ├───containerization.md
-│   │   │   │   ├───css.md
-│   │   │   │   ├───data-centers.md
-│   │   │   │   ├───database.md
-│   │   │   │   ├───development.md
-│   │   │   │   ├───devops.md
-│   │   │   │   ├───diagrams.md
-│   │   │   │   ├───dispositivos-wearable.md
-│   │   │   │   ├───docker.md
-│   │   │   │   ├───ee-uu.md
-│   │   │   │   ├───frontend.md
-│   │   │   │   ├───git.md
-│   │   │   │   ├───grok.md
-│   │   │   │   ├───hacking.md
-│   │   │   │   ├───industria-global.md
-│   │   │   │   ├───internet.md
-│   │   │   │   ├───inversores.md
-│   │   │   │   ├───iot.md
-│   │   │   │   ├───iphone.md
-│   │   │   │   ├───isp.md
-│   │   │   │   ├───javascript.md
-│   │   │   │   ├───kubernetes.md
-│   │   │   │   ├───microsoft.md
-│   │   │   │   ├───monitoring.md
-│   │   │   │   ├───netflix.md
-│   │   │   │   ├───networking.md
-│   │   │   │   ├───node-js.md
-│   │   │   │   ├───openai.md
-│   │   │   │   ├───politicas-de-seguridad.md
-│   │   │   │   ├───privacy.md
-│   │   │   │   ├───programacion.md
-│   │   │   │   ├───python.md
-│   │   │   │   ├───react.md
-│   │   │   │   ├───rust.md
-│   │   │   │   ├───seguridad.md
-│   │   │   │   ├───semiconductores.md
-│   │   │   │   ├───smartphones.md
-│   │   │   │   ├───tooling.md
-│   │   │   │   ├───tools.md
-│   │   │   │   ├───typescript.md
-│   │   │   │   ├───visualization.md
-│   │   │   │   ├───vs-code.md
-│   │   │   │   ├───vue.md
-│   │   │   │   ├───web-assembly.md
-│   │   │   │   ├───whiteboard.md
-│   │   │   │   ├───workflow.md
-│   │   │   │   ├───x.md
-│   │   │   │   └───youtube.md
-│   │   │   └───es/
-│   │   │       ├───ai.md
-│   │   │       ├───analytics.md
-│   │   │       ├───apple.md
-│   │   │       ├───automation.md
-│   │   │       ├───automatizacion.md
-│   │   │       ├───aws.md
-│   │   │       ├───backend.md
-│   │   │       ├───chatgpt.md
-│   │   │       ├───china.md
-│   │   │       ├───cloudflare.md
-│   │   │       ├───containerization.md
-│   │   │       ├───css.md
-│   │   │       ├───data-centers.md
-│   │   │       ├───database.md
-│   │   │       ├───development.md
-│   │   │       ├───devops.md
-│   │   │       ├───diagrams.md
-│   │   │       ├───dispositivos-wearable.md
-│   │   │       ├───docker.md
-│   │   │       ├───ee-uu.md
-│   │   │       ├───frontend.md
-│   │   │       ├───git.md
-│   │   │       ├───grok.md
-│   │   │       ├───hacking.md
-│   │   │       ├───industria-global.md
-│   │   │       ├───internet.md
-│   │   │       ├───inversores.md
-│   │   │       ├───iot.md
-│   │   │       ├───iphone.md
-│   │   │       ├───isp.md
-│   │   │       ├───javascript.md
-│   │   │       ├───kubernetes.md
-│   │   │       ├───microsoft.md
-│   │   │       ├───monitoring.md
-│   │   │       ├───netflix.md
-│   │   │       ├───networking.md
-│   │   │       ├───node-js.md
-│   │   │       ├───openai.md
-│   │   │       ├───politicas-de-seguridad.md
-│   │   │       ├───privacy.md
-│   │   │       ├───programacion.md
-│   │   │       ├───python.md
-│   │   │       ├───react.md
-│   │   │       ├───rust.md
-│   │   │       ├───seguridad.md
-│   │   │       ├───semiconductores.md
-│   │   │       ├───smartphones.md
-│   │   │       ├───tooling.md
-│   │   │       ├───tools.md
-│   │   │       ├───typescript.md
-│   │   │       ├───visualization.md
-│   │   │       ├───vs-code.md
-│   │   │       ├───vue.md
-│   │   │       ├───web-assembly.md
-│   │   │       ├───whiteboard.md
-│   │   │       ├───workflow.md
-│   │   │       ├───x.md
-│   │   │       └───youtube.md
-│   │   └───.DS_Store
-│   ├───i18n/
-│   │   ├───__tests__/
-│   │   │   └───i18n.test.ts
-│   │   ├───translations/
-│   │   │   ├───account.ts
-│   │   │   ├───apps.ts
-│   │   │   ├───auth.ts
-│   │   │   ├───common.ts
-│   │   │   ├───contact.ts
-│   │   │   ├───email.ts
-│   │   │   ├───footer.ts
-│   │   │   ├───home.ts
-│   │   │   ├───navigation.ts
-│   │   │   ├───newsletter.ts
-│   │   │   ├───posts.ts
-│   │   │   └───theme.ts
-│   │   ├───.DS_Store
-│   │   ├───i18n.ts
-│   │   ├───index.ts
-│   │   ├───locales.ts
-│   │   ├───types.ts
-│   │   └───ui.ts
-│   ├───layouts/
-│   │   ├───Article.astro
-│   │   ├───Base.astro
-│   │   ├───General.astro
-│   │   └───Page.astro
-│   ├───lib/
-│   │   ├───loaders/
-│   │   │   └───github/
-│   │   │       ├───helper.ts
-│   │   │       ├───index.ts
-│   │   │       └───schema.ts
-│   │   ├───supabase.helper.ts
-│   │   ├───supabase.ts
-│   │   └───utils.ts
-│   ├───middleware/
-│   │   └───index.ts
-│   ├───models/
-│   │   ├───apps/
-│   │   │   ├───app.criteria.ts
-│   │   │   ├───app.mapper.ts
-│   │   │   ├───app.model.ts
-│   │   │   ├───app.service.ts
-│   │   │   └───index.ts
-│   │   ├───article/
-│   │   │   ├───__tests__/
-│   │   │   │   └───article-selection.strategy.test.ts
-│   │   │   ├───article-selection.strategy.ts
-│   │   │   ├───article.criteria.ts
-│   │   │   ├───article.mapper.ts
-│   │   │   ├───article.model.ts
-│   │   │   ├───article.service.ts
-│   │   │   └───index.ts
-│   │   ├───auth/
-│   │   │   ├───user.api.response.ts
-│   │   │   └───user.service.ts
-│   │   ├───author/
-│   │   │   ├───author.criteria.ts
-│   │   │   ├───author.mapper.ts
-│   │   │   ├───author.model.ts
-│   │   │   ├───author.service.ts
-│   │   │   └───index.ts
-│   │   ├───category/
-│   │   │   ├───category.criteria.ts
-│   │   │   ├───category.mapper.ts
-│   │   │   ├───category.model.ts
-│   │   │   ├───category.service.ts
-│   │   │   └───index.ts
-│   │   ├───menu/
-│   │   │   ├───index.ts
-│   │   │   ├───menu.constants.ts
-│   │   │   ├───menu.service.ts
-│   │   │   └───menu.type.ts
-│   │   ├───newsletter/
-│   │   │   ├───index.ts
-│   │   │   ├───newsletter.criteria.ts
-│   │   │   ├───newsletter.mapper.ts
-│   │   │   ├───newsletter.model.ts
-│   │   │   └───newsletter.service.ts
-│   │   ├───post/
-│   │   │   ├───post.model.ts
-│   │   │   └───post.service.ts
-│   │   ├───repo/
-│   │   │   ├───index.ts
-│   │   │   ├───repo.criteria.ts
-│   │   │   ├───repo.mapper.ts
-│   │   │   ├───repo.model.ts
-│   │   │   └───repo.service.ts
-│   │   ├───tag/
-│   │   │   ├───index.ts
-│   │   │   ├───tag.criteria.ts
-│   │   │   ├───tag.mapper.ts
-│   │   │   ├───tag.model.ts
-│   │   │   └───tag.service.ts
-│   │   └───.DS_Store
-│   ├───pages/
-│   │   ├───[lang]/
-│   │   │   ├───apps/
-│   │   │   │   └───index.astro
-│   │   │   ├───author/
-│   │   │   │   └───[...id].astro
-│   │   │   ├───news/
-│   │   │   │   ├───category/
-│   │   │   │   │   └───...
-│   │   │   │   ├───page/
-│   │   │   │   │   └───...
-│   │   │   │   ├───tag/
-│   │   │   │   │   └───...
-│   │   │   │   ├───[...id].astro
-│   │   │   │   └───index.astro
-│   │   │   ├───newsletter/
-│   │   │   │   ├───tag/
-│   │   │   │   │   └───...
-│   │   │   │   ├───[...id].astro
-│   │   │   │   └───index.astro
-│   │   │   ├───tag/
-│   │   │   │   └───[tag]/
-│   │   │   │       └───...
-│   │   │   ├───404.astro
-│   │   │   ├───account.astro
-│   │   │   ├───contact.astro
-│   │   │   ├───index.astro
-│   │   │   ├───rss.xml.js
-│   │   │   ├───search.astro
-│   │   │   ├───signin.astro
-│   │   │   └───signup.astro
-│   │   ├───api/
-│   │   │   ├───auth/
-│   │   │   │   ├───callback.ts
-│   │   │   │   ├───signin.ts
-│   │   │   │   ├───signout.ts
-│   │   │   │   └───signup.ts
-│   │   │   ├───newsletter/
-│   │   │   │   └───subscribe.ts
-│   │   │   ├───og/
-│   │   │   ├───refresh-avatar.ts
-│   │   │   └───user.ts
-│   │   ├───en/
-│   │   │   ├───about.mdx
-│   │   │   ├───privacy-policy.mdx
-│   │   │   └───support.mdx
-│   │   ├───es/
-│   │   │   ├───about.mdx
-│   │   │   ├───privacy-policy.mdx
-│   │   │   └───support.mdx
-│   │   ├───og/
-│   │   │   └───[lang]/
-│   │   │       └───[...slug].png.ts
-│   │   ├───.DS_Store
-│   │   ├───404.astro
-│   │   ├───admin.astro
-│   │   ├───index.astro
-│   │   └───robots.txt.ts
-│   ├───styles/
-│   │   ├───global.css
-│   │   └───scroll-behavior.css
-│   ├───utils/
-│   │   ├───__tests__/
-│   │   │   ├───collection.entity.test.ts
-│   │   │   ├───date.test.ts
-│   │   │   ├───gravatar.service.test.ts
-│   │   │   └───image.utils.test.ts
-│   │   ├───open-graph/
-│   │   │   ├───og.service.ts
-│   │   │   ├───og.template.ts
-│   │   │   └───og.types.ts
-│   │   ├───test/
-│   │   │   ├───article.generator.mock.ts
-│   │   │   ├───author.generator.mock.ts
-│   │   │   ├───category.generator.mock.ts
-│   │   │   ├───image.generator.mock.ts
-│   │   │   └───tag.generator.mock.ts
-│   │   ├───.DS_Store
-│   │   ├───collection.entity.ts
-│   │   ├───date.ts
-│   │   ├───gravatar.service.ts
-│   │   ├───image.utils.ts
-│   │   └───remark-reading-time.mjs
-│   ├───.DS_Store
-│   ├───consts.ts
-│   ├───content.config.ts
-│   └───env.d.ts
+├───packages/
 ├───supabase/
 │   ├───.branches/
 │   │   └───_current_branch
@@ -548,15 +477,12 @@
 ├───LICENSE
 ├───README.md
 ├───SECURITY.md
-├───astro.config.mjs
 ├───biome.json
 ├───lychee.toml
 ├───package.json
 ├───pnpm-lock.yaml
+├───pnpm-workspace.yaml
 ├───renovate.json
-├───tsconfig.json
-├───vitest.config.ts
-├───worker-configuration.d.ts
-└───wrangler.jsonc
+└───vitest.workspace.ts
 
 ```

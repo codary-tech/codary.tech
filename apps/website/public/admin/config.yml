@@ -16,8 +16,8 @@ slug:
   sanitize_replacement: '-'
 
 
-media_folder: "src/assets/images" # Location where files will be stored in the repo
-public_folder: "src/assets/images" # The src attribute for uploaded media
+media_folder: "apps/website/src/assets/images" # Location where files will be stored in the repo
+public_folder: "apps/website/src/assets/images" # The src attribute for uploaded media
 
 i18n:
   structure: 'multiple_folders'
@@ -29,7 +29,7 @@ collections:
   - name: 'articles'
     label: 'Articles'
     label_singular: 'Article'
-    folder: 'src/data/articles'
+    folder: 'apps/website/src/data/articles'
     create: true
     slug: '{{year}}/{{month}}/{{day}}/{{slug}}'
     extension: mdx
@@ -65,7 +65,7 @@ collections:
         widget: 'image'
         label: 'Cover'
         i18n: 'duplicate'
-        default: 'src/assets/images/blog-placeholder-1.avif'
+        default: 'apps/website/src/assets/images/blog-placeholder-1.avif'
       - name: 'tags'
         widget: 'relation'
         collection: 'tags'
@@ -100,7 +100,7 @@ collections:
   - name: 'newsletter'
     label: 'Newsletters'
     label_singular: 'Newsletter'
-    folder: 'src/data/newsletter'
+    folder: 'apps/website/src/data/newsletter'
     create: true
     slug: '{{year}}/{{month}}/{{day}}/{{slug}}'
     extension: mdx
@@ -137,7 +137,7 @@ collections:
         label: 'Cover'
         i18n: 'duplicate'
         required: false
-        default: 'src/assets/images/newsletter-placeholder.avif'
+        default: 'apps/website/src/assets/images/newsletter-placeholder.avif'
       - name: 'tags'
         widget: 'relation'
         collection: 'tags'
@@ -159,7 +159,7 @@ collections:
   - name: categories
     label: Categories
     label_singular: Category
-    folder: src/data/categories
+    folder: apps/website/src/data/categories
     slug: '{{title}}'
     create: true
     i18n: true
@@ -182,7 +182,7 @@ collections:
   - name: tags
     label: Tags
     label_singular: Tag
-    folder: src/data/tags
+    folder: apps/website/src/data/tags
     slug: '{{title}}'
     create: true
     i18n: true
@@ -195,7 +195,7 @@ collections:
   - name: 'authors'
     label: 'Authors'
     label_singular: 'Author'
-    folder: src/data/authors
+    folder: apps/website/src/data/authors
     slug: '{{name}}'
     create: true
     extension: json
@@ -243,7 +243,7 @@ collections:
 
   - name: 'page'
     label: 'Pages'
-    folder: src/pages
+    folder: apps/website/src/pages
     create: true
     slug: '{{slug}}'
     extension: mdx
@@ -268,7 +268,7 @@ collections:
   - name: 'apps'
     label: 'Applications'
     label_singular: 'Application'
-    folder: 'src/data/apps'
+    folder: 'apps/website/src/data/apps'
     create: true
     slug: '{{name}}'
     extension: json
