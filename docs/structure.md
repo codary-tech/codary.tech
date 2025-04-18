@@ -140,7 +140,7 @@
 │       │   │   ├───_astro-internal_middleware.mjs
 │       │   │   ├───_noop-actions.mjs
 │       │   │   ├───index.js
-│       │   │   ├───manifest_CkV_B3qp.mjs
+│       │   │   ├───manifest_Bgoc4dGz.mjs
 │       │   │   └───renderers.mjs
 │       │   ├───admin/
 │       │   │   └───config.yml
