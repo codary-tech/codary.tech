@@ -1,5 +1,6 @@
 {
 	"$schema": "https://json.schemastore.org/tsconfig",
+	"extends": "./tsconfig.base.json",
 	"compilerOptions": {
 		"noUnusedLocals": true,
 		"strict": true,
@@ -29,4 +30,5 @@
 
 		"skipLibCheck": true
 	}
+}
 }
