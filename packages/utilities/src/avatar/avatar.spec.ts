@@ -34,9 +34,9 @@ describe("getAvatarUrl", () => {
 		);
 	});
 
-	it("returns a gravatar URL for an email with leading and trailing spaces", () => {
+	it("trims input and returns a gravatar URL for an email with leading and trailing spaces", () => {
 		const email = "  test@example.com  ";
-		const result = getAvatarUrl(email.trim());
+		const result = getAvatarUrl(email);
 		expect(result).toBe(
 			"https://gravatar.com/avatar/55502f40dc8b7c769880b10874abc9d0?size=100",
 		);
