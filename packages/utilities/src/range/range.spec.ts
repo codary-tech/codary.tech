@@ -21,7 +21,7 @@ describe("range", () => {
 		expect(result).toEqual([]);
 	});
 
-	test("returns an array with one element if start equals end", () => {
+	test("returns an empty array if start equals end", () => {
 		const result = range(5, 5, 1);
 		expect(result).toEqual([]);
 	});
