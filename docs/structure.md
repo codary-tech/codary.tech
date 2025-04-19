@@ -436,18 +436,6 @@
 │       ├───worker-configuration.d.ts
 │       └───wrangler.jsonc
 ├───config/
-│   ├───node_modules/
-│   │   ├───.bin/
-│   │   │   ├───jiti
-│   │   │   ├───stylelint
-│   │   │   ├───tsc
-│   │   │   ├───tsserver
-│   │   │   ├───vite
-│   │   │   ├───vitest
-│   │   │   └───yaml
-│   │   ├───@codary/
-│   │   ├───@codecov/
-│   │   └───@tailwindcss/
 │   ├───styles/
 │   │   ├───global.css
 │   │   ├───index.css
