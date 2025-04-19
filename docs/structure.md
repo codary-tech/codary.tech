@@ -82,7 +82,7 @@
 │       │   │   ├───Supabase.Xe1Gzhob.png
 │       │   │   ├───TailwindCSS.D43_eTwl.png
 │       │   │   ├───VSCode.B3hz57G5.png
-│       │   │   ├───_id_.DLDaIcpj.css
+│       │   │   ├───_id_.C998qweq.css
 │       │   │   ├───apple-tv-netflix.fp5SXD8M.avif
 │       │   │   ├───apple-tv-netflix.fp5SXD8M_Z1MrbvP.webp
 │       │   │   ├───apple-tv-netflix.fp5SXD8M_a0ATg.avif
@@ -140,7 +140,7 @@
 │       │   │   ├───_astro-internal_middleware.mjs
 │       │   │   ├───_noop-actions.mjs
 │       │   │   ├───index.js
-│       │   │   ├───manifest_Bgoc4dGz.mjs
+│       │   │   ├───manifest_u8YjV_MS.mjs
 │       │   │   └───renderers.mjs
 │       │   ├───admin/
 │       │   │   └───config.yml
@@ -242,14 +242,10 @@
 │       │   │   ├───wrangler
 │       │   │   ├───wrangler2
 │       │   │   └───yaml
-│       │   ├───.cache/
-│       │   │   └───wrangler/
-│       │   │       └───...
-│       │   ├───.mf/
-│       │   │   └───cf.json
 │       │   ├───.vite/
-│       │   │   └───deps/
-│       │   │       └───...
+│       │   │   ├───deps/
+│       │   │   │   └───...
+│       │   │   └───results.json
 │       │   ├───.vite-temp/
 │       │   ├───@astrojs/
 │       │   ├───@biomejs/
@@ -412,8 +408,7 @@
 │       │   │   ├───index.astro
 │       │   │   └───robots.txt.ts
 │       │   ├───styles/
-│       │   │   ├───global.css
-│       │   │   └───scroll-behavior.css
+│       │   │   └───global.css
 │       │   ├───utils/
 │       │   │   ├───__tests__/
 │       │   │   │   └───...
@@ -440,18 +435,165 @@
 │       ├───vitest.config.ts
 │       ├───worker-configuration.d.ts
 │       └───wrangler.jsonc
+├───config/
+│   ├───node_modules/
+│   │   ├───.bin/
+│   │   │   ├───jiti
+│   │   │   ├───stylelint
+│   │   │   ├───tsc
+│   │   │   ├───tsserver
+│   │   │   ├───vite
+│   │   │   ├───vitest
+│   │   │   └───yaml
+│   │   ├───@codary/
+│   │   ├───@codecov/
+│   │   └───@tailwindcss/
+│   ├───styles/
+│   │   ├───global.css
+│   │   ├───index.css
+│   │   └───scroll-behavior.css
+│   ├───.DS_Store
+│   ├───package.json
+│   ├───stylelint.config.cjs
+│   ├───tsconfig.json
+│   ├───vite.config.shared.d.ts
+│   ├───vite.config.shared.mjs
+│   ├───vitest.config.shared.d.ts
+│   └───vitest.config.shared.mjs
 ├───docs/
 │   ├───hero.svg
 │   ├───lighthouse.png
 │   └───structure.md
 ├───packages/
-│   └───tsconfig/
-│       ├───package.json
-│       ├───tsconfig.base.json
-│       ├───tsconfig.node.json
-│       ├───tsconfig.strict.json
-│       ├───tsconfig.strictest.json
-│       └───tsconfig.vue.json
+│   ├───tsconfig/
+│   │   ├───package.json
+│   │   ├───tsconfig.base.json
+│   │   ├───tsconfig.node.json
+│   │   ├───tsconfig.strict.json
+│   │   ├───tsconfig.strictest.json
+│   │   └───tsconfig.vue.json
+│   ├───utilities/
+│   │   ├───coverage/
+│   │   │   ├───src/
+│   │   │   │   ├───avatar/
+│   │   │   │   │   └───...
+│   │   │   │   ├───chunk/
+│   │   │   │   │   └───...
+│   │   │   │   ├───debounce/
+│   │   │   │   │   └───...
+│   │   │   │   ├───format-date/
+│   │   │   │   │   └───...
+│   │   │   │   ├───group-by/
+│   │   │   │   │   └───...
+│   │   │   │   ├───initials/
+│   │   │   │   │   └───...
+│   │   │   │   ├───is-equal/
+│   │   │   │   │   └───...
+│   │   │   │   ├───offset-date/
+│   │   │   │   │   └───...
+│   │   │   │   ├───order-by/
+│   │   │   │   │   └───...
+│   │   │   │   ├───random-element/
+│   │   │   │   │   └───...
+│   │   │   │   ├───random-number/
+│   │   │   │   │   └───...
+│   │   │   │   ├───random-word/
+│   │   │   │   │   └───...
+│   │   │   │   ├───range/
+│   │   │   │   │   └───...
+│   │   │   │   ├───remove/
+│   │   │   │   │   └───...
+│   │   │   │   ├───sort-by/
+│   │   │   │   │   └───...
+│   │   │   │   ├───theme/
+│   │   │   │   │   └───...
+│   │   │   │   ├───index.html
+│   │   │   │   └───index.ts.html
+│   │   │   ├───base.css
+│   │   │   ├───block-navigation.js
+│   │   │   ├───clover.xml
+│   │   │   ├───coverage-final.json
+│   │   │   ├───favicon.png
+│   │   │   ├───index.html
+│   │   │   ├───json-report.json
+│   │   │   ├───junit-report.xml
+│   │   │   ├───prettify.css
+│   │   │   ├───prettify.js
+│   │   │   ├───sort-arrow-sprite.png
+│   │   │   └───sorter.js
+│   │   ├───node_modules/
+│   │   │   ├───.bin/
+│   │   │   │   ├───jiti
+│   │   │   │   ├───rollup
+│   │   │   │   ├───tsc
+│   │   │   │   ├───tsserver
+│   │   │   │   ├───vite
+│   │   │   │   ├───vitest
+│   │   │   │   └───yaml
+│   │   │   ├───.vite/
+│   │   │   │   ├───vitest/
+│   │   │   │   │   └───...
+│   │   │   │   └───results.json
+│   │   │   ├───.vite-temp/
+│   │   │   ├───@codary/
+│   │   │   └───@internationalized/
+│   │   ├───src/
+│   │   │   ├───avatar/
+│   │   │   │   ├───avatar.spec.ts
+│   │   │   │   └───avatar.ts
+│   │   │   ├───chunk/
+│   │   │   │   ├───chunk.spec.ts
+│   │   │   │   └───chunk.ts
+│   │   │   ├───debounce/
+│   │   │   │   ├───debounce.spec.ts
+│   │   │   │   └───debounce.ts
+│   │   │   ├───format-date/
+│   │   │   │   ├───format-date.spec.ts
+│   │   │   │   └───format-date.ts
+│   │   │   ├───group-by/
+│   │   │   │   ├───group-by.spec.ts
+│   │   │   │   └───group-by.ts
+│   │   │   ├───initials/
+│   │   │   │   ├───initials.spec.ts
+│   │   │   │   └───initials.ts
+│   │   │   ├───is-equal/
+│   │   │   │   ├───is-equal.spec.ts
+│   │   │   │   └───is-equal.ts
+│   │   │   ├───offset-date/
+│   │   │   │   ├───offset-date.spec.ts
+│   │   │   │   └───offset-date.ts
+│   │   │   ├───order-by/
+│   │   │   │   ├───order-by.spec.ts
+│   │   │   │   └───order-by.ts
+│   │   │   ├───random-element/
+│   │   │   │   ├───random-element.spec.ts
+│   │   │   │   └───random-element.ts
+│   │   │   ├───random-number/
+│   │   │   │   ├───random-number.spec.ts
+│   │   │   │   └───random-number.ts
+│   │   │   ├───random-word/
+│   │   │   │   ├───random-word.spec.ts
+│   │   │   │   └───random-word.ts
+│   │   │   ├───range/
+│   │   │   │   ├───range.spec.ts
+│   │   │   │   └───range.ts
+│   │   │   ├───remove/
+│   │   │   │   ├───remove.spec.ts
+│   │   │   │   └───remove.ts
+│   │   │   ├───sort-by/
+│   │   │   │   ├───sort-by.spec.ts
+│   │   │   │   └───sort-by.ts
+│   │   │   ├───theme/
+│   │   │   │   ├───color-theme.spec.ts
+│   │   │   │   └───color-theme.ts
+│   │   │   ├───.DS_Store
+│   │   │   └───index.ts
+│   │   ├───.DS_Store
+│   │   ├───package.json
+│   │   ├───tsconfig.json
+│   │   ├───vite.config.ts
+│   │   └───vitest.config.ts
+│   └───.DS_Store
 ├───supabase/
 │   ├───.branches/
 │   │   └───_current_branch
@@ -481,6 +623,7 @@
 ├───.gitignore
 ├───.npmrc
 ├───.pre-commit-config.yaml
+├───.stylelintignore
 ├───CODE_OF_CONDUCT.md
 ├───CONTRIBUTING.md
 ├───LICENSE
@@ -492,6 +635,7 @@
 ├───pnpm-lock.yaml
 ├───pnpm-workspace.yaml
 ├───renovate.json
+├───vitest.config.ts
 └───vitest.workspace.ts
 
 ```

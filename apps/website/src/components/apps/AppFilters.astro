@@ -25,7 +25,7 @@ const tags = await getAppTags(currentLocale);
           id="search"
           name="search"
           placeholder={t("apps.search.placeholder")}
-          class="w-full px-4 py-2 rounded-lg border border-input-border-light dark:border-input-border-dark bg-input-border-light dark:bg-input-border-dark text-main-light dark:text-main-dark focus:outline-none focus:ring-2 focus:ring-input-border--focus-light dark:focus:ring-input-border--focus-dark"
+          class="w-full px-4 py-2 rounded-lg border border-input-border-light dark:border-input-border-dark bg-input-border-light dark:bg-input-border-dark text-main-light dark:text-main-dark focus:outline-none focus:ring-2 focus:ring-input-border-focus-light dark:focus:ring-input-border-focus-dark"
         />
         <button
           type="button"
@@ -47,7 +47,7 @@ const tags = await getAppTags(currentLocale);
       <select
         id="filter-tags"
         name="tags"
-        class="w-full px-4 py-2 rounded-lg border border-input-border-light dark:border-input-border-dark bg-bg-light dark:bg-hero-bg-dark text-main-light dark:text-main-dark focus:outline-none focus:ring-2 focus:ring-input-border--focus-light dark:focus:ring-input-border--focus-dark"
+        class="w-full px-4 py-2 rounded-lg border border-input-border-light dark:border-input-border-dark bg-bg-light dark:bg-hero-bg-dark text-main-light dark:text-main-dark focus:outline-none focus:ring-2 focus:ring-input-border-focus-light dark:focus:ring-input-border-focus-dark"
       >
         <option value="">{t("apps.filters.all")}</option>
         {tags.map((tag) => (
@@ -63,7 +63,7 @@ const tags = await getAppTags(currentLocale);
       <select
         id="sort-by"
         name="sort"
-        class="w-full px-4 py-2 rounded-lg border border-input-border-light dark:border-input-border-dark bg-bg-light dark:bg-hero-bg-dark text-main-light dark:text-main-dark focus:outline-none focus:ring-2 focus:ring-input-border--focus-light dark:focus:ring-input-border--focus-dark"
+        class="w-full px-4 py-2 rounded-lg border border-input-border-light dark:border-input-border-dark bg-bg-light dark:bg-hero-bg-dark text-main-light dark:text-main-dark focus:outline-none focus:ring-2 focus:ring-input-border-focus-light dark:focus:ring-input-border-focus-dark"
       >
         <option value="alphabetical">{t("apps.sort.alphabetical")}</option>
         <option value="stars">{t("apps.sort.stars")}</option>

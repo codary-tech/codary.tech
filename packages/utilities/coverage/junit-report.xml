@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="UI tests" tests="89" failures="0" errors="0" time="0.060511584">
+    <testsuite name="src/avatar/avatar.spec.ts" timestamp="2025-04-19T19:09:26.238Z" hostname="arcadian" tests="6" failures="0" errors="0" skipped="0" time="0.002275458">
+        <testcase classname="src/avatar/avatar.spec.ts" name="getAvatarUrl &gt; returns a valid gravatar URL for a given email" time="0.001130875">
+        </testcase>
+        <testcase classname="src/avatar/avatar.spec.ts" name="getAvatarUrl &gt; returns a gravatar URL with the specified size" time="0.000115041">
+        </testcase>
+        <testcase classname="src/avatar/avatar.spec.ts" name="getAvatarUrl &gt; returns a gravatar URL with the default size when size is not provided" time="0.000072125">
+        </testcase>
+        <testcase classname="src/avatar/avatar.spec.ts" name="getAvatarUrl &gt; returns a gravatar URL for an email with uppercase characters" time="0.000065042">
+        </testcase>
+        <testcase classname="src/avatar/avatar.spec.ts" name="getAvatarUrl &gt; returns a gravatar URL for an email with leading and trailing spaces" time="0.000061625">
+        </testcase>
+        <testcase classname="src/avatar/avatar.spec.ts" name="getAvatarUrl &gt; returns a gravatar URL for an email with special characters" time="0.000054458">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/chunk/chunk.spec.ts" timestamp="2025-04-19T19:09:26.239Z" hostname="arcadian" tests="5" failures="0" errors="0" skipped="0" time="0.002278084">
+        <testcase classname="src/chunk/chunk.spec.ts" name="chunk &gt; should divide an array into chunks of the specified size" time="0.001104">
+        </testcase>
+        <testcase classname="src/chunk/chunk.spec.ts" name="chunk &gt; should handle arrays that cannot be divided evenly" time="0.000104">
+        </testcase>
+        <testcase classname="src/chunk/chunk.spec.ts" name="chunk &gt; should return an empty array when given an empty array" time="0.000064625">
+        </testcase>
+        <testcase classname="src/chunk/chunk.spec.ts" name="chunk &gt; should return the original array as a single chunk when the chunk size is greater than the array length" time="0.000175959">
+        </testcase>
+        <testcase classname="src/chunk/chunk.spec.ts" name="chunk &gt; should return an array of single-item arrays when the chunk size is 1" time="0.000066834">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/format-date/format-date.spec.ts" timestamp="2025-04-19T19:09:26.240Z" hostname="arcadian" tests="5" failures="0" errors="0" skipped="0" time="0.017523667">
+        <testcase classname="src/format-date/format-date.spec.ts" name="formatDate &gt; formats a valid date string correctly" time="0.015921042">
+        </testcase>
+        <testcase classname="src/format-date/format-date.spec.ts" name="formatDate &gt; formats a valid Date object correctly" time="0.000128917">
+        </testcase>
+        <testcase classname="src/format-date/format-date.spec.ts" name="formatDate &gt; returns an empty string for undefined date" time="0.000078625">
+        </testcase>
+        <testcase classname="src/format-date/format-date.spec.ts" name="formatDate &gt; returns an empty string for invalid date string" time="0.000053458">
+        </testcase>
+        <testcase classname="src/format-date/format-date.spec.ts" name="formatDate &gt; formats date correctly for different locales" time="0.000520917">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/debounce/debounce.spec.ts" timestamp="2025-04-19T19:09:26.241Z" hostname="arcadian" tests="4" failures="0" errors="0" skipped="0" time="0.00435175">
+        <testcase classname="src/debounce/debounce.spec.ts" name="debounce &gt; should delay the execution of the function" time="0.002828292">
+        </testcase>
+        <testcase classname="src/debounce/debounce.spec.ts" name="debounce &gt; should execute the function immediately if immediate is true" time="0.000227417">
+        </testcase>
+        <testcase classname="src/debounce/debounce.spec.ts" name="debounce &gt; should reset the timer if called again before the wait time" time="0.000198666">
+        </testcase>
+        <testcase classname="src/debounce/debounce.spec.ts" name="debounce &gt; should use the correct context when calling the function" time="0.000336042">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/group-by/group-by.spec.ts" timestamp="2025-04-19T19:09:26.241Z" hostname="arcadian" tests="4" failures="0" errors="0" skipped="0" time="0.002159125">
+        <testcase classname="src/group-by/group-by.spec.ts" name="groupBy &gt; groups items by string length" time="0.001129708">
+        </testcase>
+        <testcase classname="src/group-by/group-by.spec.ts" name="groupBy &gt; groups items by number floor" time="0.00012575">
+        </testcase>
+        <testcase classname="src/group-by/group-by.spec.ts" name="groupBy &gt; returns an empty object for an empty array" time="0.000063583">
+        </testcase>
+        <testcase classname="src/group-by/group-by.spec.ts" name="groupBy &gt; groups items by identity for non-array items" time="0.000084958">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/initials/initials.spec.ts" timestamp="2025-04-19T19:09:26.241Z" hostname="arcadian" tests="9" failures="0" errors="0" skipped="0" time="0.002088458">
+        <testcase classname="src/initials/initials.spec.ts" name="initials &gt; returns initials for a single name" time="0.000789334">
+        </testcase>
+        <testcase classname="src/initials/initials.spec.ts" name="initials &gt; returns initials for a full name" time="0.000082167">
+        </testcase>
+        <testcase classname="src/initials/initials.spec.ts" name="initials &gt; returns initials for a name with multiple spaces" time="0.000056125">
+        </testcase>
+        <testcase classname="src/initials/initials.spec.ts" name="initials &gt; returns initials for a name with leading and trailing spaces" time="0.000049208">
+        </testcase>
+        <testcase classname="src/initials/initials.spec.ts" name="initials &gt; returns initials for a name with multiple words" time="0.00004625">
+        </testcase>
+        <testcase classname="src/initials/initials.spec.ts" name="initials &gt; returns an empty string for an empty input" time="0.000042125">
+        </testcase>
+        <testcase classname="src/initials/initials.spec.ts" name="initials &gt; returns initials for a name with hyphenated words" time="0.000041125">
+        </testcase>
+        <testcase classname="src/initials/initials.spec.ts" name="initials &gt; returns initials for a name with special characters" time="0.000040333">
+        </testcase>
+        <testcase classname="src/initials/initials.spec.ts" name="initials &gt; returns initials for a name with non-alphabetic characters" time="0.000047875">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/is-equal/is-equal.spec.ts" timestamp="2025-04-19T19:09:26.242Z" hostname="arcadian" tests="10" failures="0" errors="0" skipped="0" time="0.002201875">
+        <testcase classname="src/is-equal/is-equal.spec.ts" name="isEqual &gt; should return true for identical primitive values" time="0.000839375">
+        </testcase>
+        <testcase classname="src/is-equal/is-equal.spec.ts" name="isEqual &gt; should return false for different primitive values" time="0.000101042">
+        </testcase>
+        <testcase classname="src/is-equal/is-equal.spec.ts" name="isEqual &gt; should return true for identical object values" time="0.000061541">
+        </testcase>
+        <testcase classname="src/is-equal/is-equal.spec.ts" name="isEqual &gt; should return false for different object values" time="0.000051167">
+        </testcase>
+        <testcase classname="src/is-equal/is-equal.spec.ts" name="isEqual &gt; should return true for identical nested object values" time="0.000157">
+        </testcase>
+        <testcase classname="src/is-equal/is-equal.spec.ts" name="isEqual &gt; should return false for different nested object values" time="0.000049709">
+        </testcase>
+        <testcase classname="src/is-equal/is-equal.spec.ts" name="isEqual &gt; should return true for identical arrays" time="0.000045417">
+        </testcase>
+        <testcase classname="src/is-equal/is-equal.spec.ts" name="isEqual &gt; should return false for different arrays" time="0.000042208">
+        </testcase>
+        <testcase classname="src/is-equal/is-equal.spec.ts" name="isEqual &gt; should return true for identical nested arrays" time="0.00004725">
+        </testcase>
+        <testcase classname="src/is-equal/is-equal.spec.ts" name="isEqual &gt; should return false for different nested arrays" time="0.00004225">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/offset-date/offset-date.spec.ts" timestamp="2025-04-19T19:09:26.243Z" hostname="arcadian" tests="6" failures="0" errors="0" skipped="0" time="0.002353708">
+        <testcase classname="src/offset-date/offset-date.spec.ts" name="offsetDate &gt; returns the current date when no offset is provided" time="0.00107275">
+        </testcase>
+        <testcase classname="src/offset-date/offset-date.spec.ts" name="offsetDate &gt; returns the correct date when a positive offset is provided" time="0.000093833">
+        </testcase>
+        <testcase classname="src/offset-date/offset-date.spec.ts" name="offsetDate &gt; returns the correct date when a negative offset is provided" time="0.000066959">
+        </testcase>
+        <testcase classname="src/offset-date/offset-date.spec.ts" name="offsetDate &gt; handles year change correctly when offset is positive" time="0.000056833">
+        </testcase>
+        <testcase classname="src/offset-date/offset-date.spec.ts" name="offsetDate &gt; handles year change correctly when offset is negative" time="0.000052292">
+        </testcase>
+        <testcase classname="src/offset-date/offset-date.spec.ts" name="offsetDate &gt; handles leap year correctly" time="0.0000515">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/order-by/order-by.spec.ts" timestamp="2025-04-19T19:09:26.243Z" hostname="arcadian" tests="2" failures="0" errors="0" skipped="0" time="0.002095334">
+        <testcase classname="src/order-by/order-by.spec.ts" name="orderBy &gt; sorts items by multiple keys and orders" time="0.00123625">
+        </testcase>
+        <testcase classname="src/order-by/order-by.spec.ts" name="orderBy &gt; returns an empty array for an empty array input" time="0.000100083">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/random-number/random-number.spec.ts" timestamp="2025-04-19T19:09:26.244Z" hostname="arcadian" tests="5" failures="0" errors="0" skipped="0" time="0.001921458">
+        <testcase classname="src/random-number/random-number.spec.ts" name="randomNumber &gt; returns a number within the specified range" time="0.000816375">
+        </testcase>
+        <testcase classname="src/random-number/random-number.spec.ts" name="randomNumber &gt; returns the start number when start and end are the same" time="0.00016425">
+        </testcase>
+        <testcase classname="src/random-number/random-number.spec.ts" name="randomNumber &gt; handles negative ranges correctly" time="0.000070458">
+        </testcase>
+        <testcase classname="src/random-number/random-number.spec.ts" name="randomNumber &gt; handles ranges that include zero" time="0.00006025">
+        </testcase>
+        <testcase classname="src/random-number/random-number.spec.ts" name="randomNumber &gt; returns a number within a large range" time="0.000057833">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/random-element/random-element.spec.ts" timestamp="2025-04-19T19:09:26.244Z" hostname="arcadian" tests="4" failures="0" errors="0" skipped="0" time="0.002055625">
+        <testcase classname="src/random-element/random-element.spec.ts" name="randomElement &gt; should return an element from the array" time="0.001088708">
+        </testcase>
+        <testcase classname="src/random-element/random-element.spec.ts" name="randomElement &gt; should return undefined for an empty array" time="0.000091917">
+        </testcase>
+        <testcase classname="src/random-element/random-element.spec.ts" name="randomElement &gt; should return the only element for a single-element array" time="0.000104875">
+        </testcase>
+        <testcase classname="src/random-element/random-element.spec.ts" name="randomElement &gt; should handle arrays with different types" time="0.00008325">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/random-word/random-word.spec.ts" timestamp="2025-04-19T19:09:26.244Z" hostname="arcadian" tests="6" failures="0" errors="0" skipped="0" time="0.00495025">
+        <testcase classname="src/random-word/random-word.spec.ts" name="generateRandomWords &gt; returns a string with the default number of words when no arguments are provided" time="0.001971708">
+        </testcase>
+        <testcase classname="src/random-word/random-word.spec.ts" name="generateRandomWords &gt; returns a string with the specified number of words" time="0.000902834">
+        </testcase>
+        <testcase classname="src/random-word/random-word.spec.ts" name="generateRandomWords &gt; returns a string with words from the provided word list" time="0.000636459">
+        </testcase>
+        <testcase classname="src/random-word/random-word.spec.ts" name="generateRandomWords &gt; returns an empty string when count is zero" time="0.000061417">
+        </testcase>
+        <testcase classname="src/random-word/random-word.spec.ts" name="generateRandomWords &gt; handles a word list with a single word correctly" time="0.000053791">
+        </testcase>
+        <testcase classname="src/random-word/random-word.spec.ts" name="generateRandomWords &gt; handles an empty word list by returning an empty string" time="0.000045875">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/range/range.spec.ts" timestamp="2025-04-19T19:09:26.245Z" hostname="arcadian" tests="6" failures="0" errors="0" skipped="0" time="0.003104375">
+        <testcase classname="src/range/range.spec.ts" name="range &gt; returns an array of numbers from start to end with positive step" time="0.001251375">
+        </testcase>
+        <testcase classname="src/range/range.spec.ts" name="range &gt; returns an array of numbers from start to end with negative step" time="0.000118541">
+        </testcase>
+        <testcase classname="src/range/range.spec.ts" name="range &gt; returns an empty array if end is less than start and step is positive" time="0.00016125">
+        </testcase>
+        <testcase classname="src/range/range.spec.ts" name="range &gt; returns an empty array if start is less than end and step is negative" time="0.000057458">
+        </testcase>
+        <testcase classname="src/range/range.spec.ts" name="range &gt; returns an array with one element if start equals end" time="0.00005075">
+        </testcase>
+        <testcase classname="src/range/range.spec.ts" name="range &gt; returns an array from 0 to end if only end is provided" time="0.000062542">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/sort-by/sort-by.spec.ts" timestamp="2025-04-19T19:09:26.246Z" hostname="arcadian" tests="4" failures="0" errors="0" skipped="0" time="0.00223975">
+        <testcase classname="src/sort-by/sort-by.spec.ts" name="sortBy &gt; sorts items by string" time="0.001242875">
+        </testcase>
+        <testcase classname="src/sort-by/sort-by.spec.ts" name="sortBy &gt; sorts items by number using a key getter function" time="0.000136084">
+        </testcase>
+        <testcase classname="src/sort-by/sort-by.spec.ts" name="sortBy &gt; returns an empty array for an empty array input" time="0.0000675">
+        </testcase>
+        <testcase classname="src/sort-by/sort-by.spec.ts" name="sortBy &gt; returns the same array for an array with one item" time="0.00006">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/remove/remove.spec.ts" timestamp="2025-04-19T19:09:26.246Z" hostname="arcadian" tests="4" failures="0" errors="0" skipped="0" time="0.00226675">
+        <testcase classname="src/remove/remove.spec.ts" name="remove &gt; removes items that satisfy the predicate" time="0.001139583">
+        </testcase>
+        <testcase classname="src/remove/remove.spec.ts" name="remove &gt; returns an empty array when no items satisfy the predicate" time="0.000119167">
+        </testcase>
+        <testcase classname="src/remove/remove.spec.ts" name="remove &gt; removes all items when all items satisfy the predicate" time="0.000180208">
+        </testcase>
+        <testcase classname="src/remove/remove.spec.ts" name="remove &gt; does not modify the array when it is empty" time="0.00007475">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/theme/color-theme.spec.ts" timestamp="2025-04-19T19:09:26.246Z" hostname="arcadian" tests="9" failures="0" errors="0" skipped="0" time="0.006645917">
+        <testcase classname="src/theme/color-theme.spec.ts" name="Color Theme &gt; isDarkMode returns true when dark mode is set in localStorage" time="0.00154075">
+        </testcase>
+        <testcase classname="src/theme/color-theme.spec.ts" name="Color Theme &gt; isDarkMode returns false when light mode is set in localStorage" time="0.0001465">
+        </testcase>
+        <testcase classname="src/theme/color-theme.spec.ts" name="Color Theme &gt; isDarkMode returns false when no theme is set in localStorage and system prefers dark mode" time="0.000193">
+        </testcase>
+        <testcase classname="src/theme/color-theme.spec.ts" name="Color Theme &gt; loadTheme loads dark theme from localStorage" time="0.000787708">
+        </testcase>
+        <testcase classname="src/theme/color-theme.spec.ts" name="Color Theme &gt; loadTheme loads light theme from localStorage" time="0.00018175">
+        </testcase>
+        <testcase classname="src/theme/color-theme.spec.ts" name="Color Theme &gt; loadTheme loads dark theme when no theme is set in localStorage and system prefers dark mode" time="0.000100834">
+        </testcase>
+        <testcase classname="src/theme/color-theme.spec.ts" name="Color Theme &gt; toggleTheme toggles to dark theme when light mode is set" time="0.00097225">
+            <system-out>
+🚨 Theme changed [33mtrue[39m
+🚨 Theme changed [33mtrue[39m
+🚨 Theme changed [33mtrue[39m
+
+            </system-out>
+        </testcase>
+        <testcase classname="src/theme/color-theme.spec.ts" name="Color Theme &gt; toggleTheme toggles to light theme when dark mode is set" time="0.000267041">
+            <system-out>
+🚨 Theme changed [33mfalse[39m
+🚨 Theme changed [33mfalse[39m
+🚨 Theme changed [33mfalse[39m
+
+            </system-out>
+        </testcase>
+        <testcase classname="src/theme/color-theme.spec.ts" name="Color Theme &gt; loadTheme adds event listener for theme-changed" time="0.00161825">
+        </testcase>
+    </testsuite>
+</testsuites>

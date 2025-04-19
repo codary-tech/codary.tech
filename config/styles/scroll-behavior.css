@@ -1,5 +1,5 @@
 /* Reference the main CSS file for access to Tailwind utilities */
-@reference "../styles/global.css";
+@reference "./global.css";
 
 /* Modern CSS for scroll behavior
    This can be imported in your Base layout */
@@ -10,6 +10,7 @@
 			opacity: 0;
 			transform: translateY(-100%);
 		}
+
 		to {
 			opacity: 1;
 			transform: translateY(0);
@@ -21,6 +22,7 @@
 			opacity: 1;
 			transform: translateY(0);
 		}
+
 		to {
 			opacity: 0;
 			transform: translateY(-100%);
@@ -33,6 +35,7 @@
 
 	/* This would work with View Transitions API, but we're keeping JS for now
      since this is experimental and needs fallbacks */
+
 	/*
   header {
     view-timeline: --header-timeline block;

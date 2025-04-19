@@ -1,0 +1,54 @@
+{
+	"name": "@codary/utilities",
+	"version": "0.0.1",
+	"description": "A collection of utilities for Lyra",
+	"license": "MIT",
+	"type": "module",
+	"main": "./dist/utilities.js",
+	"module": "./dist/utilities.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"require": "./dist/utilities.js",
+			"import": {
+				"types": "./dist/index.d.ts",
+				"default": "./dist/utilities.js"
+			}
+		}
+	},
+	"files": ["package.json", "dist"],
+	"keywords": ["codary", "utilities"],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/codary-tech/codary.tech.git",
+		"directory": "packages/utilities",
+		"branch": "main"
+	},
+	"bugs": {
+		"url": "https://github.com/codary-tech/codary.tech/issues"
+	},
+	"scripts": {
+		"dev": "vite build -- --watch",
+		"build:types": "tsc --build",
+		"build:vite": "vite build",
+		"build:all": "run-s build:types build:vite",
+		"build": "run-s build:all",
+		"preview": "vite preview",
+		"check": "tsc --noEmit --skipLibCheck",
+		"clean": "rm -rf dist coverage",
+		"test": "vitest --coverage --run",
+		"test:watch": "vitest --watch"
+	},
+	"dependencies": {
+		"gravatar-url": "^4.0.1"
+	},
+	"devDependencies": {
+		"@internationalized/date": "^3.5.6",
+		"@codary/config": "workspace:*",
+		"@codary/tsconfig": "workspace:*",
+		"typescript": "^5.7.2",
+		"vite-plugin-dts": "^4.2.3",
+		"vitest": "^3.0.9"
+	}
+}

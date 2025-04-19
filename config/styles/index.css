@@ -1,0 +1,14 @@
+/**
+ * Main CSS entry point for Codary.tech
+ *
+ * This file imports and re-exports all other CSS files in the project
+ * in the correct cascade order.
+ */
+
+/* Import global styles first (includes Tailwind) */
+@import "./global.css";
+
+/* Import component-specific styles */
+@import "./scroll-behavior.css";
+
+/* Additional CSS imports can be added here */

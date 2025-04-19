@@ -72,7 +72,7 @@ const contentLink = `/${currentLocale}/${type}/${cleanEntityId(id).toLowerCase()
 <style>
   /* Estilos solo para las partes complejas */
   .post-card-animation {
-    animation: toTopFadeIn 0.4s ease forwards;
+    animation: to-top-fade-in 0.4s ease forwards;
     animation-delay: calc(var(--i) * 0.12s);
   }
 
@@ -132,7 +132,7 @@ const contentLink = `/${currentLocale}/${type}/${cleanEntityId(id).toLowerCase()
     }
   }
 
-  @keyframes toTopFadeIn {
+  @keyframes to-top-fade-in {
     0% {
       opacity: 0;
       transform: translateY(20px);
