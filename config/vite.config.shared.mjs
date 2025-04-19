@@ -6,7 +6,6 @@ export const sharedViteConfig = (dirname) => ({
 		alias: {
 			"~": resolve(dirname, "src"),
 			"@": resolve(dirname, "src"),
-			mock: resolve(dirname, "../mock/src/routes"),
 		},
 		mainFields: ["module"],
 	},
