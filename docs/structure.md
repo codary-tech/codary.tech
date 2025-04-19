@@ -223,25 +223,16 @@
 │       │   └───sitemap-index.xml
 │       ├───node_modules/
 │       │   ├───.astro/
-│       │   │   ├───assets/
-│       │   │   │   └───...
 │       │   │   └───data-store.json
 │       │   ├───.bin/
-│       │   │   ├───acorn
 │       │   │   ├───astro
 │       │   │   ├───astro-check
 │       │   │   ├───biome
-│       │   │   ├───browserslist
-│       │   │   ├───jiti
-│       │   │   ├───rollup
 │       │   │   ├───tsc
 │       │   │   ├───tsserver
-│       │   │   ├───vite
 │       │   │   ├───vitest
-│       │   │   ├───workerd
 │       │   │   ├───wrangler
-│       │   │   ├───wrangler2
-│       │   │   └───yaml
+│       │   │   └───wrangler2
 │       │   ├───.vite/
 │       │   │   ├───deps/
 │       │   │   │   └───...
@@ -470,18 +461,10 @@
 │   ├───utilities/
 │   │   ├───node_modules/
 │   │   │   ├───.bin/
-│   │   │   │   ├───jiti
-│   │   │   │   ├───rollup
 │   │   │   │   ├───tsc
 │   │   │   │   ├───tsserver
-│   │   │   │   ├───vite
-│   │   │   │   ├───vitest
-│   │   │   │   └───yaml
-│   │   │   ├───.cache/
-│   │   │   │   └───jiti/
+│   │   │   │   └───vitest
 │   │   │   ├───.vite/
-│   │   │   │   ├───vitest/
-│   │   │   │   │   └───...
 │   │   │   │   └───results.json
 │   │   │   ├───.vite-temp/
 │   │   │   ├───@codary/

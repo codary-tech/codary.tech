@@ -25,10 +25,23 @@ export function isEqual(value: unknown, other: unknown): boolean {
 		return false;
 	}
 
-	// Cast to a more appropriate type than 'any'
+	// Check for arrays first
+	if (Array.isArray(value) && Array.isArray(other)) {
+		if (value.length !== other.length) return false;
+		for (let i = 0; i < value.length; i++) {
+			if (!isEqual(value[i], other[i])) return false;
+		}
+		return true;
+	}
+
+	// Handle Date objects
+	if (value instanceof Date && other instanceof Date) {
+		return value.getTime() === other.getTime();
+	}
+
+	// Cast regular objects
 	const valueRecord = value as Record<string, unknown>;
 	const otherRecord = other as Record<string, unknown>;
-
 	const keysA = Object.keys(valueRecord);
 	const keysB = Object.keys(otherRecord);
 
