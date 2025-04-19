@@ -20,10 +20,24 @@ export function orderBy<T>(
 	keys: (keyof T)[],
 	orders: Order[],
 ): T[] {
+	if (keys.length !== orders.length) {
+		throw new Error("The number of keys must match the number of orders");
+	}
 	return [...array].sort((a, b) => {
 		for (let i = 0; i < keys.length; i++) {
-			if (a[keys[i]] > b[keys[i]]) return orders[i] === "asc" ? 1 : -1;
-			if (a[keys[i]] < b[keys[i]]) return orders[i] === "asc" ? -1 : 1;
+			const aValue = a[keys[i]];
+			const bValue = b[keys[i]];
+
+			// Handle null/undefined values
+			if (aValue === null || aValue === undefined) {
+				return orders[i] === "asc" ? -1 : 1;
+			}
+			if (bValue === null || bValue === undefined) {
+				return orders[i] === "asc" ? 1 : -1;
+			}
+
+			if (aValue > bValue) return orders[i] === "asc" ? 1 : -1;
+			if (aValue < bValue) return orders[i] === "asc" ? -1 : 1;
 		}
 		return 0;
 	});

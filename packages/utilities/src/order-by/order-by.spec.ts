@@ -6,6 +6,8 @@ describe("orderBy", () => {
 			[
 				{ name: "banana", type: "fruit" },
 				{ name: "apple", type: "fruit" },
+				{ name: "carrot", type: "vegetable" },
+				{ name: "broccoli", type: "vegetable" },
 			],
 			["type", "name"],
 			["asc", "desc"],
@@ -13,6 +15,8 @@ describe("orderBy", () => {
 		expect(result).toEqual([
 			{ name: "banana", type: "fruit" },
 			{ name: "apple", type: "fruit" },
+			{ name: "carrot", type: "vegetable" },
+			{ name: "broccoli", type: "vegetable" },
 		]);
 	});
 
