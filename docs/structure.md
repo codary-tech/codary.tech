@@ -140,7 +140,7 @@
 │       │   │   ├───_astro-internal_middleware.mjs
 │       │   │   ├───_noop-actions.mjs
 │       │   │   ├───index.js
-│       │   │   ├───manifest_u8YjV_MS.mjs
+│       │   │   ├───manifest_-MxWjKCR.mjs
 │       │   │   └───renderers.mjs
 │       │   ├───admin/
 │       │   │   └───config.yml
@@ -436,6 +436,13 @@
 │       ├───worker-configuration.d.ts
 │       └───wrangler.jsonc
 ├───config/
+│   ├───node_modules/
+│   │   ├───.bin/
+│   │   │   ├───stylelint
+│   │   │   └───vitest
+│   │   ├───@codary/
+│   │   ├───@codecov/
+│   │   └───@tailwindcss/
 │   ├───styles/
 │   │   ├───global.css
 │   │   ├───index.css
