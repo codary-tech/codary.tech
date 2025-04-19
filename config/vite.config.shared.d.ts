@@ -1,5 +1,5 @@
 import type { UserConfig } from "vite";
 
-declare function sharedViteConfig(
+export declare function sharedViteConfig(
 	dirname: string,
 ): UserConfig | Promise<UserConfig>;
