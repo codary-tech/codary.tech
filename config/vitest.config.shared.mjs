@@ -6,8 +6,8 @@ export const sharedVitestConfig = (dirname) =>
 		test: {
 			// run the tests inside the folder __tests__ and skip the ones .spec.e2e files
 			include: ["**/__tests__/**/*.spec.{ts,js}", "**/*.spec.{ts,js}"],
-			exclude: ["tests/e2e/**/*.spec.e2e.{ts,js}"],
-			testMatch: ["**/__tests__/**/*.spec.{ts,js}"],
+			exclude: ["tests/e2e/**/*..spec.e2e.{ts,js}"],
+			match: ["**/__tests__/**/*..spec.{ts,js}"],
 			coverage: {
 				provider: "v8",
 				enabled: true,
@@ -15,14 +15,13 @@ export const sharedVitestConfig = (dirname) =>
 			},
 			reporters: [
 				"default",
-				"json",
+				["json", { file: "./coverage/json-report.json" }],
 				"verbose",
-				["junit", { suiteName: "UI tests" }],
+				[
+					"junit",
+					{ suiteName: "UI tests", outputFile: "./coverage/junit-report.xml" },
+				],
 			],
-			outputFile: {
-				junit: "./coverage/junit-report.xml",
-				json: "./coverage/json-report.json",
-			},
 		},
 		plugins: [tsconfigPaths()],
 	});
