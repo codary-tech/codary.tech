@@ -11,15 +11,26 @@ export interface ThemeChangedEventDetail {
  * @param {string} darkThemeClass - The class representing the dark theme. Default is 'dark'.
  * @returns {boolean} - Returns true if dark mode is enabled, otherwise returns false. If the theme is not set in localStorage, it will use the system preference.
  */
+/**
+ * Internal helper to check if dark mode should be active
+ * @private
+ */
+const shouldUseDarkMode = (
+	theme: string | null,
+	darkThemeClass: string,
+): boolean => {
+	return (
+		theme === darkThemeClass ||
+		(!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
+	);
+};
+
 export const isDarkMode = (
 	key: string = DEFAULT_KEY,
 	darkThemeClass: string = DARK_THEME,
 ): boolean => {
 	const theme = localStorage.getItem(key);
-	return (
-		theme === darkThemeClass ||
-		(!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
-	);
+	return shouldUseDarkMode(theme, darkThemeClass);
 };
 const themeChanged = "theme-changed";
 
