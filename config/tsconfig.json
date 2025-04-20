@@ -1,0 +1,8 @@
+{
+	"extends": "@codary/tsconfig/tsconfig.node.json",
+	"compilerOptions": {
+		"composite": true,
+		"declaration": true
+	},
+	"exclude": ["node_modules", "dist"]
+}

@@ -44,3 +44,8 @@ Icon
 # wrangler files
 .wrangler
 .dev.vars*
+
+# test coverage reports
+coverage*
+coverage/
+**/coverage/

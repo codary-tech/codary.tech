@@ -69,6 +69,7 @@ export default defineConfig({
 			},
 		}),
 		sitemap({
+			filter: (page) => page !== `${BASE_URL}/admin/`,
 			i18n: {
 				defaultLocale: DEFAULT_LOCALE_SETTING,
 				locales: Object.fromEntries(

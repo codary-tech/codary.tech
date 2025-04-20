@@ -1,0 +1,43 @@
+{
+	"name": "@codary/config",
+	"description": "Codary config",
+	"version": "0.0.1",
+	"type": "module",
+	"license": "MIT",
+	"files": [
+		"stylelint.config.cjs",
+		"styles/**/*",
+		"vite.config.shared.mjs",
+		"vite.config.shared.d.ts",
+		"vitest.config.shared.mjs",
+		"vitest.config.shared.d.ts"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/codary-tech/codary.tech.git",
+		"directory": "config",
+		"branch": "main"
+	},
+	"bugs": {
+		"url": "https://github.com/codary-tech/codary.tech/issues"
+	},
+	"scripts": {
+		"test": "echo No test specified 😎 && exit 0"
+	},
+	"homepage": "codary.tech",
+	"devDependencies": {
+		"@codecov/vite-plugin": "1.2.0",
+		"@codary/tsconfig": "workspace:*",
+		"postcss": "^8.4.49",
+		"stylelint": "^16.10.0",
+		"stylelint-config-standard-scss": "^13.1.0",
+		"stylelint-order": "^6.0.4",
+		"tailwindcss": "^4.0.17",
+		"@tailwindcss/typography": "^0.5.16",
+		"vite-tsconfig-paths": "^5.1.2",
+		"vitest": "^3.0.9"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
+}
