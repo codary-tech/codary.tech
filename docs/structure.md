@@ -68,6 +68,10 @@
 │       │   │   ├───vitest
 │       │   │   ├───wrangler
 │       │   │   └───wrangler2
+│       │   ├───.cache/
+│       │   │   └───jiti/
+│       │   ├───.mf/
+│       │   │   └───cf.json
 │       │   ├───.vite/
 │       │   │   ├───deps/
 │       │   │   │   └───...
