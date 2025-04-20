@@ -22,6 +22,10 @@ export const isDarkMode = (
 	);
 };
 const themeChanged = "theme-changed";
+
+// Define event handler at module level to maintain reference
+let themeChangeHandler: EventListener | null = null;
+
 /**
  * Loads the theme from localStorage and applies it to the document. If the theme is not set in localStorage,
  * it will use the system preference. If the system preference is not set, it will use the light theme.
@@ -49,15 +53,21 @@ export const loadTheme = (
 		localStorage.setItem(key, lightThemeClass);
 	}
 
-	// Listen for theme change events
-	document.addEventListener(themeChanged, ((
-		event: CustomEvent<ThemeChangedEventDetail>,
-	) => {
+	// Remove any existing event listener
+	if (themeChangeHandler) {
+		document.removeEventListener(themeChanged, themeChangeHandler);
+	}
+
+	// Create new event handler and store reference
+	themeChangeHandler = ((event: CustomEvent<ThemeChangedEventDetail>) => {
 		console.log("🚨 Theme changed", event.detail.isDark);
 		const isDark = event.detail.isDark;
 		document.documentElement.classList.toggle(darkThemeClass, isDark);
 		localStorage.setItem(key, isDark ? darkThemeClass : lightThemeClass);
-	}) as EventListener);
+	}) as EventListener;
+
+	// Listen for theme change events
+	document.addEventListener(themeChanged, themeChangeHandler);
 };
 
 /**

@@ -431,6 +431,8 @@
 │   │   ├───.bin/
 │   │   │   ├───stylelint
 │   │   │   └───vitest
+│   │   ├───.cache/
+│   │   │   └───jiti/
 │   │   ├───@codary/
 │   │   ├───@codecov/
 │   │   └───@tailwindcss/
@@ -464,6 +466,8 @@
 │   │   │   │   ├───tsc
 │   │   │   │   ├───tsserver
 │   │   │   │   └───vitest
+│   │   │   ├───.cache/
+│   │   │   │   └───jiti/
 │   │   │   ├───.vite/
 │   │   │   │   └───results.json
 │   │   │   ├───.vite-temp/
