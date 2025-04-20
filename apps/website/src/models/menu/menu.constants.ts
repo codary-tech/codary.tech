@@ -73,4 +73,10 @@ export const navLinks: MenuItem[] = [
 		ariaLabelKey: "footer.aria.privacyPolicy",
 		condition: true,
 	},
+	{
+		href: "/terms-of-use/",
+		translationKey: "footer.termsOfUse",
+		ariaLabelKey: "footer.aria.termsOfUse",
+		condition: true,
+	},
 ];
