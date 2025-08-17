@@ -91,33 +91,5 @@ const socialMediaLinkShare: {
 	</SocialLinks>
 </div>
 
-<script>
-	// Get the button element
-	const copyButton = document.getElementById('copy-url-button');
-	const copyIcon = document.getElementById('copy-icon');
-	const copiedIcon = document.getElementById('copied-icon');
-
-	if (copyButton) {
-		copyButton.addEventListener('click', async () => {
-			// Get the current URL from the page or use the one set in the component
-			const url = window.location.href;
-
-			try {
-				// Copy to clipboard
-				await navigator.clipboard.writeText(url);
-
-				// Hide the copy icon and show the check icon
-				copyIcon?.classList.add('hidden');
-				copiedIcon?.classList.remove('hidden');
-
-				// Reset icons after 2 seconds
-				setTimeout(() => {
-					copyIcon?.classList.remove('hidden');
-					copiedIcon?.classList.add('hidden');
-				}, 2000);
-			} catch (err) {
-				console.error('Failed to copy URL: ', err);
-			}
-		});
-	}
-</script>
+<!-- External copy-to-clipboard script to avoid inline-scripting edge cases during build -->
+<script type="module" src="/scripts/copy-url.js"></script>

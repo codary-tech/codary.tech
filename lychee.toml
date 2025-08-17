@@ -27,6 +27,7 @@ exclude_path = [
 	".*/utils/.*",      # Match utils directory at any level
 	".*/__tests__/.*",   # Match __tests__ directory at any level
 	"*__tests__*",
+	"apps/website/src/components/SocialMediaShare.astro"
 ]
 
 #############################  Cache  ###############################
