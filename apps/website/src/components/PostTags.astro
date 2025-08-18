@@ -1,9 +1,10 @@
 ---
+import type { HTMLAttributes } from "astro/types";
 import { cn } from "@/lib/utils";
 import type { ContentType } from "@/models/post/post.model";
 import type Tag from "@/models/tag/tag.model";
-import type { HTMLAttributes } from "astro/types";
 import PostTag from "./PostTag.astro";
+
 interface Props extends HTMLAttributes<"div"> {
 	tags: Tag[];
 	type: ContentType;

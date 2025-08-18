@@ -1,9 +1,10 @@
 ---
 export const prerender = false;
+
+import { Icon } from "astro-icon/components";
 import SignupForm from "@/components/SignupForm.astro";
 import { type Lang, useTranslatedPath, useTranslations } from "@/i18n";
 import Layout from "@/layouts/Base.astro";
-import { Icon } from "astro-icon/components";
 
 // Check if user is logged in and redirect if needed
 let isLoggedIn = false;

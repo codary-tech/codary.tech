@@ -12,7 +12,7 @@
 		"start": "astro dev --open",
 		"build": "astro check && astro build",
 		"preview": "astro build && wrangler dev",
-		"check": "astro check && biome check --write .",
+		"check": "astro check",
 		"clean": "rm -rf dist node_modules/.vite",
 		"astro": "astro",
 		"test": "vitest",

@@ -1,13 +1,13 @@
 ---
+import type { HTMLAttributes } from "astro/types";
 import { type Lang, useTranslations } from "@/i18n";
 import { cn } from "@/lib/utils";
-import {
-	type SortingStrategy,
-	getSelectionStrategy,
-} from "@/models/article/article-selection.strategy";
 import type Article from "@/models/article/article.model";
+import {
+	getSelectionStrategy,
+	type SortingStrategy,
+} from "@/models/article/article-selection.strategy";
 import { cleanEntityId } from "@/utils/collection.entity";
-import type { HTMLAttributes } from "astro/types";
 import ArticleCard from "./ArticleCard.astro";
 import CtaNewsletterSubscription from "./CtaNewsletterSubscription.astro";
 

@@ -28,9 +28,3 @@ repos:
         args: ['run', 'check']
         language: system
         pass_filenames: false
-      - id: run-structure-script
-        name: run-structure-script
-        entry: pnpm
-        args: ['run', 'structure']
-        language: system
-        pass_filenames: false

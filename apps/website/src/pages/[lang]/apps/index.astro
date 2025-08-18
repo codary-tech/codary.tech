@@ -1,11 +1,12 @@
 ---
-import CtaNewsletterSubscription from "@/components/CtaNewsletterSubscription.astro";
 import AppFilters from "@/components/apps/AppFilters.astro";
 import AppGrid from "@/components/apps/AppGrid.astro";
+import CtaNewsletterSubscription from "@/components/CtaNewsletterSubscription.astro";
 import { type Lang, useTranslations } from "@/i18n";
 import Layout from "@/layouts/General.astro";
 import { getApps } from "@/models/apps";
 import type App from "@/models/apps/app.model";
+
 const { lang } = Astro.params;
 const currentLocale = lang as Lang;
 const t = useTranslations(currentLocale);

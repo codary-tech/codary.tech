@@ -2,10 +2,11 @@
 // Displays a link to the user's system language page
 // if the language being viewed is different
 
-import { LOCALES, type Lang, useTranslations } from "@/i18n";
-import { cn } from "@/lib/utils";
-import { Icon } from "astro-icon/components";
 import type { HTMLAttributes } from "astro/types";
+import { Icon } from "astro-icon/components";
+import { type Lang, LOCALES, useTranslations } from "@/i18n";
+import { cn } from "@/lib/utils";
+
 interface Props extends HTMLAttributes<"div"> {
 	position?: "bottom-left" | "bottom-right" | "top-left" | "top-right";
 }

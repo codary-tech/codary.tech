@@ -1,5 +1,6 @@
 import { describe, test } from "vitest";
 import { range } from "./range";
+
 describe("range", () => {
 	test("returns an array of numbers from start to end with positive step", () => {
 		const result = range(1, 5, 1);

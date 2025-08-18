@@ -1,12 +1,12 @@
-import { generateMockArticle } from "@/utils/test/article.generator.mock";
 import { beforeEach, describe, expect, it } from "vitest";
+import { generateMockArticle } from "@/utils/test/article.generator.mock";
+import type Article from "../article.model";
 import {
+	getSelectionStrategy,
 	NewestSelectionStrategy,
 	PositionSelectionStrategy,
 	RandomSelectionStrategy,
-	getSelectionStrategy,
 } from "../article-selection.strategy";
-import type Article from "../article.model";
 
 describe("ArticleSelectionStrategy", () => {
 	let testArticles: Article[];

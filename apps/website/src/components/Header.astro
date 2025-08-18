@@ -1,4 +1,6 @@
 ---
+import type { HTMLAttributes } from "astro/types";
+import { Icon } from "astro-icon/components";
 import { type Lang, useTranslatedPath, useTranslations } from "@/i18n";
 import { cn } from "@/lib/utils";
 import { checkUserStatusClient } from "@/models/auth/user.service";
@@ -8,15 +10,13 @@ import {
 	filterMenuItems,
 	mainMenuItems,
 } from "@/models/menu";
-import { Icon } from "astro-icon/components";
-import type { HTMLAttributes } from "astro/types";
 import AuthButton from "./AuthButton.astro";
 import IconButton from "./IconButton.astro";
+import LocaleSelect from "./i18n/LocaleSelect.astro";
 import Logo from "./Logo.astro";
 import Navigation from "./Navigation.astro";
 import SearchButton from "./SearchButton.astro";
 import ThemeToggle from "./ThemeToggle.astro";
-import LocaleSelect from "./i18n/LocaleSelect.astro";
 
 const lang = Astro.currentLocale as Lang;
 const t = useTranslations(lang);
@@ -37,138 +37,155 @@ const authInfo: AuthInfo = {
 };
 ---
 
-<header id="header"
- class={cn(
-	"fixed top-0 left-0 w-full z-50 transition-all duration-300 ease-in-out",
-	"border-b border-b-secondary-foreground-light transition-all duration-400 ease-in-out [transition-property:top,background-color,border-bottom-color]",
- )}
- {...attrs}
- >
-    <div class="container mx-auto px-4 flex items-center h-20 relative">
-      <div class="flex items-center mr-10">
-        <IconButton
-          class="md:hidden mr-4"
-          id="mobile-menu-button"
-          aria-label={t("header.menu")}
-        >
-          <Icon name="tabler:menu-2" class="size-6 text-main-light dark:text-main-dark" />
-        </IconButton>
-
-        <Logo />
-      </div>
-      <Navigation
-        mainItems={filteredMainMenuItems}
-        dropdownItems={filteredDropdownMenuItems}
-        authInfo={authInfo}
-      />
-
-      <div class="flex items-center justify-center space-x-4 ml-auto">
-        <SearchButton id="search-button" />
-        <ThemeToggle />
-				<LocaleSelect
-					variant="text"
-					class="hidden md:inline-flex"
+<header
+	id="header"
+	class={cn(
+		"fixed top-0 left-0 w-full z-50 transition-all duration-300 ease-in-out",
+		"border-b border-b-secondary-foreground-light transition-all duration-400 ease-in-out [transition-property:top,background-color,border-bottom-color]",
+	)}
+	{...attrs}
+>
+	<div class="container mx-auto px-4 flex items-center h-20 relative">
+		<div class="flex items-center mr-10">
+			<!-- Mobile menu button disabled for isolation -->
+			<IconButton
+				class="md:hidden mr-4"
+				id="mobile-menu-button"
+				aria-label={t("header.menu")}
+			>
+				<Icon
+					name="tabler:menu-2"
+					class="size-6 text-main-light dark:text-main-dark"
 				/>
+			</IconButton>
 
-        <AuthButton />
-      </div>
-    </div>
+			<Logo />
+		</div>
+		<!-- Re-enabled Navigation for isolation testing -->
+		<Navigation
+			mainItems={filteredMainMenuItems}
+			dropdownItems={filteredDropdownMenuItems}
+			authInfo={authInfo}
+		/>
 
-  </header>
+		<div class="flex items-center justify-center space-x-4 ml-auto">
+			<!-- Re-enabled ThemeToggle and LocaleSelect for testing -->
+			<!-- <SearchButton id="search-button" /> -->
+			<ThemeToggle />
+			<LocaleSelect variant="text" class="hidden md:inline-flex" />
 
-  <style>
-    @reference "../styles/global.css";
+			<!-- Re-enabled AuthButton only for isolation testing -->
+			<AuthButton />
+		</div>
+	</div>
+</header>
 
-    /* Header states */
-    header {
-      background-color: transparent;
-      transform: translateY(0);
-    }
+<style>
+	@reference "../styles/global.css";
 
-    header.scrolled {
-      @apply bg-bg-light dark:bg-bg-dark border-b border-section-border-light/12 dark:border-section-border-dark;
-    }
+	/* Header states */
+	header {
+		background-color: transparent;
+		transform: translateY(0);
+	}
 
-    /* Alternative approach using CSS variables */
-    header.scrolled #site-title,
-    header.scrolled nav a,
-    header.scrolled button:not(.bg-primary-light):not(.bg-primary-dark) {
-      color: var(--colors-main-light);
-    }
+	header.scrolled {
+		@apply bg-bg-light dark:bg-bg-dark border-b border-section-border-light/12 dark:border-section-border-dark;
+	}
 
-    :global(.dark) header.scrolled #site-title,
-    :global(.dark) header.scrolled nav a,
-    :global(.dark) header.scrolled button:not(.bg-primary-light):not(.bg-primary-dark) {
-      color: var(--colors-main-dark);
-    }
+	/* Alternative approach using CSS variables */
+	header.scrolled #site-title,
+	header.scrolled nav a,
+	header.scrolled button:not(.bg-primary-light):not(.bg-primary-dark) {
+		color: var(--colors-main-light);
+	}
 
-    header.scrolled nav a:hover {
-      @apply text-secondary-foreground-light dark:text-secondary-foreground-dark;
-    }
+	:global(.dark) header.scrolled #site-title,
+	:global(.dark) header.scrolled nav a,
+	:global(.dark)
+		header.scrolled
+		button:not(.bg-primary-light):not(.bg-primary-dark) {
+		color: var(--colors-main-dark);
+	}
 
-    header.hide {
-      transform: translateY(-100%);
-    }
-  </style>
+	header.scrolled nav a:hover {
+		@apply text-secondary-foreground-light dark:text-secondary-foreground-dark;
+	}
 
-  <script>
-    import { checkUserStatusClient } from "@/models/auth/user.service";
+	header.hide {
+		transform: translateY(-100%);
+	}
+</style>
 
-    // Handle colored-hero classes for button styling
-    const header = document.getElementById('header');
-    const heroSection = document.querySelector('.hero-section');
+<script>
+	import { checkUserStatusClient } from "@/models/auth/user.service";
 
-    // Check if we're on a page with a colored hero
-    if (heroSection && heroSection.classList.contains('colored-hero')) {
-      document.body.classList.add('colored-hero');
-    }
+	// Handle colored-hero classes for button styling
+	const header = document.getElementById("header");
+	const heroSection = document.querySelector(".hero-section");
 
-    // Header scroll behavior
-    let lastScrollY = 0;
+	// Check if we're on a page with a colored hero
+	if (heroSection && heroSection.classList.contains("colored-hero")) {
+		document.body.classList.add("colored-hero");
+	}
 
-    const handleHeaderVisibility = () => {
-      if (window.scrollY === 0) {
-        header?.classList.remove("hide", "scrolled");
-      } else if (window.scrollY > 50) {
-        if (window.scrollY < lastScrollY) {
-          header?.classList.remove("hide");
-          header?.classList.add("scrolled");
-        } else {
-          header?.classList.add("hide");
-        }
-      }
-      lastScrollY = window.scrollY;
-    };
+	// Header scroll behavior (throttled)
+	let lastScrollY = 0;
+	let ticking = false;
 
-    // Initialize header state
-    handleHeaderVisibility();
+	const handleHeaderVisibility = () => {
+		if (!header) return;
+		if (window.scrollY === 0) {
+			header.classList.remove("hide", "scrolled");
+		} else if (window.scrollY > 50) {
+			if (window.scrollY < lastScrollY) {
+				header.classList.remove("hide");
+				header.classList.add("scrolled");
+			} else {
+				header.classList.add("hide");
+			}
+		}
+		lastScrollY = window.scrollY;
+	};
 
-    // Use passive event listener for better performance
-    window.addEventListener("scroll", handleHeaderVisibility, { passive: true });
+	// Throttle scroll handler to one per animation frame
+	const onScroll = () => {
+		if (!ticking) {
+			ticking = true;
+			requestAnimationFrame(() => {
+				handleHeaderVisibility();
+				ticking = false;
+			});
+		}
+	};
 
-    // Check if user is logged in on client-side using the reusable function
-    async function updateAuthUI() {
-      try {
-        const isLoggedIn = await checkUserStatusClient();
+	// Initialize header state
+	handleHeaderVisibility();
+	window.addEventListener("scroll", onScroll, { passive: true });
 
-        // Update the auth button if needed
-        if (isLoggedIn) {
-          const authLink = document.querySelector('a[href="/signin"]');
-          if (authLink) {
-            authLink.setAttribute('href', '/account');
-            const textSpan = authLink.querySelector('span');
-            if (textSpan) {
-              // Translate based on current language
-              const currentLang = document.documentElement.lang || 'en';
-              textSpan.textContent = currentLang === 'es' ? 'Cuenta' : 'Account';
-            }
-          }
-        }
-      } catch (error) {
-        console.error("Error checking user status:", error);
-      }
-    }
+	// Check if user is logged in on client-side using the reusable function
+	async function updateAuthUI() {
+		try {
+			const isLoggedIn = await checkUserStatusClient();
 
-    // Run on load
-    updateAuthUI();
-  </script>
+			// Update the auth button if needed
+			if (isLoggedIn) {
+				const authLink = document.querySelector('a[href="/signin"]');
+				if (authLink) {
+					authLink.setAttribute("href", "/account");
+					const textSpan = authLink.querySelector("span");
+					if (textSpan) {
+						// Translate based on current language
+						const currentLang = document.documentElement.lang || "en";
+						textSpan.textContent = currentLang === "es" ? "Cuenta" : "Account";
+					}
+				}
+			}
+		} catch (error) {
+			console.error("Error checking user status:", error);
+		}
+	}
+
+	// Run on load
+	updateAuthUI();
+</script>

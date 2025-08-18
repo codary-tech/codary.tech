@@ -1,9 +1,11 @@
 ---
 export const prerender = true;
+
+import Pagefind from "astro-pagefind/components/Search";
 import Logo from "@/components/Logo.astro";
 import { type Lang, localeParams, useTranslations } from "@/i18n";
 import Layout from "@/layouts/General.astro";
-import Pagefind from "astro-pagefind/components/Search";
+
 const t = useTranslations(Astro.currentLocale as Lang);
 export const getStaticPaths = () => localeParams;
 ---

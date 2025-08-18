@@ -1,8 +1,8 @@
 ---
+import type { HTMLAttributes } from "astro/types";
+import { Icon } from "astro-icon/components";
 import { type Lang, useTranslatedPath, useTranslations } from "@/i18n";
 import { cn } from "@/lib/utils";
-import { Icon } from "astro-icon/components";
-import type { HTMLAttributes } from "astro/types";
 
 export interface Props extends HTMLAttributes<"a"> {
 	href: string;

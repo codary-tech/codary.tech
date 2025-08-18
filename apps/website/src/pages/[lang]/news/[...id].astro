@@ -1,5 +1,6 @@
 ---
 export const prerender = true;
+
 import { render } from "astro:content";
 import CtaNewsletterSubscription from "@/components/CtaNewsletterSubscription.astro";
 import OptimizedPicture from "@/components/OptimizedPicture.astro";
@@ -9,6 +10,7 @@ import { type Lang, useTranslations } from "@/i18n";
 import Layout from "@/layouts/Article.astro";
 import { getArticles } from "@/models/article";
 import type Article from "@/models/article/article.model";
+
 const currentLocale = Astro.currentLocale as Lang;
 const t = useTranslations(currentLocale);
 
