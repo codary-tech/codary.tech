@@ -135,17 +135,19 @@ const authInfo: AuthInfo = {
 
 	const handleHeaderVisibility = () => {
 		if (!header) return;
-		if (window.scrollY === 0) {
+		const y = window.scrollY;
+		if (y <= 50) {
+			// Reset when at or above 50px from top
 			header.classList.remove("hide", "scrolled");
-		} else if (window.scrollY > 50) {
-			if (window.scrollY < lastScrollY) {
-				header.classList.remove("hide");
-				header.classList.add("scrolled");
-			} else {
-				header.classList.add("hide");
-			}
+		} else if (y < lastScrollY) {
+			// Scrolling up past 50px
+			header.classList.remove("hide");
+			header.classList.add("scrolled");
+		} else {
+			// Scrolling down past 50px
+			header.classList.add("hide");
 		}
-		lastScrollY = window.scrollY;
+		lastScrollY = y;
 	};
 
 	// Throttle scroll handler to one per animation frame
