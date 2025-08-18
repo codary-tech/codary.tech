@@ -1,7 +1,7 @@
 import type Article from "../article/article.model";
 import type Newsletter from "../newsletter/newsletter.model";
-import type { ContentType } from "./post.model";
 import type Post from "./post.model";
+import type { ContentType } from "./post.model";
 
 // Helper function to detect post type
 export const getPostType = (post: Post): ContentType => {

@@ -1,7 +1,9 @@
 ---
 export const prerender = true;
-import { LOCALES, type Lang, localeParams, useTranslations } from "@/i18n";
+
+import { type Lang, LOCALES, localeParams, useTranslations } from "@/i18n";
 import Layout from "@/layouts/General.astro";
+
 const t = useTranslations(Astro.currentLocale as Lang);
 
 const title = t({

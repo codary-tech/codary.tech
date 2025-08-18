@@ -1,4 +1,6 @@
 export const prerender = true;
+
+import type { APIRoute, GetStaticPaths, GetStaticPathsItem } from "astro";
 import { BRAND_NAME, SITE_TITLE } from "@/consts";
 import { useTranslations } from "@/i18n";
 import { DEFAULT_LOCALE_SETTING, LOCALES_SETTING } from "@/i18n/locales";
@@ -8,7 +10,6 @@ import { getTags } from "@/models/tag";
 import { cleanEntityId } from "@/utils/collection.entity";
 import generateOgImage from "@/utils/open-graph/og.service";
 import type { OgData } from "@/utils/open-graph/og.types";
-import type { APIRoute, GetStaticPaths, GetStaticPathsItem } from "astro";
 
 const STATIC_PATH = [
 	{
@@ -156,7 +157,37 @@ export const GET: APIRoute<OgData & { lang?: string }> = async ({ props }) => {
 			});
 		}
 
-		return new Response(response, {
+		// Normalize response into a BodyInit acceptable by the Response constructor.
+		let body: BodyInit;
+
+		if (typeof Buffer !== "undefined" && Buffer.isBuffer(response)) {
+			// Convert Node Buffer to a plain ArrayBuffer by copying into a new Uint8Array
+			const slice = response.buffer.slice(
+				response.byteOffset,
+				response.byteOffset + response.byteLength,
+			);
+			const copy = new Uint8Array(slice);
+			body = copy.buffer as ArrayBuffer;
+		} else if (
+			typeof ArrayBuffer !== "undefined" &&
+			ArrayBuffer.isView(response)
+		) {
+			const view = response as ArrayBufferView;
+			const byteOffset =
+				"byteOffset" in view ? (view as { byteOffset: number }).byteOffset : 0;
+			// Slice the underlying ArrayBuffer to the view's byte range and copy into a new ArrayBuffer
+			const slice = view.buffer.slice(byteOffset, byteOffset + view.byteLength);
+			const copy = new Uint8Array(slice);
+			body = copy.buffer as ArrayBuffer;
+		} else if (response instanceof ArrayBuffer) {
+			body = response;
+		} else if (typeof response === "string") {
+			body = response;
+		} else {
+			body = String(response);
+		}
+
+		return new Response(body, {
 			status: 200,
 			headers: {
 				"Content-Type": "image/png",

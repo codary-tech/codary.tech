@@ -1,10 +1,10 @@
 ---
+import type { HTMLAttributes } from "astro/types";
+import { Icon } from "astro-icon/components";
 import { type Lang, useTranslatedPath, useTranslations } from "@/i18n";
 import { LOCALES_SETTING } from "@/i18n/locales";
 import { cn } from "@/lib/utils";
 import { checkUserStatusClient } from "@/models/auth/user.service";
-import { Icon } from "astro-icon/components";
-import type { HTMLAttributes } from "astro/types";
 import Link from "./Link.astro";
 
 interface Props extends HTMLAttributes<"a"> {
@@ -105,15 +105,26 @@ const translations = Object.fromEntries(
     }
 
     observeUrlChanges() {
-      // Watch for changes to the URL to update the auth button accordingly
+      // Watch for changes to a sensible root element (prefer <main>), not the whole body.
+      const root = document.querySelector('main') || document.querySelector('body');
+      if (!root) return;
+
+      // Throttle updates to avoid spamming the main thread during heavy DOM churn.
+      let lastRun = 0;
+      const THROTTLE_MS = 250; // limit to ~4 updates per second
+
       const observer = new MutationObserver(() => {
+        const now = Date.now();
+        if (now - lastRun < THROTTLE_MS) return;
+        lastRun = now;
+
         // Only update if already mounted
         if (this.link) {
           this.updateAuthState(this.isLoggedIn);
         }
       });
 
-      observer.observe(document.querySelector('body')!, {
+      observer.observe(root, {
         childList: true,
         subtree: true
       });

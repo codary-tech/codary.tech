@@ -1,11 +1,12 @@
 ---
+import type { HTMLAttributes } from "astro/types";
 import { type Lang, useTranslations } from "@/i18n";
 import { cn } from "@/lib/utils";
 import type Post from "@/models/post/post.model";
-import type { HTMLAttributes } from "astro/types";
 import ByAuthor from "./ByAuthor.astro";
 import FormattedDate from "./FormattedDate.astro";
 import ReadingTime from "./ReadingTime.astro";
+
 interface Props extends HTMLAttributes<"div"> {
 	post: Post;
 	readingTime: string;

@@ -1,8 +1,9 @@
 ---
 export const prerender = true;
+
 import PageHeadline from "@/components/PageHeadline.astro";
 import PostsList from "@/components/PostsList.astro";
-import { LOCALES, type Lang, useTranslations } from "@/i18n";
+import { type Lang, LOCALES, useTranslations } from "@/i18n";
 import Layout from "@/layouts/General.astro";
 import { getNewsletters } from "@/models/newsletter";
 import type Tag from "@/models/tag/tag.model";

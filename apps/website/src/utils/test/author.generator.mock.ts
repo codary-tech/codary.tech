@@ -1,6 +1,6 @@
+import { faker } from "@faker-js/faker";
 import type Author from "@/models/author/author.model";
 import type { Social } from "@/models/author/author.model";
-import { faker } from "@faker-js/faker";
 
 /**
  * Generates a mock social media profile

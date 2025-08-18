@@ -4,6 +4,7 @@ import type Post from "@/models/post/post.model";
 import type { ContentType } from "@/models/post/post.model";
 import { cleanEntityId } from "@/utils/collection.entity";
 import ByAuthor from "./ByAuthor.astro";
+
 const currentLocale = Astro.currentLocale as Lang;
 const t = useTranslations(currentLocale);
 interface Props extends Post {

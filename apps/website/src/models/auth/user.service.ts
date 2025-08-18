@@ -17,7 +17,7 @@ export async function getUser(): Promise<UserAPIResponse> {
 
 		const data = await response.json<UserAPIResponse>();
 		return data;
-	} catch (error) {
+	} catch (_error) {
 		return {
 			isLoggedIn: false,
 			user: null,

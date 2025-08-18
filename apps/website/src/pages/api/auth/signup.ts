@@ -1,6 +1,6 @@
+import type { APIRoute } from "astro";
 import { supabase } from "@/lib/supabase";
 import { signInWithMagicLink } from "@/lib/supabase.helper";
-import type { APIRoute } from "astro";
 
 interface SignupRequest {
 	name?: string;

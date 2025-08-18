@@ -1,17 +1,17 @@
 ---
+import type { HTMLAttributes } from "astro/types";
+import { Icon } from "astro-icon/components";
 import { type Lang, useTranslatedPath, useTranslations } from "@/i18n";
 import { cn } from "@/lib/utils";
 import type { AuthInfo, MenuItem } from "@/models/menu";
-import { Icon } from "astro-icon/components";
-import type { HTMLAttributes } from "astro/types";
 import AuthButton from "./AuthButton.astro";
 import DotMenuIcon from "./DotMenuIcon.astro";
 import IconButton from "./IconButton.astro";
+import LocaleSelect from "./i18n/LocaleSelect.astro";
 import Logo from "./Logo.astro";
 import SearchButton from "./SearchButton.astro";
 import SubscriptionForm from "./SubscriptionForm.astro";
 import ThemeToggle from "./ThemeToggle.astro";
-import LocaleSelect from "./i18n/LocaleSelect.astro";
 
 export interface Props extends HTMLAttributes<"nav"> {
 	mainItems: MenuItem[];

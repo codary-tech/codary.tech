@@ -17,8 +17,14 @@
 			}
 		}
 	},
-	"files": ["package.json", "dist"],
-	"keywords": ["codary", "utilities"],
+	"files": [
+		"package.json",
+		"dist"
+	],
+	"keywords": [
+		"codary",
+		"utilities"
+	],
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/codary-tech/codary.tech.git",

@@ -1,11 +1,10 @@
+import type { APIRoute } from "astro";
 import { supabase } from "@/lib/supabase";
 import type {
 	GetUserResponse,
 	UserAPIErrorResponse,
 	UserAPISuccessResponse,
 } from "@/models/auth/user.api.response";
-
-import type { APIRoute } from "astro";
 
 export const GET: APIRoute = async ({ request }) => {
 	try {
@@ -42,7 +41,7 @@ export const GET: APIRoute = async ({ request }) => {
 			status: 200,
 			headers: { "Content-Type": "application/json" },
 		});
-	} catch (error) {
+	} catch (_error) {
 		const response: UserAPIErrorResponse = {
 			error: "Internal server error",
 			isLoggedIn: false,

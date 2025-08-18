@@ -1,17 +1,14 @@
+import cloudflare from "@astrojs/cloudflare";
 import mdx from "@astrojs/mdx";
+import partytown from "@astrojs/partytown";
 import sitemap from "@astrojs/sitemap";
+import tailwindcss from "@tailwindcss/vite";
+import { defineConfig, envField, passthroughImageService } from "astro/config";
 import icon from "astro-icon";
 import pagefind from "astro-pagefind";
-import { defineConfig, envField, passthroughImageService } from "astro/config";
-import { DEFAULT_LOCALE_SETTING, LOCALES_SETTING } from "./src/i18n/locales";
-
-import tailwindcss from "@tailwindcss/vite";
-
-import cloudflare from "@astrojs/cloudflare";
 import { BASE_URL } from "./src/consts.ts";
+import { DEFAULT_LOCALE_SETTING, LOCALES_SETTING } from "./src/i18n/locales";
 import { remarkReadingTime } from "./src/utils/remark-reading-time.mjs";
-
-import partytown from "@astrojs/partytown";
 
 // https://astro.build/config
 export default defineConfig({

@@ -1,44 +1,81 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.1.2/schema.json",
 	"vcs": {
-		"enabled": false,
+		"enabled": true,
 		"clientKind": "git",
-		"useIgnoreFile": false
+		"useIgnoreFile": true
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"ignore": [
-			"node_modules",
-			"coverage",
-			".astro",
-			".cache",
-			".git",
-			".pnpm",
-			".yarn",
-			"dist",
-			"out",
-			"public",
-			".vscode",
-			"src/styles/global.css",
-			"worker-configuration.d.ts"
+		"includes": [
+			"**",
+			"!**/node_modules",
+			"!**/coverage",
+			"!**/.astro",
+			"!**/.cache",
+			"!**/.git",
+			"!**/.vscode",
+			"!**/.idea",
+			"!**/.pnpm",
+			"!**/.yarn",
+			"!**/dist",
+			"!**/out",
+			"!**/public/**/*.{png,jpg,jpeg,gif,webp,svg,ico,woff,woff2,ttf,eot,otf,avif,mp4,webm,ogg,mov}",
+			"!**/public/**/*.min.*",
+			"!**/public/**/fonts/**",
+			"!**/public/**/images/**",
+			"!**/public/**/assets/**",
+			"public/scripts/**",
+			"!**/.vscode",
+			"!**/src/styles/global.css",
+			"!**/worker-configuration.d.ts",
+			"!**/components/ui",
+			"!**/components.d.ts"
 		]
 	},
 	"formatter": {
 		"enabled": true,
 		"indentStyle": "tab"
 	},
-	"organizeImports": {
-		"enabled": true
-	},
+	"assist": { "actions": { "source": { "organizeImports": "on" } } },
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": true
+			"recommended": true,
+			"style": {
+				"noParameterAssign": "error",
+				"useAsConstAssertion": "error",
+				"useDefaultParameterLast": "error",
+				"useEnumInitializers": "error",
+				"useSelfClosingElements": "error",
+				"useSingleVarDeclarator": "error",
+				"noUnusedTemplateLiteral": "error",
+				"useNumberNamespace": "error",
+				"noInferrableTypes": "error",
+				"noUselessElse": "error"
+			}
 		}
 	},
 	"javascript": {
 		"formatter": {
 			"quoteStyle": "double"
 		}
-	}
+	},
+	"overrides": [
+		{
+			"includes": ["**/*.svelte", "**/*.astro", "**/*.vue"],
+			"linter": {
+				"rules": {
+					"style": {
+						"useConst": "off",
+						"useImportType": "off"
+					},
+					"correctness": {
+						"noUnusedVariables": "off",
+						"noUnusedImports": "off"
+					}
+				}
+			}
+		}
+	]
 }

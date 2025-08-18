@@ -1,5 +1,5 @@
-import { supabase } from "@/lib/supabase";
 import type { APIRoute } from "astro";
+import { supabase } from "@/lib/supabase";
 
 // Define the shape of the expected request body
 interface RefreshAvatarRequest {

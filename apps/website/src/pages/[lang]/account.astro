@@ -1,10 +1,10 @@
 ---
+import { Icon } from "astro-icon/components";
 import { type Lang, useTranslatedPath, useTranslations } from "@/i18n";
 import Layout from "@/layouts/Base.astro";
 import { supabase } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
 import { getGravatarUrl } from "@/utils/gravatar.service";
-import { Icon } from "astro-icon/components";
 
 const currentLanguage = Astro.currentLocale as Lang;
 const t = useTranslations(currentLanguage);

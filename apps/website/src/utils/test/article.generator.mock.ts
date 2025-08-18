@@ -1,5 +1,5 @@
-import type Article from "@/models/article/article.model";
 import { faker } from "@faker-js/faker";
+import type Article from "@/models/article/article.model";
 import { generateMockAuthor } from "./author.generator.mock";
 import { generateMockCategory } from "./category.generator.mock";
 import { generateMockImage } from "./image.generator.mock";

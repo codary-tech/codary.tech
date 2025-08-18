@@ -1,5 +1,5 @@
-import type Category from "@/models/category/category.model";
 import { faker } from "@faker-js/faker";
+import type Category from "@/models/category/category.model";
 
 /**
  * Generates a single mock category with random data
