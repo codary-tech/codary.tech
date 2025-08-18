@@ -163,29 +163,23 @@ const authInfo: AuthInfo = {
 	handleHeaderVisibility();
 	window.addEventListener("scroll", onScroll, { passive: true });
 
-	// Check if user is logged in on client-side using the reusable function
-	async function updateAuthUI() {
+	// Check if user is logged in on client-side and notify other components.
+	// We dispatch a CustomEvent so that `AuthButton` (or any other listener)
+	// can react and update its UI. Do not manipulate DOM for AuthButton here.
+	async function notifyAuthStateChange() {
 		try {
 			const isLoggedIn = await checkUserStatusClient();
 
-			// Update the auth button if needed
-			if (isLoggedIn) {
-				const authLink = document.querySelector('a[href="/signin"]');
-				if (authLink) {
-					authLink.setAttribute("href", "/account");
-					const textSpan = authLink.querySelector("span");
-					if (textSpan) {
-						// Translate based on current language
-						const currentLang = document.documentElement.lang || "en";
-						textSpan.textContent = currentLang === "es" ? "Cuenta" : "Account";
-					}
-				}
-			}
+			// Dispatch a neutral event that components can listen for.
+			const ev = new CustomEvent("authStateChange", {
+				detail: { isLoggedIn },
+			});
+			document.dispatchEvent(ev);
 		} catch (error) {
 			console.error("Error checking user status:", error);
 		}
 	}
 
 	// Run on load
-	updateAuthUI();
+	notifyAuthStateChange();
 </script>
