@@ -1,6 +1,6 @@
+import type { APIRoute } from "astro";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/consts";
 import { supabase } from "@/lib/supabase";
-import type { APIRoute } from "astro";
 
 export const GET: APIRoute = async ({ cookies, redirect }) => {
 	try {

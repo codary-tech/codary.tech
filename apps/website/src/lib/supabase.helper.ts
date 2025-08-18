@@ -1,6 +1,6 @@
+import type { AuthOtpResponse } from "@supabase/supabase-js";
 import { BASE_URL } from "@/consts";
 import { supabase } from "@/lib/supabase";
-import type { AuthOtpResponse } from "@supabase/supabase-js";
 
 /**
  * Signs in a user with a magic link sent to their email.

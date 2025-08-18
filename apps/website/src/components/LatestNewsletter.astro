@@ -2,6 +2,7 @@
 import { type Lang, useTranslations } from "@/i18n";
 import { getNewsletters } from "@/models/newsletter";
 import LatestPosts from "./LatestPosts.astro";
+
 const currentLanguage = Astro.currentLocale as Lang;
 const t = useTranslations(currentLanguage);
 

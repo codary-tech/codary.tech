@@ -1,5 +1,5 @@
-import { signInWithMagicLink } from "@/lib/supabase.helper";
 import type { APIRoute } from "astro";
+import { signInWithMagicLink } from "@/lib/supabase.helper";
 
 interface SubscribeRequest {
 	email?: string;

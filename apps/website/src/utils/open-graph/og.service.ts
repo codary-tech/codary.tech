@@ -1,9 +1,9 @@
 import { readFile } from "node:fs/promises";
+import satori, { type SatoriOptions } from "satori";
+import sharp from "sharp";
 import { SITE_TITLE } from "@/consts";
 import { retrieveLocalizedString } from "@/i18n";
 import { DEFAULT_LOCALE_SETTING } from "@/i18n/locales";
-import satori, { type SatoriOptions } from "satori";
-import sharp from "sharp";
 import { Template } from "./og.template";
 
 const siteTitle = retrieveLocalizedString(SITE_TITLE);

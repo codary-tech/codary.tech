@@ -1,9 +1,10 @@
 ---
 export const prerender = true;
+
 import GridContainer from "@/components/GridContainer.astro";
 import PageHeadline from "@/components/PageHeadline.astro";
 import Pagination from "@/components/Pagination.astro";
-import { LOCALES, type Lang, useTranslations } from "@/i18n";
+import { type Lang, LOCALES, useTranslations } from "@/i18n";
 import Layout from "@/layouts/General.astro";
 import { getArticles } from "@/models/article";
 import type Tag from "@/models/tag/tag.model";

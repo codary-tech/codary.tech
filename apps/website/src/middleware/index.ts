@@ -1,6 +1,6 @@
 import { defineMiddleware } from "astro:middleware";
-import { supabase } from "@/lib/supabase";
 import micromatch from "micromatch";
+import { supabase } from "@/lib/supabase";
 
 // Define routes with precise patterns
 const protectedWebRoutes = [

@@ -1,10 +1,12 @@
 ---
 export const prerender = true;
+
 import Hero from "@/components/Hero.astro";
 import LatestNewsletter from "@/components/LatestNewsletter.astro";
 import LatestPosts from "@/components/LatestPosts.astro";
-import { LOCALES, type Lang, useTranslations } from "@/i18n";
+import { type Lang, LOCALES, useTranslations } from "@/i18n";
 import Layout from "@/layouts/General.astro";
+
 const t = useTranslations(Astro.currentLocale as Lang);
 
 export const getStaticPaths = () =>

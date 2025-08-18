@@ -1,5 +1,5 @@
-import type Tag from "@/models/tag/tag.model";
 import { faker } from "@faker-js/faker";
+import type Tag from "@/models/tag/tag.model";
 
 /**
  * Generates a single mock tag with random data

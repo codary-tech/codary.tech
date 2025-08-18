@@ -1,5 +1,5 @@
-import { supabase } from "@/lib/supabase";
 import type { APIRoute } from "astro";
+import { supabase } from "@/lib/supabase";
 
 export const GET: APIRoute = async ({ request, redirect }) => {
 	const requestUrl = new URL(request.url);
