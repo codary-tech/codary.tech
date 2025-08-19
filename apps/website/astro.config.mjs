@@ -18,6 +18,19 @@ export default defineConfig({
 	adapter: cloudflare({
 		platformProxy: {
 			enabled: true,
+			configPath: "wrangler.jsonc", // Explicitly specify your config file
+			persist: true, // Enable local binding persistence for development
+		},
+		imageService: "cloudflare", // Use Cloudflare's image optimization service
+		routes: {
+			extend: {
+				// Exclude static assets from server function for better performance
+				exclude: [
+					{ pattern: "/fonts/*" },
+					{ pattern: "/images/*" },
+					{ pattern: "/_astro/*" },
+				],
+			},
 		},
 	}),
 	i18n: {
