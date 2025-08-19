@@ -3,7 +3,7 @@ import mdx from "@astrojs/mdx";
 import partytown from "@astrojs/partytown";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
-import { defineConfig, envField } from "astro/config";
+import { defineConfig, envField, passthroughImageService } from "astro/config";
 import icon from "astro-icon";
 import pagefind from "astro-pagefind";
 import { BASE_URL } from "./src/consts.ts";
@@ -21,15 +21,16 @@ export default defineConfig({
 			configPath: "wrangler.jsonc", // Explicitly specify your config file
 			persist: true, // Enable local binding persistence for development
 		},
-		imageService: "cloudflare", // Use Cloudflare's image optimization service
+		// Use passthrough image service when Cloudflare Images is not configured.
+		// This prevents runtime sharp processing on the edge and avoids
+		// image-service related errors when deploying to Workers.
+		imageService: passthroughImageService(),
 		routes: {
 			extend: {
-				// Exclude static assets from server function for better performance
-				exclude: [
-					{ pattern: "/fonts/*" },
-					{ pattern: "/images/*" },
-					{ pattern: "/_astro/*" },
-				],
+				// Exclude a few static patterns but DO NOT exclude /_astro/*
+				// because those are the generated optimized assets that must
+				// remain available as static files for the ASSETS binding.
+				exclude: [{ pattern: "/fonts/*" }, { pattern: "/images/*" }],
 			},
 		},
 	}),
