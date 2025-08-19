@@ -1,7 +1,7 @@
 {
 	"name": "Grafana",
 	"description": "Open and composable observability and data visualization platform for all your metrics",
-	"icon": "/src/assets/images/Grafana.png",
+	"icon": "src/assets/images/Grafana.avif",
 	"url": "https://grafana.com/",
 	"repository": {
 		"url": "https://github.com/grafana/grafana",

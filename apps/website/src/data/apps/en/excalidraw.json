@@ -1,7 +1,7 @@
 {
 	"name": "Excalidraw",
 	"description": "Virtual whiteboard for sketching hand-drawn like diagrams",
-	"icon": "/src/assets/images/Excalidraw.png",
+	"icon": "src/assets/images/Excalidraw.avif",
 	"url": "https://excalidraw.com/",
 	"repository": {
 		"url": "https://github.com/excalidraw/excalidraw",

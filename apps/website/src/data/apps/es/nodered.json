@@ -1,7 +1,7 @@
 {
 	"name": "Node-RED",
 	"description": "Programación de bajo código para aplicaciones basadas en eventos con un editor de flujos basado en navegador",
-	"icon": "/src/assets/images/NodeRED.png",
+	"icon": "src/assets/images/NodeRED.avif",
 	"url": "https://nodered.org/",
 	"repository": {
 		"url": "https://github.com/node-red/node-red",

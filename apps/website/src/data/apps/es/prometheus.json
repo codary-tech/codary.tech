@@ -1,7 +1,7 @@
 {
 	"name": "Prometheus",
 	"description": "Kit de herramientas de código abierto para monitoreo y alertas de sistemas, diseñado para confiabilidad y escalabilidad",
-	"icon": "/src/assets/images/Prometheus.png",
+	"icon": "src/assets/images/Prometheus.avif",
 	"url": "https://prometheus.io/",
 	"repository": {
 		"url": "https://github.com/prometheus/prometheus",

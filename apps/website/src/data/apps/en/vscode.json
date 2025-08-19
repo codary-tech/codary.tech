@@ -1,7 +1,7 @@
 {
 	"name": "VS Code",
 	"description": "Lightweight but powerful source code editor with support for thousands of extensions",
-	"icon": "/src/assets/images/VSCode.png",
+	"icon": "src/assets/images/VSCode.avif",
 	"url": "https://code.visualstudio.com/",
 	"repository": {
 		"url": "https://github.com/microsoft/vscode",

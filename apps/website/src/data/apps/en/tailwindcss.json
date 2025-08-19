@@ -1,7 +1,7 @@
 {
 	"name": "Tailwind CSS",
 	"description": "Utility-first CSS framework for rapidly building custom user interfaces",
-	"icon": "/src/assets/images/TailwindCSS.png",
+	"icon": "src/assets/images/TailwindCSS.avif",
 	"url": "https://tailwindcss.com/",
 	"repository": {
 		"url": "https://github.com/tailwindlabs/tailwindcss",

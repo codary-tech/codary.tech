@@ -1,7 +1,7 @@
 {
 	"name": "Docker",
 	"description": "Plataforma para desarrollar, enviar y ejecutar aplicaciones en contenedores",
-	"icon": "/src/assets/images/Docker.png",
+	"icon": "src/assets/images/Docker.avif",
 	"url": "https://www.docker.com/",
 	"repository": {
 		"url": "https://github.com/moby/moby",

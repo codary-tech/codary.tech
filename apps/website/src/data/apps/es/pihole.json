@@ -1,7 +1,7 @@
 {
 	"name": "Pi-hole",
 	"description": "Aplicación de bloqueo de anuncios y rastreadores a nivel de red que actúa como un sumidero de DNS",
-	"icon": "/src/assets/images/Pihole.png",
+	"icon": "src/assets/images/Pihole.avif",
 	"url": "https://pi-hole.net/",
 	"repository": {
 		"url": "https://github.com/pi-hole/pi-hole",

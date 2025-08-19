@@ -1,7 +1,7 @@
 {
 	"name": "Prometheus",
 	"description": "Open-source systems monitoring and alerting toolkit built for reliability and scalability",
-	"icon": "/src/assets/images/Prometheus.png",
+	"icon": "src/assets/images/Prometheus.avif",
 	"url": "https://prometheus.io/",
 	"repository": {
 		"url": "https://github.com/prometheus/prometheus",
