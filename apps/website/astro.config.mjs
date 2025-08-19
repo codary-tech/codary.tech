@@ -3,7 +3,7 @@ import mdx from "@astrojs/mdx";
 import partytown from "@astrojs/partytown";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
-import { defineConfig, envField, passthroughImageService } from "astro/config";
+import { defineConfig, envField } from "astro/config";
 import icon from "astro-icon";
 import pagefind from "astro-pagefind";
 import { BASE_URL } from "./src/consts.ts";
@@ -47,7 +47,6 @@ export default defineConfig({
 	},
 
 	image: {
-		service: passthroughImageService(),
 		remotePatterns: [
 			{
 				protocol: "https",

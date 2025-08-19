@@ -49,3 +49,6 @@ Icon
 coverage*
 coverage/
 **/coverage/
+
+# MCPs
+.playwright-mcp
