@@ -1,0 +1,62 @@
+name: Rebuild Blog from Notion
+
+# This workflow rebuilds the blog when Notion content changes
+# It can be triggered manually or scheduled to run periodically
+
+on:
+  # Run every hour to check for new Notion content
+  schedule:
+    - cron: "0 * * * *"
+  
+  # Allow manual triggers from the Actions tab
+  workflow_dispatch:
+
+  # Can also be triggered by a webhook from Notion (requires additional setup)
+  repository_dispatch:
+    types: [notion-content-updated]
+
+jobs:
+  rebuild-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Enable pnpm
+        run: corepack enable pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build website
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          AHREFS_KEY: ${{ secrets.AHREFS_KEY }}
+        run: pnpm build
+
+      - name: Deploy to Cloudflare Pages
+        run: pnpm deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+  notify:
+    needs: rebuild-and-deploy
+    runs-on: ubuntu-latest
+    if: failure()
+    
+    steps:
+      - name: Send notification on failure
+        run: |
+          echo "Build failed! Check the logs for details."
+          # Add your notification logic here (Slack, Discord, Email, etc.)

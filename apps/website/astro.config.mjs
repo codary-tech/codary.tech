@@ -57,6 +57,16 @@ export default defineConfig({
 				context: "server",
 				access: "secret",
 			}),
+			NOTION_TOKEN: envField.string({
+				context: "server",
+				access: "secret",
+				optional: true,
+			}),
+			NOTION_DATABASE_ID: envField.string({
+				context: "server",
+				access: "secret",
+				optional: true,
+			}),
 		},
 	},
 
