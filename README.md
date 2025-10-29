@@ -54,6 +54,7 @@ Este proyecto es el sitio web de **Codary.tech**. Basado en Astro, aprovecha lo 
 - **Código Modular:** Organización por componentes y layouts que facilitan el desarrollo y la ampliación.
 - **Soporte Multilenguaje:** Utiliza tecnologías como TypeScript, JavaScript, CSS y MDX para una experiencia de desarrollo moderna.
 - **Despliegue Sencillo:** Genera una carpeta de producción (`./dist`) lista para desplegar en servicios como Netlify, Vercel o GitHub Pages.
+- **Integración con Notion CMS:** Gestiona contenido del blog directamente desde Notion con sincronización automática en build time. [Ver documentación completa](docs/NOTION_CMS_INTEGRATION.md)
 
 ## Tecnologías Utilizadas
 
@@ -199,6 +200,21 @@ Desde la raíz del proyecto, utiliza los siguientes comandos:
   ```bash
   pnpm astro --help
   ```
+
+### Configuración de Notion CMS (Opcional)
+
+Para usar Notion como CMS para el blog:
+
+1. Crea una integración en [Notion Developer Portal](https://www.notion.so/my-integrations)
+2. Crea una base de datos de blog en Notion con las propiedades requeridas
+3. Añade las variables de entorno al archivo `.env`:
+   ```env
+   NOTION_TOKEN=tu_token_de_integracion
+   NOTION_DATABASE_ID=tu_id_de_base_de_datos
+   ```
+4. Visita `/en/blog` para ver tus posts de Notion renderizados
+
+📚 **Documentación completa:** [NOTION_CMS_INTEGRATION.md](docs/NOTION_CMS_INTEGRATION.md)
 
 ## Despliegue
 

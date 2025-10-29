@@ -2,11 +2,18 @@
 export const prerender = true;
 
 import { getCollection } from "astro:content";
-import { type Lang, useTranslations } from "@/i18n";
+import { type Lang, LOCALES, useTranslations } from "@/i18n";
 import Layout from "@/layouts/General.astro";
 
-const currentLocale = Astro.currentLocale as Lang;
+const { lang } = Astro.params;
+const currentLocale = lang as Lang;
 const t = useTranslations(currentLocale);
+
+// Generate static paths for all supported languages
+export const getStaticPaths = () =>
+	Object.keys(LOCALES).map((lang) => ({
+		params: { lang },
+	}));
 
 // Get all blog posts from Notion
 const blogPosts = await getCollection("blog");

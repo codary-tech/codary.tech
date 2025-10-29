@@ -2,10 +2,11 @@
 export const prerender = true;
 
 import { getCollection } from "astro:content";
-import { type Lang, useTranslations } from "@/i18n";
+import { type Lang, LOCALES, useTranslations } from "@/i18n";
 import Layout from "@/layouts/General.astro";
 
-const currentLocale = Astro.currentLocale as Lang;
+const { lang } = Astro.params;
+const currentLocale = lang as Lang;
 const t = useTranslations(currentLocale);
 
 interface Props {
@@ -15,17 +16,20 @@ interface Props {
 export async function getStaticPaths() {
 	const posts = await getCollection("blog");
 
-	return posts.map((post) => ({
-		params: { lang: "en", slug: post.id },
-		props: { slug: post.id },
-	}));
+	// Generate paths for all languages and all blog posts
+	return Object.keys(LOCALES).flatMap((lang) =>
+		posts.map((post) => ({
+			params: { lang, slug: post.id },
+			props: { slug: post.id },
+		}))
+	);
 }
 
-const { slug } = Astro.props;
+const { slug: propSlug } = Astro.props;
 
 // Get all blog posts to find the current one
 const posts = await getCollection("blog");
-const post = posts.find((p) => p.id === slug);
+const post = posts.find((p) => p.id === propSlug);
 
 if (!post) {
 	return Astro.redirect("/404");
