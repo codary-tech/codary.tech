@@ -6,6 +6,12 @@ import { type Lang, LOCALES, useTranslations } from "@/i18n";
 import Layout from "@/layouts/General.astro";
 
 const { lang } = Astro.params;
+
+// Validate that lang is a supported locale
+if (!lang || !Object.keys(LOCALES).includes(lang)) {
+	return Astro.redirect("/404");
+}
+
 const currentLocale = lang as Lang;
 const t = useTranslations(currentLocale);
 
