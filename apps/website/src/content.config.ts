@@ -8,6 +8,8 @@ import { glob } from "astro/loaders";
 import { githubReposLoader } from "./lib/loaders/github";
 import { getGitHubRepoUrlsFromApps } from "./lib/loaders/github/helper";
 import { RepoSchema } from "./lib/loaders/github/schema";
+import { notionLoader } from "./lib/loaders/notion";
+import { NotionBlogPostSchema } from "./lib/loaders/notion/schema";
 
 const articles = defineCollection({
 	loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: "./src/data/articles" }),
@@ -105,6 +107,20 @@ const repositories = defineCollection({
 	}),
 });
 
+// Blog collection using Notion as CMS
+// Only loaded if NOTION_TOKEN and NOTION_DATABASE_ID are configured
+const blog = defineCollection({
+	loader:
+		import.meta.env.NOTION_TOKEN && import.meta.env.NOTION_DATABASE_ID
+			? notionLoader({
+					auth: import.meta.env.NOTION_TOKEN,
+					databaseId: import.meta.env.NOTION_DATABASE_ID,
+				})
+			: // Use an empty glob loader when Notion is not configured
+				glob({ pattern: "**/_no_posts_*.json", base: "./src/data" }),
+	schema: NotionBlogPostSchema,
+});
+
 export const collections = {
 	articles,
 	tags,
@@ -113,4 +129,5 @@ export const collections = {
 	newsletter,
 	apps,
 	repositories,
+	blog,
 };

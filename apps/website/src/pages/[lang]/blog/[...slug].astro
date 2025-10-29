@@ -1,0 +1,107 @@
+---
+export const prerender = true;
+
+import { getCollection } from "astro:content";
+import { type Lang, useTranslations } from "@/i18n";
+import Layout from "@/layouts/General.astro";
+
+const currentLocale = Astro.currentLocale as Lang;
+const t = useTranslations(currentLocale);
+
+interface Props {
+	slug: string;
+}
+
+export async function getStaticPaths() {
+	const posts = await getCollection("blog");
+
+	return posts.map((post) => ({
+		params: { lang: "en", slug: post.id },
+		props: { slug: post.id },
+	}));
+}
+
+const { slug } = Astro.props;
+
+// Get all blog posts to find the current one
+const posts = await getCollection("blog");
+const post = posts.find((p) => p.id === slug);
+
+if (!post) {
+	return Astro.redirect("/404");
+}
+
+const { data } = post;
+---
+
+<Layout
+	title={data.title}
+	description={data.excerpt || data.title}
+>
+	<article class="container mx-auto px-4 py-12">
+		<header class="mb-8">
+			<h1 class="text-4xl md:text-5xl font-bold mb-4">
+				{data.title}
+			</h1>
+
+			<div class="flex items-center gap-4 text-muted-foreground mb-6">
+				<time datetime={data.date}>
+					{new Date(data.date).toLocaleDateString(currentLocale, {
+						year: "numeric",
+						month: "long",
+						day: "numeric",
+					})}
+				</time>
+			</div>
+
+			{data.tags && data.tags.length > 0 && (
+				<div class="flex gap-2 flex-wrap mb-6">
+					{data.tags.map((tag) => (
+						<span class="px-3 py-1 bg-secondary text-secondary-foreground rounded-full text-sm">
+							{tag}
+						</span>
+					))}
+				</div>
+			)}
+
+			{data.cover && (
+				<img
+					src={data.cover}
+					alt={data.title}
+					class="w-full max-h-96 object-cover rounded-lg mb-8"
+					loading="eager"
+				/>
+			)}
+		</header>
+
+		<div class="prose lg:prose-xl dark:prose-invert max-w-none mb-12">
+			{data.excerpt && (
+				<p class="text-xl text-muted-foreground italic border-l-4 border-primary pl-4 mb-8">
+					{data.excerpt}
+				</p>
+			)}
+
+			{data.content ? (
+				<div set:html={data.content} />
+			) : (
+				<div class="text-center py-12">
+					<p class="text-muted-foreground">
+						{t("blog.contentNotAvailable") || "Content is being loaded from Notion..."}
+					</p>
+					<p class="text-sm text-muted-foreground mt-2">
+						{t("blog.viewInNotion") || "View this post in Notion for the full content."}
+					</p>
+				</div>
+			)}
+		</div>
+
+		<footer class="border-t border-border pt-8">
+			<a
+				href={`/${currentLocale}/blog`}
+				class="inline-flex items-center text-primary hover:underline"
+			>
+				← {t("blog.backToList") || "Back to all posts"}
+			</a>
+		</footer>
+	</article>
+</Layout>

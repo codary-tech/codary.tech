@@ -1,0 +1,92 @@
+---
+export const prerender = true;
+
+import { getCollection } from "astro:content";
+import { type Lang, useTranslations } from "@/i18n";
+import Layout from "@/layouts/General.astro";
+
+const currentLocale = Astro.currentLocale as Lang;
+const t = useTranslations(currentLocale);
+
+// Get all blog posts from Notion
+const blogPosts = await getCollection("blog");
+
+// Sort posts by date (newest first)
+const sortedPosts = blogPosts.sort((a, b) => {
+	const dateA = new Date(a.data.date);
+	const dateB = new Date(b.data.date);
+	return dateB.getTime() - dateA.getTime();
+});
+---
+
+<Layout
+	title={t("blog.title") || "Blog"}
+	description={t("blog.description") || "Read our latest blog posts"}
+>
+	<div class="container mx-auto px-4 py-12">
+		<header class="mb-12">
+			<h1 class="text-4xl md:text-5xl font-bold mb-4">
+				{t("blog.title") || "Blog"}
+			</h1>
+			<p class="text-xl text-muted-foreground">
+				{t("blog.description") || "Read our latest blog posts from Notion"}
+			</p>
+		</header>
+
+		{sortedPosts.length === 0 ? (
+			<div class="text-center py-12">
+				<p class="text-lg text-muted-foreground">
+					{t("blog.noPosts") || "No blog posts available yet. Check back soon!"}
+				</p>
+			</div>
+		) : (
+			<div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+				{sortedPosts.map((post) => (
+					<article class="border border-border rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+						{post.data.cover && (
+							<img
+								src={post.data.cover}
+								alt={post.data.title}
+								class="w-full h-48 object-cover"
+								loading="lazy"
+							/>
+						)}
+						<div class="p-6">
+							<h2 class="text-2xl font-semibold mb-2">
+								<a
+									href={`/${currentLocale}/blog/${post.id}`}
+									class="hover:text-primary transition-colors"
+								>
+									{post.data.title}
+								</a>
+							</h2>
+							{post.data.excerpt && (
+								<p class="text-muted-foreground mb-4 line-clamp-3">
+									{post.data.excerpt}
+								</p>
+							)}
+							<div class="flex items-center gap-4 text-sm text-muted-foreground">
+								<time datetime={post.data.date}>
+									{new Date(post.data.date).toLocaleDateString(currentLocale, {
+										year: "numeric",
+										month: "long",
+										day: "numeric",
+									})}
+								</time>
+								{post.data.tags && post.data.tags.length > 0 && (
+									<div class="flex gap-2 flex-wrap">
+										{post.data.tags.slice(0, 3).map((tag) => (
+											<span class="px-2 py-1 bg-secondary text-secondary-foreground rounded text-xs">
+												{tag}
+											</span>
+										))}
+									</div>
+								)}
+							</div>
+						</div>
+					</article>
+				))}
+			</div>
+		)}
+	</div>
+</Layout>
