@@ -27,12 +27,12 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.1.2",
-		"@vitest/coverage-v8": "^3.0.9",
-		"happy-dom": "^17.4.4",
-		"postcss-html": "^1.8.0",
+		"@vitest/coverage-v8": "^4.0.17",
+		"happy-dom": "^20.3.3",
+		"postcss-html": "^1.8.1",
 		"stylelint": "^16.10.0",
 		"stylelint-config-html": "^1.1.0",
-		"stylelint-config-standard": "^36.0.1",
+		"stylelint-config-standard": "^40.0.0",
 		"typescript": "^5.8.2",
 		"vitest": "^3.0.9"
 	},
